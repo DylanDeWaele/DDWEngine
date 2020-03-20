@@ -24,9 +24,11 @@
  *
  *  Header file for SDL_rect definition and management functions.
  */
-
 #ifndef SDL_rect_h_
 #define SDL_rect_h_
+
+//DISABLED THE BOOL WARNING
+#pragma warning( disable : 26812 )
 
 #include "SDL_stdinc.h"
 #include "SDL_error.h"

@@ -104,7 +104,6 @@
     <ClCompile Include="MiniginPCH.cpp">
       <Filter>General</Filter>
     </ClCompile>
-    <ClCompile Include="Main.cpp" />
     <ClCompile Include="Minigin.cpp" />
     <ClCompile Include="BaseComponent.cpp">
       <Filter>Components</Filter>

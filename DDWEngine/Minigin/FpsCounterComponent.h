@@ -5,7 +5,7 @@ class FpsCounterComponent : public BaseComponent
 {
 public:
 	//Ctor
-	FpsCounterComponent() = default;
+	FpsCounterComponent();
 
 	//Dtor
 	virtual ~FpsCounterComponent() = default;

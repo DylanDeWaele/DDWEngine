@@ -3,6 +3,12 @@
 #include "TextComponent.h"
 #include "GameObject.h"
 
+FpsCounterComponent::FpsCounterComponent()
+	: m_Frames{},
+	m_Counter{}
+{
+}
+
 void FpsCounterComponent::Update(float elapsedTime)
 {
 	m_Frames++; //Once we get here again a new frame has passed
