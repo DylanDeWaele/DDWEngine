@@ -5,26 +5,34 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Resource Files">
+    <Filter Include="Components">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Scenes">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="Commands">
+      <UniqueIdentifier>{4893d5e6-5a01-4842-a15b-1a970d4b2a2d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="TestScene.cpp">
-      <Filter>Scenes</Filter>
+    <ClCompile Include="PlayerControllerComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Commands.cpp">
+      <Filter>Commands</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
-    <ClInclude Include="TestScene.h">
-      <Filter>Scenes</Filter>
+    <ClInclude Include="GamePCH.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerControllerComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Commands.h">
+      <Filter>Commands</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

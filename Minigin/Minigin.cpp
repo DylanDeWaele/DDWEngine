@@ -7,6 +7,7 @@
 #include "ResourceManager.h"
 #include "Renderer.h"
 #include <SDL.h>
+#include "GameTime.h"
 
 
 using namespace std;
@@ -23,8 +24,8 @@ void  Minigin::Initialize()
 		"Programming 4 assignment",
 		SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED,
-		640,
-		480,
+		int(m_Width),
+		int(m_Height),
 		SDL_WINDOW_OPENGL
 	);
 	if (m_Window == nullptr)
@@ -53,6 +54,9 @@ void  Minigin::Run()
 		auto& sceneManager = SceneManager::GetInstance();
 		auto& input = InputManager::GetInstance();
 
+		//Initialization
+		sceneManager.Initialize();
+
 		bool doContinue = true;
 		auto lastTime = std::chrono::high_resolution_clock::now();
 		float lag = 0.0f;
@@ -65,10 +69,14 @@ void  Minigin::Run()
 			lastTime = currentTime;
 			lag += deltaTime;
 
-			doContinue = input.ProcessInput();
+			//Singleton for the elapsedTime
+			GameTime::GetInstance().SetElapsedTime(deltaTime);
 			while (lag >= MsPerFrame)
 			{
-				sceneManager.Update(deltaTime);
+				//Before handling input, first process the physics
+				sceneManager.FixedUpdate();
+				doContinue = input.ProcessInput();
+				sceneManager.Update();
 				lag -= MsPerFrame;
 			}
 			renderer.Render();
@@ -76,4 +84,14 @@ void  Minigin::Run()
 	}
 
 	Cleanup();
+}
+
+float Minigin::GetWindowWidth() const
+{
+	return m_Width;
+}
+
+float Minigin::GetWindowHeight() const
+{
+	return m_Height;
 }

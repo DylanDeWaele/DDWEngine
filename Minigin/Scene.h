@@ -1,7 +1,7 @@
 #pragma once
 #include "SceneManager.h"
 
-class SceneObject;
+class GameObject;
 class Scene
 {
 	friend Scene& SceneManager::CreateScene(const std::string& name);
@@ -18,15 +18,22 @@ public:
 	Scene& operator=(Scene&& other) = delete;
 
 	//Public member functions
-	void Add(SceneObject* object);
+	void Add(GameObject* object);
 
-	void Update(float elapsedTime);
+	void Initialize();
+	void FixedUpdate();
+	void Update();
 	void Render() const;
+
+	//Getters
+	const std::string& GetName() const;
+	const std::vector<GameObject*>& GetObjects() const;
+
 private:
 	explicit Scene(const std::string& name);
 
 	std::string m_Name;
-	std::vector <SceneObject*> m_Objects{};
+	std::vector <GameObject*> m_Objects{};
 
 	static unsigned int m_IdCounter;
 };

@@ -3,32 +3,36 @@
 
 #pragma warning(push)
 #pragma warning (disable:4201)
-#include <glm/vec3.hpp>
+#include <glm/vec2.hpp>
 #pragma warning(pop)
 
 class TransformComponent : public BaseComponent
 {
 public:
 	//Ctor
-	TransformComponent(const glm::vec3& position, const glm::vec3& rotation = { 0,0,0 }, const glm::vec3& scale = { 1,1,1 });
+	TransformComponent(const glm::vec2& position, const glm::vec2& rotation = { 0,0 }, const glm::vec2& scale = { 1,1 });
 	//Dtor
 	virtual ~TransformComponent() = default;
 	//Public member functions
 	//Setters
-	void SetPosition(const glm::vec3& position);
-	void SetRotation(const glm::vec3& rotation);
-	void SetScale(const glm::vec3& scale);
+	void SetPosition(const glm::vec2& position);
+	void SetRotation(const glm::vec2& rotation);
+	void SetScale(const glm::vec2& scale);
 	//Getters
-	const glm::vec3& GetPosition();
-	const glm::vec3& GetRotation();
-	const glm::vec3& GetScale();
+	const glm::vec2& GetPosition();
+	const glm::vec2& GetRotation();
+	const glm::vec2& GetScale();
 
-	virtual void Update(float elapsedTime) override;
+	void Move(float x, float y);
+
+	virtual void Initialize() override;
+	virtual void FixedUpdate() override;
+	virtual void Update() override;
 	virtual void Render() const override;
 
 private:
 	//Private datamembers
-	glm::vec3 m_Position;
-	glm::vec3 m_Rotation;
-	glm::vec3 m_Scale;
+	glm::vec2 m_Position;
+	glm::vec2 m_Rotation;
+	glm::vec2 m_Scale;
 };

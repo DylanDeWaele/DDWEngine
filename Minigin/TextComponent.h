@@ -8,22 +8,24 @@ class TextComponent final : public BaseComponent
 {
 public:
 	//Ctor
-	TextComponent(const std::string& text, const std::shared_ptr<Font>& font);
+	TextComponent(const std::string& text, Font* pFont);
 	
 	//Dtor
-	virtual ~TextComponent() = default;
+	virtual ~TextComponent();
 
 	//Public member functions	
 	//Setters
 	void SetText(const std::string& text);
 
-	virtual void Update(float elapsedTime) override;
+	virtual void Initialize() override;
+	virtual void FixedUpdate() override;
+	virtual void Update() override;
 	virtual void Render() const override;
 
 private:
 	bool m_NeedsUpdate;
 	std::string m_Text;
-	std::shared_ptr<Font> m_Font;
-	std::shared_ptr<Texture2D> m_Texture;
+	Font* m_pFont;
+	Texture2D* m_pTexture;
 };
 

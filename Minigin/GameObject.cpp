@@ -13,11 +13,27 @@ GameObject::~GameObject()
 	}
 }
 
-void  GameObject::Update(float elapsedTime)
+void GameObject::Initialize()
 {
 	for (BaseComponent* component : m_Components)
 	{
-		component->Update(elapsedTime);
+		component->Initialize();
+	}
+}
+
+void GameObject::FixedUpdate()
+{
+	for (BaseComponent* component : m_Components)
+	{
+		component->FixedUpdate();
+	}
+}
+
+void  GameObject::Update()
+{
+	for (BaseComponent* component : m_Components)
+	{
+		component->Update();
 	}
 }
 

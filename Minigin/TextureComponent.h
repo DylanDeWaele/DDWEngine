@@ -8,7 +8,7 @@ class TextureComponent : public BaseComponent
 {
 public:
 	//Ctor
-	TextureComponent(const std::string& filename);
+	TextureComponent(const std::string& filename, float width, float height);
 
 	//Dtor
 	virtual ~TextureComponent();
@@ -17,10 +17,14 @@ public:
 	//Setters
 	void SetTexture(const std::string& filename);
 
-	virtual void Update(float elapsedTime) override;
+	virtual void Initialize() override;
+	virtual void FixedUpdate() override;
+	virtual void Update() override;
 	virtual void Render() const override;
 
 private:
 	//Private datamembers
 	Texture2D* m_pTexture;
+	float m_Width;
+	float m_Height;
 };

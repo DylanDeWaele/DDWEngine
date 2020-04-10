@@ -2,31 +2,60 @@
 #include "SceneManager.h"
 #include "Scene.h"
 
-void  SceneManager::Update(float elapsedTime)
+void SceneManager::Initialize()
 {
-	for(auto& scene : m_Scenes)
+	for (Scene* pScene : m_Scenes)
 	{
-		scene->Update(elapsedTime);
+		pScene->Initialize();
 	}
+}
+
+void SceneManager::FixedUpdate()
+{
+	m_pActiveScene->FixedUpdate();
+}
+
+void  SceneManager::Update()
+{
+	m_pActiveScene->Update();
 }
 
 void  SceneManager::Render()
 {
-	for (const auto& scene : m_Scenes)
+	m_pActiveScene->Render();
+}
+
+void SceneManager::SetActiveScene(const std::string& sceneName)
+{
+	for (Scene* pScene : m_Scenes)
 	{
-		scene->Render();
+		if (pScene->GetName() == sceneName)
+		{
+			m_pActiveScene = pScene;
+			return;
+		}
 	}
+}
+
+Scene* SceneManager::GetActiveScene() const
+{
+	return m_pActiveScene;
+}
+
+SceneManager::SceneManager()
+	: m_pActiveScene{ nullptr }
+{
 }
 
 SceneManager::~SceneManager()
 {
-	for (Scene* pScene : m_Scenes) 
+	for (Scene* pScene : m_Scenes)
 	{
 		SAFE_DELETE(pScene);
 	}
 }
 
-Scene&  SceneManager::CreateScene(const std::string& name)
+Scene& SceneManager::CreateScene(const std::string& name)
 {
 	const auto scene = new Scene(name);
 	m_Scenes.push_back(scene);

@@ -1,10 +1,9 @@
 #pragma once
-#include "SceneObject.h"
 #include "BaseComponent.h"
 #include <vector>
 
 class Texture2D;
-class GameObject final : public SceneObject
+class GameObject final
 {
 public:
 	//Ctor
@@ -20,8 +19,10 @@ public:
 	GameObject& operator=(GameObject && other) = delete;
 
 	//Public member functions
-	void Update(float elapsedTime) override;
-	void Render() const override;
+	void Initialize();
+	void FixedUpdate();
+	void Update();
+	void Render() const;
 
 	//Setters
 	void AddComponent(BaseComponent* pComponent);
@@ -29,7 +30,6 @@ public:
 	//Getters
 	template <class Component>
 	Component* GetComponent() const;
-
 
 private:
 	std::vector<BaseComponent*> m_Components;

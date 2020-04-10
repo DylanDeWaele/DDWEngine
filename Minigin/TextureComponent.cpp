@@ -4,16 +4,24 @@
 #include "TransformComponent.h"
 #include "Renderer.h"
 #include "GameObject.h"
+#include "SDL.h"
 
-void TextureComponent::Update(float elapsedTime)
+void TextureComponent::Initialize()
 {
-	UNREFERENCED_PARAMETER(elapsedTime);
+}
+
+void TextureComponent::FixedUpdate()
+{
+}
+
+void TextureComponent::Update()
+{
 }
 
 void TextureComponent::Render() const
 {
-	const glm::vec3 pos = m_pParent->GetComponent<TransformComponent>()->GetPosition();
-	Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x, pos.y);
+	const glm::vec2 pos = m_pParent->GetComponent<TransformComponent>()->GetPosition();
+	Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x, pos.y, m_Width, m_Height);
 }
 
 void TextureComponent::SetTexture(const std::string& filename)
@@ -21,8 +29,10 @@ void TextureComponent::SetTexture(const std::string& filename)
 	m_pTexture = ResourceManager::GetInstance().LoadTexture(filename);
 }
 
-TextureComponent::TextureComponent(const std::string& filename)
-	: BaseComponent{}
+TextureComponent::TextureComponent(const std::string& filename, float width, float height)
+	: BaseComponent{},
+	m_Width{ width },
+	m_Height{ height }
 {
 	m_pTexture = ResourceManager::GetInstance().LoadTexture(filename);
 }

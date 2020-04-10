@@ -13,21 +13,28 @@
 
 void TextComponent::Render() const
 {
-	if (m_Texture != nullptr)
+	if (m_pTexture != nullptr)
 	{
 		const auto pos = m_pParent->GetComponent<TransformComponent>()->GetPosition();
-		Renderer::GetInstance().RenderTexture(*m_Texture, pos.x, pos.y);
+		Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x, pos.y);
 	}
 }
 
-void TextComponent::Update(float elapsedTime)
+void TextComponent::Initialize()
 {
-	UNREFERENCED_PARAMETER(elapsedTime); //Used to get rid of the warning
+}
+
+void TextComponent::FixedUpdate()
+{
+}
+
+void TextComponent::Update()
+{
 
 	if (m_NeedsUpdate)
 	{
 		const SDL_Color color = { 255,255,255 }; // only white text is supported now //TODO: wtf please add multi color support
-		const auto surf = TTF_RenderText_Blended(m_Font->GetFont(), m_Text.c_str(), color);
+		const auto surf = TTF_RenderText_Blended(m_pFont->GetFont(), m_Text.c_str(), color);
 		if (surf == nullptr)
 		{
 			throw std::runtime_error(std::string("Render text failed: ") + SDL_GetError());
@@ -38,7 +45,7 @@ void TextComponent::Update(float elapsedTime)
 			throw std::runtime_error(std::string("Create text texture from surface failed: ") + SDL_GetError());
 		}
 		SDL_FreeSurface(surf);
-		m_Texture = std::make_shared<Texture2D>(texture);
+		m_pTexture = new Texture2D{texture};
 		m_NeedsUpdate = false;
 	}
 }
@@ -49,11 +56,17 @@ void TextComponent::SetText(const std::string& text)
 	m_NeedsUpdate = true;
 }
 
-TextComponent::TextComponent(const std::string& text, const std::shared_ptr<Font>& font)
-	: m_NeedsUpdate(true), 
+TextComponent::TextComponent(const std::string& text, Font* pFont)
+	: BaseComponent{},
+	m_NeedsUpdate(true), 
 	m_Text(text),
-	m_Font(font),
-	m_Texture(nullptr)
+	m_pFont(pFont),
+	m_pTexture(nullptr)
 {
 
+}
+
+TextComponent::~TextComponent()
+{
+	SAFE_DELETE(m_pTexture);
 }

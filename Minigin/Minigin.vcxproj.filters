@@ -24,6 +24,18 @@
     <Filter Include="Custom">
       <UniqueIdentifier>{f6877270-5b71-41a0-a3f4-57a689ade651}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Physics">
+      <UniqueIdentifier>{523f39d7-de1b-4c2a-b986-7c30b8bad800}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Commands">
+      <UniqueIdentifier>{4c275618-183e-4963-841e-2a87c63e7ffb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameTime">
+      <UniqueIdentifier>{43c450fb-dd30-4528-936e-47077487fd98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{7ea446b1-ad2f-491a-8899-e501de61ad25}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MiniginPCH.h">
@@ -45,9 +57,6 @@
       <Filter>Managers</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneObject.h">
       <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="Renderer.h">
@@ -74,6 +83,27 @@
     </ClInclude>
     <ClInclude Include="FpsCounterComponent.h">
       <Filter>Custom</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxColliderComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsSettings.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="RigidBodyComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Command.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="GameTime.h">
+      <Filter>GameTime</Filter>
+    </ClInclude>
+    <ClInclude Include="Structs.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -119,6 +149,18 @@
     </ClCompile>
     <ClCompile Include="FpsCounterComponent.cpp">
       <Filter>Custom</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxColliderComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsSettings.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="RigidBodyComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="GameTime.cpp">
+      <Filter>GameTime</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

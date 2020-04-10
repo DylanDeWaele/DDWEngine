@@ -11,7 +11,8 @@ public:
 	virtual ~FpsCounterComponent() = default;
 	
 	//Public member functions
-	virtual void Update(float elapsedTime) override;
+	virtual void Initialize() override;
+	virtual void Update() override;
 	virtual void Render() const override;
 
 private:

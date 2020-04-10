@@ -15,12 +15,15 @@ public:
 	BaseComponent& operator=(BaseComponent&& other) = delete;
 
 	//Public member functions
-	virtual void Update(float elapsedTime) = 0;
+	virtual void Initialize() = 0;
+	virtual void FixedUpdate() = 0; //Physics
+	virtual void Update() = 0;
 	virtual void Render() const = 0;
 	//Setters 
 	void SetParent(GameObject* pParent);
 
 protected:
-	GameObject* m_pParent;
+	//Protected datamembers
+	GameObject* m_pParent;	
 };
 
