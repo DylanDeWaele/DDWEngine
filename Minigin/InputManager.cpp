@@ -13,6 +13,7 @@ bool InputManager::ProcessInput()
 	if (IsPressed(ControllerButton::RightDPad))
 		m_pRightDPAD->Execute();
 
+
 	//Keyboard - single hit events
 	SDL_Event e;
 	while (SDL_PollEvent(&e)) {
@@ -21,7 +22,12 @@ bool InputManager::ProcessInput()
 		}
 		if (e.type == SDL_KEYUP)
 		{
-
+			switch (e.key.keysym.sym)
+			{
+			case SDLK_SPACE:
+				m_pSpacebarKey->Execute();
+				break;
+			}
 		}
 	}
 
@@ -30,11 +36,11 @@ bool InputManager::ProcessInput()
 	const Uint8* keystate = SDL_GetKeyboardState(NULL);
 	if (keystate[SDL_SCANCODE_A])
 	{
-		m_pKeyA->Execute();
+		m_pAKey->Execute();
 	}
 	if (keystate[SDL_SCANCODE_D])
 	{
-		m_pKeyD->Execute();
+		m_pDKey->Execute();
 	}
 	return true;
 }
@@ -49,14 +55,19 @@ void InputManager::AssignCommandToRightDPad(Command* pCommand)
 	m_pRightDPAD = pCommand;
 }
 
-void InputManager::AssignCommandToKeyA(Command* pCommand)
+void InputManager::AssignCommandToSpacebarKey(Command* pCommand)
 {
-	m_pKeyA = pCommand;
+	m_pSpacebarKey = pCommand;
 }
 
-void InputManager::AssignCommandToKeyD(Command* pCommand)
+void InputManager::AssignCommandToAKey(Command* pCommand)
 {
-	m_pKeyD = pCommand;
+	m_pAKey = pCommand;
+}
+
+void InputManager::AssignCommandToDKey(Command* pCommand)
+{
+	m_pDKey = pCommand;
 }
 
 #pragma region Private functions

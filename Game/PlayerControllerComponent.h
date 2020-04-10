@@ -27,10 +27,14 @@ public:
 
 	void MoveLeft();
 	void MoveRight();
+	void Jump();
 
 private:
 	//Private datamembers
 	RigidBodyComponent* m_pRigidbody;
 	const float m_MoveSpeed;
+	const float m_JumpForce;
+
+	PlayerState m_PlayerState;
 };
 

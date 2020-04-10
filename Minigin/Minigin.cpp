@@ -70,7 +70,7 @@ void  Minigin::Run()
 			lag += deltaTime;
 
 			//Singleton for the elapsedTime
-			GameTime::GetInstance().SetElapsedTime(deltaTime);
+			GameTime::GetInstance().SetElapsedTime(deltaTime/1000);
 			while (lag >= MsPerFrame)
 			{
 				//Before handling input, first process the physics

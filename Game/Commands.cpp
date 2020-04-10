@@ -34,5 +34,19 @@ void MoveRightCommand::Execute()
 			return;
 		}
 	}
+}
 
+void JumpCommand::Execute()
+{
+	const std::vector<GameObject*>& pObjects = SceneManager::GetInstance().GetActiveScene()->GetObjects();
+	for (GameObject* pObject : pObjects)
+	{
+		//Find if it has the playercontroller component
+		PlayerControllerComponent* pCC = pObject->GetComponent<PlayerControllerComponent>();
+		if (pCC)
+		{
+			pCC->Jump();
+			return;
+		}
+	}
 }

@@ -22,10 +22,13 @@ public:
 	bool ProcessInput();
 
 	//Assigning
+	//Controller
 	void AssignCommandToLeftDPad(Command* pCommand);
 	void AssignCommandToRightDPad(Command* pCommand);
-	void AssignCommandToKeyA(Command* pCommand);
-	void AssignCommandToKeyD(Command* pCommand);
+	//Keyboard
+	void AssignCommandToAKey(Command* pCommand);
+	void AssignCommandToDKey(Command* pCommand);
+	void AssignCommandToSpacebarKey(Command* pCommand);
 
 private:
 	//Private datamembers
@@ -38,8 +41,9 @@ private:
 	Command* m_pRightDPAD;
 
 	//Keyboard
-	Command* m_pKeyA;
-	Command* m_pKeyD;
+	Command* m_pAKey;
+	Command* m_pDKey;
+	Command* m_pSpacebarKey;
 
 	//Private functions
 	bool IsPressed(ControllerButton button) const;

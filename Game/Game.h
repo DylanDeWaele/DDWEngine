@@ -21,6 +21,7 @@ private:
 	//Commands
 	Command* m_pMoveLeftCommand;
 	Command* m_pMoveRightCommand;
+	Command* m_pJumpCommand;
 
 	//Private functions
 	void Initialize();

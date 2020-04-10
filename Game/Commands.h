@@ -23,3 +23,14 @@ public:
 	virtual void Execute() override;
 };
 
+class JumpCommand : public Command
+{
+public:
+	//Ctor
+	JumpCommand() = default;
+	//Dtor
+	virtual ~JumpCommand() = default;
+	//Public member functions
+	virtual void Execute() override;
+};
+

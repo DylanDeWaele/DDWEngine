@@ -41,7 +41,7 @@ private:
 	//Private functions
 	//Collision
 	void CheckCollisions();
-	void CheckMovementCollisions(const glm::vec2 collisionsPoints[3],  const DDWRect& otherCollider);
+	void CheckMovementCollisions(glm::vec2* collisionsPoints, const DDWRect& otherCollider);
 	void CheckTriggerCollisions(const DDWRect& thisCollider, BoxColliderComponent* pOther);
 };
 

@@ -1,9 +1,10 @@
 #include "MiniginPCH.h"
 #include "TransformComponent.h"
-
+#include "Minigin.h"
+#include "GameTime.h"
 
 TransformComponent::TransformComponent(const glm::vec2& position, const glm::vec2& rotation, const glm::vec2& scale)
-	: m_Position{ position },
+	: m_Position{ position.x,  Minigin::GetInstance().GetWindowHeight() - position.y },
 	m_Rotation{ rotation },
 	m_Scale{ scale }
 {
@@ -11,7 +12,8 @@ TransformComponent::TransformComponent(const glm::vec2& position, const glm::vec
 
 void  TransformComponent::SetPosition(const glm::vec2& position)
 {
-	m_Position = position;
+	m_Position.x = position.x;
+	m_Position.y = Minigin::GetInstance().GetWindowHeight() - position.y;
 }
 
 void  TransformComponent::SetRotation(const glm::vec2& rotation)
@@ -41,8 +43,8 @@ const glm::vec2& TransformComponent::GetScale()
 
 void TransformComponent::Move(float x, float y)
 {
-	m_Position.x += x;
-	m_Position.y += y;
+	m_Position.x += x * GameTime::GetInstance().GetElapsedTime();
+	m_Position.y -= y * GameTime::GetInstance().GetElapsedTime();
 }
 
 void TransformComponent::Initialize()
