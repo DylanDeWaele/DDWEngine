@@ -21,6 +21,8 @@ public:
 	virtual void Render() const = 0;
 	//Setters 
 	void SetParent(GameObject* pParent);
+	//Getters
+	GameObject* GetParent() const;
 
 protected:
 	//Protected datamembers

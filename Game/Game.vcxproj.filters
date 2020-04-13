@@ -12,15 +12,51 @@
     <Filter Include="Commands">
       <UniqueIdentifier>{4893d5e6-5a01-4842-a15b-1a970d4b2a2d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Prefabs">
+      <UniqueIdentifier>{08553de8-b197-43e0-8d82-bbb64af81235}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Prefabs\Player">
+      <UniqueIdentifier>{fe2e7507-1cce-4692-a92a-1d8a0a1ba284}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Prefabs\Box">
+      <UniqueIdentifier>{232dbad1-5bbc-4d83-af6a-f2c714c547a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Controllers">
+      <UniqueIdentifier>{c9d2a9f7-5a15-46f8-a038-653e1d7caf59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\States">
+      <UniqueIdentifier>{06c7174e-16ee-4297-beac-57de3bcd4df4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Prefabs\Bullet">
+      <UniqueIdentifier>{4a087cfd-e9c4-4a11-8d2a-06fc18453847}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Bullet">
+      <UniqueIdentifier>{a1f60b37-4006-4aca-9e2f-36c341d90eb6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="PlayerControllerComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="Commands.cpp">
       <Filter>Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Prefabs\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Box.cpp">
+      <Filter>Prefabs\Box</Filter>
+    </ClCompile>
+    <ClCompile Include="ControllerComponents.cpp">
+      <Filter>Components\Controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="StateComponents.cpp">
+      <Filter>Components\States</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Prefabs\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletLifeComponent.cpp">
+      <Filter>Components\Bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -28,11 +64,26 @@
     <ClInclude Include="GamePCH.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerControllerComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="Commands.h">
       <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Prefabs\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Box.h">
+      <Filter>Prefabs\Box</Filter>
+    </ClInclude>
+    <ClInclude Include="ControllerComponents.h">
+      <Filter>Components\Controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="StateComponents.h">
+      <Filter>Components\States</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Prefabs\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletLifeComponent.h">
+      <Filter>Components\Bullet</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

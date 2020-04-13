@@ -19,6 +19,7 @@ public:
 
 	//Public member functions
 	void Add(GameObject* object);
+	bool Remove(GameObject* pObject);
 
 	void Initialize();
 	void FixedUpdate();
@@ -28,6 +29,7 @@ public:
 	//Getters
 	const std::string& GetName() const;
 	const std::vector<GameObject*>& GetObjects() const;
+	GameObject* GetGameObjectWithTag(const std::string& tag) const;
 
 private:
 	explicit Scene(const std::string& name);

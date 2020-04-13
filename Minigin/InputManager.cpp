@@ -27,6 +27,9 @@ bool InputManager::ProcessInput()
 			case SDLK_SPACE:
 				m_pSpacebarKey->Execute();
 				break;
+			case SDLK_f:
+				m_pFKey->Execute();
+				break;
 			}
 		}
 	}
@@ -35,13 +38,10 @@ bool InputManager::ProcessInput()
 	//https://gamedev.stackexchange.com/questions/19571/how-can-i-process-continuously-held-keys-with-sdl
 	const Uint8* keystate = SDL_GetKeyboardState(NULL);
 	if (keystate[SDL_SCANCODE_A])
-	{
 		m_pAKey->Execute();
-	}
 	if (keystate[SDL_SCANCODE_D])
-	{
 		m_pDKey->Execute();
-	}
+	
 	return true;
 }
 
@@ -58,6 +58,11 @@ void InputManager::AssignCommandToRightDPad(Command* pCommand)
 void InputManager::AssignCommandToSpacebarKey(Command* pCommand)
 {
 	m_pSpacebarKey = pCommand;
+}
+
+void InputManager::AssignCommandToFKey(Command* pCommand)
+{
+	m_pFKey = pCommand;
 }
 
 void InputManager::AssignCommandToAKey(Command* pCommand)

@@ -4,13 +4,13 @@
 
 unsigned int Scene::m_IdCounter = 0;
 
-Scene::Scene(const std::string& name) 
+Scene::Scene(const std::string& name)
 	: m_Name(name)
 {}
 
-Scene::~Scene() 
+Scene::~Scene()
 {
-	for (GameObject* pObject : m_Objects) 
+	for (GameObject* pObject : m_Objects)
 	{
 		SAFE_DELETE(pObject);
 	}
@@ -19,6 +19,18 @@ Scene::~Scene()
 void Scene::Add(GameObject* object)
 {
 	m_Objects.push_back(object);
+}
+
+bool Scene::Remove(GameObject* pObject)
+{
+	std::vector<GameObject*>::iterator foundObject{ std::find(m_Objects.begin(), m_Objects.end(), pObject) };
+	if (foundObject != m_Objects.end())
+	{
+		m_Objects.erase(foundObject);
+		return true;
+	}
+	std::cout << "ERROR - Trying to remove a Game Object that does not exist\n";
+	return false;
 }
 
 void Scene::Initialize()
@@ -61,4 +73,17 @@ const std::string& Scene::GetName() const
 const std::vector<GameObject*>& Scene::GetObjects() const
 {
 	return m_Objects;
+}
+
+GameObject* Scene::GetGameObjectWithTag(const std::string& tag) const
+{
+	//Loop over all gameobjects
+	for (GameObject* pGameObject : m_Objects)
+	{
+		//Return the one where the tag is equal
+		if (pGameObject->GetTag() == tag)
+			return pGameObject;
+	}
+	std::cout << "ERROR - GetGameObjectsWithTag(" << tag << ") - No GameObject was found with this tag\n";
+	return nullptr;
 }

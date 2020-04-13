@@ -2,51 +2,26 @@
 #include "GamePCH.h"
 #include "SceneManager.h"
 #include "Scene.h"
-#include "PlayerControllerComponent.h"
+#include "ControllerComponents.h"
 
 void MoveLeftCommand::Execute()
 {
 	//Find the object the has the playerControllerComponent attached to it and move
 	//This can be optimized with a tag system
-	const std::vector<GameObject*>& pObjects = SceneManager::GetInstance().GetActiveScene()->GetObjects();
-	for (GameObject* pObject : pObjects) 
-	{
-		//Find if it has the playercontroller component
-		PlayerControllerComponent* pCC = pObject->GetComponent<PlayerControllerComponent>();
-		if (pCC) 
-		{
-			pCC->MoveLeft();
-			return;
-		}
-	}
+	SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player")->GetComponent<PlayerControllerComponent>()->MoveLeft();
 }
 
 void MoveRightCommand::Execute()
 {
-	const std::vector<GameObject*>& pObjects = SceneManager::GetInstance().GetActiveScene()->GetObjects();
-	for (GameObject* pObject : pObjects)
-	{
-		//Find if it has the playercontroller component
-		PlayerControllerComponent* pCC = pObject->GetComponent<PlayerControllerComponent>();
-		if (pCC)
-		{
-			pCC->MoveRight();
-			return;
-		}
-	}
+	SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player")->GetComponent<PlayerControllerComponent>()->MoveRight();
 }
 
 void JumpCommand::Execute()
 {
-	const std::vector<GameObject*>& pObjects = SceneManager::GetInstance().GetActiveScene()->GetObjects();
-	for (GameObject* pObject : pObjects)
-	{
-		//Find if it has the playercontroller component
-		PlayerControllerComponent* pCC = pObject->GetComponent<PlayerControllerComponent>();
-		if (pCC)
-		{
-			pCC->Jump();
-			return;
-		}
-	}
+	SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player")->GetComponent<PlayerControllerComponent>()->Jump();
+}
+
+void ShootCommand::Execute()
+{
+	SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player")->GetComponent<PlayerControllerComponent>()->Shoot();
 }

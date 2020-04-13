@@ -10,6 +10,7 @@
 #include "Structs.h"
 #include "Utils.h"
 #include <SDL.h>
+#include "GameTime.h"
 
 RigidBodyComponent::RigidBodyComponent(bool useGravity)
 	: BaseComponent{},
@@ -27,9 +28,6 @@ void RigidBodyComponent::Initialize()
 
 void RigidBodyComponent::FixedUpdate() //Apply physics
 {
-	//Reset the x of the object
-	m_Velocity.x = 0;
-
 	//Pull the object down with the gravity
 	if (m_UseGravity)
 	{
@@ -42,11 +40,15 @@ void RigidBodyComponent::Update() //Check collisions and do movement
 	//Collisions
 	CheckCollisions();
 
-	if (m_Velocity.x > 0 && !m_CanMoveRight) m_Velocity.x = 0;
-	if (m_Velocity.x < 0 && !m_CanMoveLeft) m_Velocity.x = 0;
-	if (m_Velocity.y < 0 && !m_CanMoveDown) m_Velocity.y = 0; //While falling
+	if (!m_CanMoveDown && m_Velocity.y < 0)
+		m_Velocity.y = 0;
 
-	m_pParent->GetComponent<TransformComponent>()->Move(m_Velocity.x, m_Velocity.y);
+	//Apply y movement
+	m_pParent->GetComponent<TransformComponent>()->Move(0, m_Velocity.y);
+
+	//Apply x movement
+	if (m_Velocity.x > 0 && m_CanMoveRight || m_Velocity.x < 0 && m_CanMoveLeft)
+		m_pParent->GetComponent<TransformComponent>()->Move(m_Velocity.x, 0);
 }
 
 void RigidBodyComponent::Render() const
@@ -61,6 +63,16 @@ const glm::vec2& RigidBodyComponent::GetVelocity() const
 void RigidBodyComponent::SetVelocity(float x, float y)
 {
 	m_Velocity = { x,y };
+}
+
+void RigidBodyComponent::SetXVelocity(float x)
+{
+	m_Velocity.x = x;
+}
+
+void RigidBodyComponent::SetYVelocity(float y)
+{
+	m_Velocity.y = y;
 }
 
 #pragma region COLLISION DETECTION
@@ -107,7 +119,7 @@ void RigidBodyComponent::CheckCollisions()
 			if (pOther != nullptr)
 			{
 				if (pOther->IsTrigger() == false)
-					CheckMovementCollisions(collisionsPoints, pOther->GetRect());
+					CheckMovementCollisions(collisionsPoints, pOther);
 				else
 					CheckTriggerCollisions(thisCollider, pOther);
 			}
@@ -115,23 +127,33 @@ void RigidBodyComponent::CheckCollisions()
 	}
 }
 
-void RigidBodyComponent::CheckMovementCollisions(glm::vec2* collisionsPoints, const DDWRect& otherCollider)
+void RigidBodyComponent::CheckMovementCollisions(glm::vec2* collisionsPoints, BoxColliderComponent* pOtherCollider)
 {
 	//Check if any of the defined collision points are inside another collider
 	//If they are, then they cannot move that direction + push it out
-	//Left points
-	if (IsPointInRect(collisionsPoints[0], otherCollider) && m_CanMoveLeft)
-		m_CanMoveLeft = false;
-	//Right points
-	if (IsPointInRect(collisionsPoints[1], otherCollider) && m_CanMoveRight)
-		m_CanMoveRight = false;
-	//Bottom point
-	if (IsPointInRect(collisionsPoints[2], otherCollider) && m_CanMoveDown)
+	//Only do left and right checks if the object is not passable (so not a platform)
+	const std::string& collsionLayer = pOtherCollider->GetParent()->GetCollisionLayer();
+
+	if (collsionLayer != "Passable")
 	{
-		//Move to the top of the collided object
-		TransformComponent* pTransform = m_pParent->GetComponent<TransformComponent>();
-		pTransform->SetPosition({pTransform->GetPosition().x, otherCollider.GetModifiedY() + m_pParent->GetComponent<BoxColliderComponent>()->GetRect().height});
-		m_CanMoveDown = false;
+		//Left points
+		if (IsPointInRect(collisionsPoints[0], pOtherCollider->GetRect()) && m_CanMoveLeft)
+			m_CanMoveLeft = false;
+		//Right points
+		if (IsPointInRect(collisionsPoints[1], pOtherCollider->GetRect()) && m_CanMoveRight)
+			m_CanMoveRight = false;
+	}
+
+	//Bottom point
+	if (IsPointInRect(collisionsPoints[2], pOtherCollider->GetRect()) && m_CanMoveDown)
+	{
+		//Move to the top of the collided object (only if falling)
+		if (m_Velocity.y < 0)
+		{
+			m_CanMoveDown = false;
+			TransformComponent* pTransform = m_pParent->GetComponent<TransformComponent>();
+			pTransform->SetPosition({ pTransform->GetPosition().x, pOtherCollider->GetRect().GetModifiedY() + m_pParent->GetComponent<BoxColliderComponent>()->GetRect().height });
+		}
 	}
 }
 

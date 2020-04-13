@@ -2,17 +2,10 @@
 #include <BaseComponent.h>
 class RigidBodyComponent;
 
+#pragma region Player
 class PlayerControllerComponent : public BaseComponent
 {
 public:
-	enum class PlayerState
-	{
-		Idle,
-		Moving,
-		Jumping,
-		Falling
-	};
-
 	//Ctor
 	PlayerControllerComponent();
 
@@ -28,6 +21,7 @@ public:
 	void MoveLeft();
 	void MoveRight();
 	void Jump();
+	void Shoot();
 
 private:
 	//Private datamembers
@@ -35,6 +29,10 @@ private:
 	const float m_MoveSpeed;
 	const float m_JumpForce;
 
-	PlayerState m_PlayerState;
+	bool m_LookingRight; //If not looking right hes looking left
 };
+#pragma endregion
 
+#pragma region AI
+
+#pragma endregion

@@ -29,6 +29,7 @@ public:
 	void AssignCommandToAKey(Command* pCommand);
 	void AssignCommandToDKey(Command* pCommand);
 	void AssignCommandToSpacebarKey(Command* pCommand);
+	void AssignCommandToFKey(Command* pCommand);
 
 private:
 	//Private datamembers
@@ -44,6 +45,7 @@ private:
 	Command* m_pAKey;
 	Command* m_pDKey;
 	Command* m_pSpacebarKey;
+	Command* m_pFKey;
 
 	//Private functions
 	bool IsPressed(ControllerButton button) const;

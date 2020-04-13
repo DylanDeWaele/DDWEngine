@@ -34,3 +34,14 @@ public:
 	virtual void Execute() override;
 };
 
+class ShootCommand : public Command
+{
+public:
+	//Ctor
+	ShootCommand() = default;
+	//Dtor
+	virtual ~ShootCommand() = default;
+	//Public member functions
+	virtual void Execute() override;
+};
+

@@ -1,23 +1,26 @@
+//Game
 #include "Game.h"
 #include "GamePCH.h"
 #include "Font.h"
 
+//Engine
 #include "Scene.h"
 #include "SceneManager.h"
 #include "ResourceManager.h"
 
 //Components
-#include "TransformComponent.h"
-#include "TextureComponent.h"
-#include "TextComponent.h"
-#include "FPSCounterComponent.h"
-#include "BoxColliderComponent.h"
-#include "RigidBodyComponent.h"
-#include "PlayerControllerComponent.h"
-#include "Commands.h"
+
+//Input
 #include "InputManager.h"
+//Commands
+#include "Commands.h"
+
+//Prefabs
+#include "Player.h"
+#include "Box.h"
 
 Game::Game()
+	: m_pPlayer{}
 {
 	//Initialize the engine when creating the game
 	Minigin::GetInstance().Initialize();
@@ -31,10 +34,11 @@ Game::~Game()
 	//Font
 	SAFE_DELETE(m_pFont);
 
-	//Commands
+	//Commands - Perhaps move this to the engine
 	SAFE_DELETE(m_pMoveLeftCommand);
 	SAFE_DELETE(m_pMoveRightCommand);
 	SAFE_DELETE(m_pJumpCommand);
+	SAFE_DELETE(m_pShootCommand);
 }
 
 void Game::Run()
@@ -62,6 +66,7 @@ void Game::InitializeInput()
 	m_pMoveLeftCommand = new MoveLeftCommand{};
 	m_pMoveRightCommand = new MoveRightCommand{};
 	m_pJumpCommand = new JumpCommand{};
+	m_pShootCommand = new ShootCommand{};
 
 	//Controller
 	InputManager::GetInstance().AssignCommandToLeftDPad(m_pMoveLeftCommand);
@@ -70,56 +75,33 @@ void Game::InitializeInput()
 	InputManager::GetInstance().AssignCommandToAKey(m_pMoveLeftCommand);
 	InputManager::GetInstance().AssignCommandToDKey(m_pMoveRightCommand);
 	InputManager::GetInstance().AssignCommandToSpacebarKey(m_pJumpCommand);
+	InputManager::GetInstance().AssignCommandToFKey(m_pShootCommand);
 
 }
 void Game::InitializeTestScene()
 {
 	Scene& scene = SceneManager::GetInstance().CreateScene("TestScene");
 
-	//Initialize ground
 	const float windowWidth{ Minigin::GetInstance().GetWindowWidth() };
 	const float windowHeight{ Minigin::GetInstance().GetWindowHeight() };
-	GameObject* pGround = new GameObject{};
-	pGround->AddComponent(new TransformComponent{ {0,30} });
-	pGround->AddComponent(new TextureComponent{ "Collision.jpg", windowWidth ,30 });
-	pGround->AddComponent(new BoxColliderComponent{ windowWidth,30 });
-	scene.Add(pGround);
+
+	//Initialize ground
+	Box box = Box{ 0,20, windowWidth, 20 };
+	scene.Add(box.GetGameObject());
 
 	//Initialize walls
-	GameObject* pWall = new GameObject{};
-	pWall->AddComponent(new TransformComponent{ {0,windowHeight} });
-	pWall->AddComponent(new TextureComponent{ "Collision.jpg", 30 ,windowHeight });
-	pWall->AddComponent(new BoxColliderComponent{ 30,windowHeight });
-	scene.Add(pWall);
-
-	pWall = new GameObject{};
-	pWall->AddComponent(new TransformComponent{ {windowWidth - 30,windowHeight} });
-	pWall->AddComponent(new TextureComponent{ "Collision.jpg", 30 ,windowHeight });
-	pWall->AddComponent(new BoxColliderComponent{ 30,windowHeight });
-	scene.Add(pWall);
+	box = Box{ 0, windowHeight, 30, windowHeight };
+	scene.Add(box.GetGameObject());
+	box = Box{ windowWidth - 30, windowHeight, 30, windowHeight };
+	scene.Add(box.GetGameObject());
 
 	//Platform
-	GameObject* pPlatform = new GameObject{};
-	pPlatform->AddComponent(new TransformComponent{ {windowWidth / 2.f, 100} });
-	pPlatform->AddComponent(new TextureComponent{ "Collision.jpg", 200, 10 });
-	pPlatform->AddComponent(new BoxColliderComponent{ 200,10 });
-	scene.Add(pPlatform);
-
-	//FPS
-	GameObject* pFPSCounter = new GameObject{};
-	pFPSCounter->AddComponent(new TransformComponent{ {0,windowHeight} });
-	pFPSCounter->AddComponent(new TextComponent{ "00", m_pFont });
-	pFPSCounter->AddComponent(new FpsCounterComponent{});
-	scene.Add(pFPSCounter);
+	box = Box{ windowWidth / 2.f, 100, 200, 10,"Default", "Passable" };
+	scene.Add(box.GetGameObject());
 
 	//Initialize player
-	GameObject* pPlayer = new GameObject{};
-	pPlayer->AddComponent(new TransformComponent{ {350,150} });
-	pPlayer->AddComponent(new TextureComponent{ "Player.png",15,20 });
-	pPlayer->AddComponent(new BoxColliderComponent{ 15,20 });
-	pPlayer->AddComponent(new RigidBodyComponent{ });
-	pPlayer->AddComponent(new PlayerControllerComponent{});
-	scene.Add(pPlayer);
+	m_pPlayer = Player{ 350,150 };
+	scene.Add(m_pPlayer.GetGameObject());
 
 	SceneManager::GetInstance().SetActiveScene("TestScene");
 }

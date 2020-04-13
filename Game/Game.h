@@ -3,6 +3,10 @@ class TestScene;
 class Font;
 class Command;
 
+//Prefabs - should be instantiated on the stack
+#include "Player.h";
+#include "Box.h";
+
 class Game
 {
 public:
@@ -22,6 +26,11 @@ private:
 	Command* m_pMoveLeftCommand;
 	Command* m_pMoveRightCommand;
 	Command* m_pJumpCommand;
+	Command* m_pShootCommand;
+
+	//Important gameobjects
+	//Player
+	Player m_pPlayer;
 
 	//Private functions
 	void Initialize();

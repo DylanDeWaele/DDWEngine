@@ -1,13 +1,14 @@
 #pragma once
 #include "BaseComponent.h"
 #include <vector>
+#include <string>
 
 class Texture2D;
 class GameObject final
 {
 public:
 	//Ctor
-	GameObject() = default;
+	GameObject();
 	
 	//Dtor
 	virtual ~GameObject();
@@ -26,12 +27,18 @@ public:
 
 	//Setters
 	void AddComponent(BaseComponent* pComponent);
+	void SetTag(const std::string& tag);
+	void SetCollisionLayer(const std::string& layer);
 
 	//Getters
 	template <class Component>
 	Component* GetComponent() const;
+	const std::string& GetTag() const;
+	const std::string& GetCollisionLayer() const;
 
 private:
+	std::string m_Tag;
+	std::string m_CollisionLayer;
 	std::vector<BaseComponent*> m_Components;
 };
 

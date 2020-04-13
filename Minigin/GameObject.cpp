@@ -5,7 +5,13 @@
 #include "TransformComponent.h"
 #include "TextureComponent.h"
 
-GameObject::~GameObject() 
+GameObject::GameObject()
+	: m_Tag{"Default"},
+	m_CollisionLayer{"Default"}
+{
+}
+
+GameObject::~GameObject()
 {
 	for(BaseComponent* component : m_Components)
 	{
@@ -57,4 +63,24 @@ void  GameObject::AddComponent(BaseComponent* pComponent)
 	}
 	m_Components.push_back(pComponent);
 	pComponent->SetParent(this);
+}
+
+void GameObject::SetTag(const std::string& tag)
+{
+	m_Tag = tag;
+}
+
+void GameObject::SetCollisionLayer(const std::string& layer)
+{
+	m_CollisionLayer = layer;
+}
+
+const std::string& GameObject::GetTag() const
+{
+	return m_Tag;
+}
+
+const std::string& GameObject::GetCollisionLayer() const
+{
+	return m_CollisionLayer;
 }

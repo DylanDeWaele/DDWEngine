@@ -2,7 +2,7 @@
 #include "PhysicsSettings.h"
 
 PhysicsSettings::PhysicsSettings()
-	: m_Gravity{-35.f} //Fake gravity scale
+	: m_Gravity{-9.81f}
 {
 }
 
