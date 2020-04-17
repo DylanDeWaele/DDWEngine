@@ -15,7 +15,7 @@
 PlayerControllerComponent::PlayerControllerComponent()
 	:BaseComponent{},
 	m_pRigidbody{},
-	m_MoveSpeed{ 350.f },
+	m_MoveSpeed{ 250.f },
 	m_JumpForce{ 400.f },
 	m_LookingRight{ true }
 {
@@ -57,11 +57,6 @@ void PlayerControllerComponent::Jump()
 }
 void PlayerControllerComponent::Shoot()
 {
-	if (m_LookingRight)
-		std::cout << "SHOOT RIGHT\n";
-	else
-		std::cout << "SHOOT LEFT\n";
-
 	const glm::vec2& position{ m_pParent->GetComponent<TransformComponent>()->GetPosition() };
 	float x = position.x;
 	if (m_LookingRight)

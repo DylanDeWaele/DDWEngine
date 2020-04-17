@@ -33,6 +33,15 @@
     <Filter Include="Components\Bullet">
       <UniqueIdentifier>{a1f60b37-4006-4aca-9e2f-36c341d90eb6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Prefabs\Enemy">
+      <UniqueIdentifier>{3c251fab-023c-4247-96c6-d30708ef63ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Player">
+      <UniqueIdentifier>{eed242a9-a7ee-4eec-bbe0-6376a6d20b67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Worth">
+      <UniqueIdentifier>{8a943665-5a96-43c1-b1c3-62d14b06b328}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
@@ -55,8 +64,17 @@
     <ClCompile Include="Bullet.cpp">
       <Filter>Prefabs\Bullet</Filter>
     </ClCompile>
-    <ClCompile Include="BulletLifeComponent.cpp">
+    <ClCompile Include="BulletComponent.cpp">
       <Filter>Components\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Prefabs\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreComponent.cpp">
+      <Filter>Components\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="WorthComponent.cpp">
+      <Filter>Components\Worth</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -82,8 +100,17 @@
     <ClInclude Include="Bullet.h">
       <Filter>Prefabs\Bullet</Filter>
     </ClInclude>
-    <ClInclude Include="BulletLifeComponent.h">
+    <ClInclude Include="BulletComponent.h">
       <Filter>Components\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Prefabs\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreComponent.h">
+      <Filter>Components\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="WorthComponent.h">
+      <Filter>Components\Worth</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -31,7 +31,7 @@ void RigidBodyComponent::FixedUpdate() //Apply physics
 	//Pull the object down with the gravity
 	if (m_UseGravity)
 	{
-		m_Velocity.y += PhysicsSettings::GetInstance().GetGravity();
+		m_Velocity.y += PhysicsSettings::GetInstance().GetGravity() * GameTime::GetInstance().GetElapsedTime();
 	}
 }
 
@@ -118,7 +118,7 @@ void RigidBodyComponent::CheckCollisions()
 			BoxColliderComponent* pOther = pObject->GetComponent<BoxColliderComponent>();
 			if (pOther != nullptr)
 			{
-				if (pOther->IsTrigger() == false)
+				if (this->m_pParent->GetComponent<BoxColliderComponent>()->IsTrigger() == false)
 					CheckMovementCollisions(collisionsPoints, pOther);
 				else
 					CheckTriggerCollisions(thisCollider, pOther);
@@ -155,14 +155,19 @@ void RigidBodyComponent::CheckMovementCollisions(glm::vec2* collisionsPoints, Bo
 			pTransform->SetPosition({ pTransform->GetPosition().x, pOtherCollider->GetRect().GetModifiedY() + m_pParent->GetComponent<BoxColliderComponent>()->GetRect().height });
 		}
 	}
+
+	//Set collided objeccts
+	if (m_CanMoveLeft == false || m_CanMoveRight == false || m_CanMoveDown == false)
+		this->m_pParent->GetComponent<BoxColliderComponent>()->SetCollidedObject(pOtherCollider->GetParent());
 }
 
 void RigidBodyComponent::CheckTriggerCollisions(const DDWRect& thisCollider, BoxColliderComponent* pOther)
 {
 	if (IsOverlapping(thisCollider, pOther->GetRect()))
 	{
-		pOther->SetTriggered(true);
+		this->m_pParent->GetComponent<BoxColliderComponent>()->SetTriggered(true);
+		this->m_pParent->GetComponent<BoxColliderComponent>()->SetCollidedObject(pOther->GetParent());
 	}
-	else pOther->SetTriggered(false);
+	else this->m_pParent->GetComponent<BoxColliderComponent>()->SetTriggered(false);
 }
 #pragma endregion

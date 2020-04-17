@@ -1,13 +1,14 @@
 #pragma once
 #include "GamePCH.h"
 
-class Bullet //"Bubble"
+class Enemy
 {
 public:
 	//Ctor
-	Bullet(float x, float y, bool goingRight);
+	Enemy() = default;
+	Enemy(float x, float y);
 	//Dtor
-	~Bullet() = default;
+	~Enemy() = default;
 	//Public member functions
 	//Getters
 	GameObject* GetGameObject() const;

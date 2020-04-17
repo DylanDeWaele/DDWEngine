@@ -10,3 +10,8 @@ float PhysicsSettings::GetGravity() const
 {
 	return m_Gravity;
 }
+
+void PhysicsSettings::SetGravity(float gravity)
+{
+	m_Gravity = gravity;
+}

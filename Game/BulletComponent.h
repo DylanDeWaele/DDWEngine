@@ -1,13 +1,13 @@
 #pragma once
 #include "BaseComponent.h"
 
-class BulletLifeComponent : public BaseComponent
+class BulletComponent : public BaseComponent
 {
 public:
 	//Ctor
-	BulletLifeComponent(float lifeTime);
+	BulletComponent(float lifeTime);
 	//Dtor
-	virtual ~BulletLifeComponent() = default;
+	virtual ~BulletComponent() = default;
 
 	//Public member functions
 	virtual void Initialize() override;
@@ -16,7 +16,12 @@ public:
 	virtual void Render() const;
 
 private:
+	//Private datamembers
 	const float m_Lifetime;
 	float m_CurrentTime;
+
+	//Private functions
+	void HandleLifetime();
+	void HandleCollision();
 };
 

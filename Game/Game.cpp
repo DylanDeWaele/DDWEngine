@@ -7,6 +7,7 @@
 #include "Scene.h"
 #include "SceneManager.h"
 #include "ResourceManager.h"
+#include "PhysicsSettings.h"
 
 //Components
 
@@ -52,6 +53,9 @@ void Game::Initialize()
 {
 	//Initialize the resources
 	m_pFont = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
+
+	//Initialize custom gravity
+	PhysicsSettings::GetInstance().SetGravity(-981.f);
 
 	//Initialize input commands
 	InitializeInput();
@@ -102,6 +106,10 @@ void Game::InitializeTestScene()
 	//Initialize player
 	m_pPlayer = Player{ 350,150 };
 	scene.Add(m_pPlayer.GetGameObject());
+
+	//Initialize test enemy
+	Enemy enemy = Enemy{ 200,100 };
+	scene.Add(enemy.GetGameObject());
 
 	SceneManager::GetInstance().SetActiveScene("TestScene");
 }

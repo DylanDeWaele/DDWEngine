@@ -27,6 +27,7 @@ bool Scene::Remove(GameObject* pObject)
 	if (foundObject != m_Objects.end())
 	{
 		m_Objects.erase(foundObject);
+		SAFE_DELETE(pObject);
 		return true;
 	}
 	std::cout << "ERROR - Trying to remove a Game Object that does not exist\n";

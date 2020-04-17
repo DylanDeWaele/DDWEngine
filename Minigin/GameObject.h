@@ -2,6 +2,7 @@
 #include "BaseComponent.h"
 #include <vector>
 #include <string>
+#include <iostream>
 
 class Texture2D;
 class GameObject final
@@ -52,6 +53,8 @@ inline Component* GameObject::GetComponent() const
 		if (component && typeid(*component) == ti)
 			return static_cast<Component*>(component);
 	}
+
+	std::cout << "Component of type: " << typeid(Component).name() << " could not be found\n";
 
 	return nullptr;
 }

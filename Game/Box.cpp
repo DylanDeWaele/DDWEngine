@@ -11,14 +11,14 @@ Box::Box(float x, float y, float width, float height, const std::string& tag, co
 	m_pGameObject->SetCollisionLayer(collisionLayer);
 
 	//Initialize Components
-	m_pTransform = new TransformComponent{ {x,y} };
-	m_pTexture = new TextureComponent{ "Collision.jpg",width,height };
-	m_pBoxCollider = new BoxColliderComponent{ width,height };
+	TransformComponent * pTransform = new TransformComponent{ {x,y} };
+	TextureComponent* pTexture = new TextureComponent{ "Collision.jpg",width,height };
+	BoxColliderComponent* pBoxCollider = new BoxColliderComponent{ width,height };
 
 	//Add components to gameobject
-	m_pGameObject->AddComponent(m_pTransform);
-	m_pGameObject->AddComponent(m_pTexture);
-	m_pGameObject->AddComponent(m_pBoxCollider);
+	m_pGameObject->AddComponent(pTransform);
+	m_pGameObject->AddComponent(pTexture);
+	m_pGameObject->AddComponent(pBoxCollider);
 }
 
 GameObject* Box::GetGameObject() const

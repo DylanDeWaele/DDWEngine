@@ -10,9 +10,11 @@ public:
 	virtual ~PhysicsSettings() = default;
 	//Getters
 	float GetGravity() const;
+	//Setters
+	void SetGravity(float gravity);
 
 private:
 	//Private datamembers
-	const float m_Gravity;
+	float m_Gravity;
 };
 

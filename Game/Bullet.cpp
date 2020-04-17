@@ -3,10 +3,9 @@
 #include "TextureComponent.h"
 #include "RigidBodyComponent.h"
 #include "BoxColliderComponent.h"
-#include "BulletLifeComponent.h"
+#include "BulletComponent.h"
 
 Bullet::Bullet(float x, float y, bool goingRight)
-	: m_BulletSpeed{500.f}
 {
 	//Initialize gameObject
 	m_pGameObject = new GameObject{};
@@ -15,23 +14,25 @@ Bullet::Bullet(float x, float y, bool goingRight)
 	const float width{ 5 };
 
 	//Initialize Components
-	m_pTransform = new TransformComponent{ {x,y} };
-	m_pTexture = new TextureComponent{ "Bubble.png",width,width };
-	m_pBoxCollider = new BoxColliderComponent{ width,width,true }; //Trigger
-	m_pRigidbody = new RigidBodyComponent{ false }; //Dont use gravity
-	m_pBulletLife = new BulletLifeComponent{3};
+	TransformComponent* pTransform = new TransformComponent{ {x,y} };
+	TextureComponent* pTexture = new TextureComponent{ "Bubble.png",width,width };
+	BoxColliderComponent* pBoxCollider = new BoxColliderComponent{ width,width,true }; //Trigger
+	RigidBodyComponent* pRigidbody = new RigidBodyComponent{ false }; //Dont use gravity
+	BulletComponent* pBullet = new BulletComponent{3};
+
+	const float bulletSpeed{ 500.f };
 
 	if (goingRight)
-		m_pRigidbody->SetXVelocity(m_BulletSpeed);
+		pRigidbody->SetXVelocity(bulletSpeed);
 	else
-		m_pRigidbody->SetXVelocity(-m_BulletSpeed);
+		pRigidbody->SetXVelocity(-bulletSpeed);
 
 	//Add components to gameobject
-	m_pGameObject->AddComponent(m_pTransform);
-	m_pGameObject->AddComponent(m_pTexture);
-	m_pGameObject->AddComponent(m_pBoxCollider);
-	m_pGameObject->AddComponent(m_pRigidbody);
-	m_pGameObject->AddComponent(m_pBulletLife);
+	m_pGameObject->AddComponent(pTransform);
+	m_pGameObject->AddComponent(pTexture);
+	m_pGameObject->AddComponent(pBoxCollider);
+	m_pGameObject->AddComponent(pRigidbody);
+	m_pGameObject->AddComponent(pBullet);
 }
 
 GameObject* Bullet::GetGameObject() const

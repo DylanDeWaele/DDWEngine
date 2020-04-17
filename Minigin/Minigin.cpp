@@ -9,7 +9,6 @@
 #include <SDL.h>
 #include "GameTime.h"
 
-
 using namespace std;
 using namespace std::chrono;
 
@@ -59,26 +58,22 @@ void  Minigin::Run()
 
 		bool doContinue = true;
 		auto lastTime = std::chrono::high_resolution_clock::now();
-		float lag = 0.0f;
 
 		while (doContinue)
 		{
 			//Changed the update loop to catch up in fixed steps
 			const auto currentTime = high_resolution_clock::now();
-			float deltaTime = float(std::chrono::duration_cast<milliseconds>(currentTime - lastTime).count());
+			float deltaTime = float(std::chrono::duration<float>(currentTime - lastTime).count());
 			lastTime = currentTime;
-			lag += deltaTime;
 
 			//Singleton for the elapsedTime
-			GameTime::GetInstance().SetElapsedTime(deltaTime/1000);
-			while (lag >= MsPerFrame)
-			{
-				//Before handling input, first process the physics
-				sceneManager.FixedUpdate();
-				doContinue = input.ProcessInput();
-				sceneManager.Update();
-				lag -= MsPerFrame;
-			}
+			GameTime::GetInstance().SetElapsedTime(min(deltaTime, 0.1f)); //Clip it when using breakpoints
+
+			//Before handling input, first process the physics
+			sceneManager.FixedUpdate();
+			doContinue = input.ProcessInput();
+			sceneManager.Update();
+
 			renderer.Render();
 		}
 	}

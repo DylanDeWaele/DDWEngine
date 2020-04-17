@@ -25,14 +25,20 @@ public:
 	//This function tells us whether or not the trigger has been triggered
 	bool IsTriggered() const;
 
+	GameObject* GetCollidedObject() const;
+
 	//Setters
 	void SetTriggered(bool triggered);
+	void SetCollidedObject(GameObject* pOther);
 
 private:
 	//Private datamembers
 	DDWRect m_Rect;
 	bool m_IsTrigger;
 	bool m_IsTriggered;
+
+	//The other object that was last triggered
+	GameObject* m_pCollidedObject;
 
 	//Private functions
 	void FollowParent();

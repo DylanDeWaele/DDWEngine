@@ -1,9 +1,6 @@
 #pragma once
 #include "GamePCH.h"
 #include <string>
-class TransformComponent;
-class TextureComponent;
-class BoxColliderComponent;
 
 class Box
 {
@@ -19,8 +16,5 @@ public:
 private:
 	//Components
 	GameObject* m_pGameObject;
-	TransformComponent* m_pTransform;
-	TextureComponent* m_pTexture;
-	BoxColliderComponent* m_pBoxCollider;
 };
 

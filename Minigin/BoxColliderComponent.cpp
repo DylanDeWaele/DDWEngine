@@ -11,7 +11,8 @@ BoxColliderComponent::BoxColliderComponent(float width, float height, bool isTri
 	: BaseComponent{},
 	m_Rect{},
 	m_IsTrigger{ isTrigger },
-	m_IsTriggered{ false }
+	m_IsTriggered{ false },
+	m_pCollidedObject{nullptr}
 {
 	m_Rect.width = width;
 	m_Rect.height = height;
@@ -56,9 +57,19 @@ bool BoxColliderComponent::IsTriggered() const
 	return m_IsTriggered;
 }
 
+GameObject* BoxColliderComponent::GetCollidedObject() const
+{
+	return m_pCollidedObject;
+}
+
 void BoxColliderComponent::SetTriggered(bool triggered)
 {
 	m_IsTriggered = triggered;
+}
+
+void BoxColliderComponent::SetCollidedObject(GameObject* pOther)
+{
+	m_pCollidedObject = pOther;
 }
 
 void BoxColliderComponent::FollowParent()
