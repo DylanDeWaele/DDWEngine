@@ -79,7 +79,7 @@ void RigidBodyComponent::SetYVelocity(float y)
 void RigidBodyComponent::CheckCollisions()
 {
 	//Get this collider
-	DDWRect thisCollider = m_pParent->GetComponent<BoxColliderComponent>()->GetRect();
+	BoxColliderComponent* thisCollider = m_pParent->GetComponent<BoxColliderComponent>();
 
 	//For collision i will use 3 points that determine whether this object can still move left, right or down
 	//I need to calculate a distance for this point
@@ -92,15 +92,17 @@ void RigidBodyComponent::CheckCollisions()
 	//     +
 	glm::vec2 collisionsPoints[3];
 
+	const DDWRect& thisColliderRect = thisCollider->GetRect();
+
 	//Left
-	collisionsPoints[0] = { thisCollider.x - 1,
-							thisCollider.y + thisCollider.height / 2.f };
+	collisionsPoints[0] = { thisColliderRect.x - 1,
+							thisColliderRect.y + thisColliderRect.height / 2.f };
 	//Right
-	collisionsPoints[1] = { thisCollider.x + thisCollider.width + 1,
-							thisCollider.y + thisCollider.height / 2.f };
+	collisionsPoints[1] = { thisColliderRect.x + thisColliderRect.width + 1,
+							thisColliderRect.y + thisColliderRect.height / 2.f };
 	//Bottom
-	collisionsPoints[2] = { thisCollider.x + thisCollider.width / 2.f,
-							thisCollider.y + thisCollider.height + 1 };
+	collisionsPoints[2] = { thisColliderRect.x + thisColliderRect.width / 2.f,
+							thisColliderRect.y + thisColliderRect.height + 1 };
 
 	//Reset the movement booleans
 	m_CanMoveDown = true;
@@ -159,15 +161,21 @@ void RigidBodyComponent::CheckMovementCollisions(glm::vec2* collisionsPoints, Bo
 	//Set collided objeccts
 	if (m_CanMoveLeft == false || m_CanMoveRight == false || m_CanMoveDown == false)
 		this->m_pParent->GetComponent<BoxColliderComponent>()->SetCollidedObject(pOtherCollider->GetParent());
+	else
+		this->m_pParent->GetComponent<BoxColliderComponent>()->SetCollidedObject(nullptr);
 }
 
-void RigidBodyComponent::CheckTriggerCollisions(const DDWRect& thisCollider, BoxColliderComponent* pOther)
+void RigidBodyComponent::CheckTriggerCollisions(BoxColliderComponent* thisCollider, BoxColliderComponent* pOther)
 {
-	if (IsOverlapping(thisCollider, pOther->GetRect()))
+	if (IsOverlapping(thisCollider->GetRect(), pOther->GetRect()))
 	{
-		this->m_pParent->GetComponent<BoxColliderComponent>()->SetTriggered(true);
-		this->m_pParent->GetComponent<BoxColliderComponent>()->SetCollidedObject(pOther->GetParent());
+		thisCollider->SetTriggered(true);
+		thisCollider->SetCollidedObject(pOther->GetParent());
 	}
-	else this->m_pParent->GetComponent<BoxColliderComponent>()->SetTriggered(false);
+	else
+	{
+		thisCollider->SetTriggered(false);
+		thisCollider->SetCollidedObject(nullptr);
+	}
 }
 #pragma endregion

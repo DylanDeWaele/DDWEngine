@@ -104,11 +104,11 @@ void Game::InitializeTestScene()
 	scene.Add(box.GetGameObject());
 
 	//Initialize player
-	m_pPlayer = Player{ 350,150 };
+	m_pPlayer = Player{ 350,150, "Player" };
 	scene.Add(m_pPlayer.GetGameObject());
 
 	//Initialize test enemy
-	Enemy enemy = Enemy{ 200,100 };
+	Enemy enemy = Enemy{ 200,100, "Enemy" };
 	scene.Add(enemy.GetGameObject());
 
 	SceneManager::GetInstance().SetActiveScene("TestScene");

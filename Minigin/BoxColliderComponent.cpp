@@ -67,9 +67,20 @@ void BoxColliderComponent::SetTriggered(bool triggered)
 	m_IsTriggered = triggered;
 }
 
+void BoxColliderComponent::SetIsTrigger(bool isTrigger)
+{
+	m_IsTrigger = isTrigger;
+}
+
 void BoxColliderComponent::SetCollidedObject(GameObject* pOther)
 {
 	m_pCollidedObject = pOther;
+}
+
+void BoxColliderComponent::SetWidthAndHeight(float width, float height)
+{
+	m_Rect.width = width;
+	m_Rect.height = height;
 }
 
 void BoxColliderComponent::FollowParent()

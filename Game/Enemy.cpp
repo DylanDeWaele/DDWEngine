@@ -7,11 +7,12 @@
 #include "StateComponents.h"
 #include "WorthComponent.h"
 
-Enemy::Enemy(float x, float y)
+Enemy::Enemy(float x, float y, const std::string& tag, const std::string& collisionLayer)
 {
 	//Initialize gameObject
 	m_pGameObject = new GameObject{};
-	m_pGameObject->SetTag("Enemy");
+	m_pGameObject->SetTag(tag);
+	m_pGameObject->SetCollisionLayer(collisionLayer);
 
 	//Initialize Components
 	TransformComponent* pTransform = new TransformComponent{ {x,y} };

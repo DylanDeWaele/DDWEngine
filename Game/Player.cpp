@@ -7,11 +7,12 @@
 #include "StateComponents.h"
 #include "ScoreComponent.h"
 
-Player::Player(float x, float y)
+Player::Player(float x, float y, const std::string& tag, const std::string& collisionLayer)
 {
 	//Initialize gameObject
 	m_pGameObject = new GameObject{};
-	m_pGameObject->SetTag("Player");
+	m_pGameObject->SetTag(tag);
+	m_pGameObject->SetCollisionLayer(collisionLayer);
 
 	//Initialize Components - Can get rid of keeping the points 
 	TransformComponent* pTransform = new TransformComponent{ {x,y} };

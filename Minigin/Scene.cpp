@@ -85,6 +85,22 @@ GameObject* Scene::GetGameObjectWithTag(const std::string& tag) const
 		if (pGameObject->GetTag() == tag)
 			return pGameObject;
 	}
-	std::cout << "ERROR - GetGameObjectsWithTag(" << tag << ") - No GameObject was found with this tag\n";
+	std::cout << "ERROR - GetGameObjectWithTag(" << tag << ") - No GameObject was found with this tag\n";
 	return nullptr;
+}
+
+const std::vector<GameObject*> Scene::GetGameObjecstWithTag(const std::string& tag) const
+{
+	std::vector<GameObject*> found{};
+	//Loop over all gameobjects
+	for (GameObject* pGameObject : m_Objects)
+	{
+		//Return the one where the tag is equal
+		if (pGameObject->GetTag() == tag)
+			found.push_back(pGameObject);
+	}
+	if (found.size() == 0)
+		std::cout << "ERROR - GetGameObjectsWithTag(" << tag << ") - No GameObjects were found with this tag\n";
+
+	return found;
 }

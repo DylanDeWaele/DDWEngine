@@ -24,9 +24,12 @@ void TextureComponent::Render() const
 	Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x, pos.y, m_Width, m_Height);
 }
 
-void TextureComponent::SetTexture(const std::string& filename)
+void TextureComponent::SetTexture(const std::string& filename, float width, float height)
 {
+	delete m_pTexture;
 	m_pTexture = ResourceManager::GetInstance().LoadTexture(filename);
+	if (width != 0) m_Width = width;
+	if (height != 0) m_Height = height;
 }
 
 TextureComponent::TextureComponent(const std::string& filename, float width, float height)

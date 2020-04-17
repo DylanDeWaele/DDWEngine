@@ -30,6 +30,7 @@ public:
 	const std::string& GetName() const;
 	const std::vector<GameObject*>& GetObjects() const;
 	GameObject* GetGameObjectWithTag(const std::string& tag) const;
+	const std::vector<GameObject*> GetGameObjecstWithTag(const std::string& tag) const;
 
 private:
 	explicit Scene(const std::string& name);

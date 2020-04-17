@@ -29,7 +29,9 @@ public:
 
 	//Setters
 	void SetTriggered(bool triggered);
+	void SetIsTrigger(bool isTrigger);
 	void SetCollidedObject(GameObject* pOther);
+	void SetWidthAndHeight(float width, float height);
 
 private:
 	//Private datamembers

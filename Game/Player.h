@@ -6,7 +6,7 @@ class Player
 public:
 	//Ctor
 	Player() = default;
-	Player(float x, float y);
+	Player(float x, float y, const std::string& tag = "Default", const std::string& collisionLayer = "Default");
 	//Dtor
 	~Player() = default;
 	//Public member functions

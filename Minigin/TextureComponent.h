@@ -15,7 +15,7 @@ public:
 
 	//Public member functions
 	//Setters
-	void SetTexture(const std::string& filename);
+	void SetTexture(const std::string& filename, float width = 0, float height = 0);
 
 	virtual void Initialize() override;
 	virtual void FixedUpdate() override;

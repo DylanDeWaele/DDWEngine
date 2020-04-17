@@ -5,6 +5,7 @@
 #include <glm/vec2.hpp>
 #pragma warning(pop)
 
+//Got this from our programing 2 framework
 bool IsOverlapping(const DDWRect& collider, const DDWRect& otherCollider)
 {
 	if (collider.x > 0 && collider.x + collider.width < otherCollider.x)

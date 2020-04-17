@@ -5,18 +5,19 @@
 #include "BoxColliderComponent.h"
 #include "BulletComponent.h"
 
-Bullet::Bullet(float x, float y, bool goingRight)
+Bullet::Bullet(float x, float y, bool goingRight, const std::string& tag, const std::string& collisionLayer)
 {
 	//Initialize gameObject
 	m_pGameObject = new GameObject{};
-	m_pGameObject->SetTag("Player");
+	m_pGameObject->SetTag(tag);
+	m_pGameObject->SetCollisionLayer(collisionLayer);
 
-	const float width{ 5 };
+	const float width{ 12.5f };
 
 	//Initialize Components
 	TransformComponent* pTransform = new TransformComponent{ {x,y} };
-	TextureComponent* pTexture = new TextureComponent{ "Bubble.png",width,width };
-	BoxColliderComponent* pBoxCollider = new BoxColliderComponent{ width,width,true }; //Trigger
+	TextureComponent* pTexture = new TextureComponent{ "Bullet.png",width,width };
+	BoxColliderComponent* pBoxCollider = new BoxColliderComponent{ width,width }; //Trigger
 	RigidBodyComponent* pRigidbody = new RigidBodyComponent{ false }; //Dont use gravity
 	BulletComponent* pBullet = new BulletComponent{3};
 
