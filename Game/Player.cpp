@@ -4,7 +4,7 @@
 #include "TextureComponent.h"
 #include "RigidBodyComponent.h"
 #include "BoxColliderComponent.h"
-#include "ControllerComponents.h"
+#include "PlayerControllerComponent.h"
 #include "ScoreComponent.h"
 
 Player::Player(float x, float y, const std::string& name, const std::string& tag, const std::string& collisionLayer)
@@ -27,6 +27,5 @@ Player::Player(float x, float y, const std::string& name, const std::string& tag
 	m_pGameObject->AddComponent(pBoxCollider);
 	m_pGameObject->AddComponent(pRigidbody);
 	m_pGameObject->AddComponent(pPlayerController);
-	m_pGameObject->AddComponent(pPlayerState);
 	m_pGameObject->AddComponent(pScore);
 }

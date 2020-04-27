@@ -9,8 +9,6 @@
 #include "ResourceManager.h"
 #include "PhysicsSettings.h"
 
-//Components
-
 //Input
 #include "InputManager.h"
 //Commands
@@ -19,6 +17,7 @@
 //Prefabs
 #include "Player.h"
 #include "Box.h"
+#include "ZenChan.h" 
 
 Game::Game()
 {
@@ -107,8 +106,8 @@ void Game::InitializeTestScene()
 	scene.Add(player.GetGameObject());
 
 	//Initialize test enemy
-	//Enemy enemy = Enemy{ 200,100, "Enemy" };
-	//scene.Add(enemy.GetGameObject());
+	ZenChan enemy = ZenChan{ 200,100 };
+	scene.Add(enemy.GetGameObject());
 
 	SceneManager::GetInstance().SetActiveScene("TestScene");
 }

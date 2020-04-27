@@ -148,16 +148,20 @@
   <ItemGroup>
     <ClCompile Include="Box.cpp" />
     <ClCompile Include="Bubble.cpp" />
+    <ClCompile Include="BubbleComponent.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="BulletComponent.cpp" />
     <ClCompile Include="Commands.cpp" />
-    <ClCompile Include="ControllerComponents.cpp" />
-    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyControllerComponent.cpp" />
+    <ClCompile Include="EnemyStates.cpp" />
+    <ClCompile Include="PlayerControllerComponent.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerStates.cpp" />
     <ClCompile Include="ScoreComponent.cpp" />
     <ClCompile Include="WorthComponent.cpp" />
+    <ClCompile Include="ZenChan.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Minigin\Minigin.vcxproj">
@@ -167,16 +171,20 @@
   <ItemGroup>
     <ClInclude Include="Box.h" />
     <ClInclude Include="Bubble.h" />
+    <ClInclude Include="BubbleComponent.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletComponent.h" />
     <ClInclude Include="Commands.h" />
-    <ClInclude Include="ControllerComponents.h" />
-    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyControllerComponent.h" />
+    <ClInclude Include="EnemyStates.h" />
+    <ClInclude Include="PlayerControllerComponent.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GamePCH.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerStates.h" />
     <ClInclude Include="ScoreComponent.h" />
     <ClInclude Include="WorthComponent.h" />
+    <ClInclude Include="ZenChan.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

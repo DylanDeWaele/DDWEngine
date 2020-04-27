@@ -33,9 +33,6 @@
     <Filter Include="Components\Bullet">
       <UniqueIdentifier>{a1f60b37-4006-4aca-9e2f-36c341d90eb6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Prefabs\Enemy">
-      <UniqueIdentifier>{3c251fab-023c-4247-96c6-d30708ef63ac}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Components\Player">
       <UniqueIdentifier>{eed242a9-a7ee-4eec-bbe0-6376a6d20b67}</UniqueIdentifier>
     </Filter>
@@ -44,6 +41,18 @@
     </Filter>
     <Filter Include="Prefabs\Bubble">
       <UniqueIdentifier>{258af553-2abd-4e58-9ab0-42f83654a506}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Prefabs\Enemies">
+      <UniqueIdentifier>{3c251fab-023c-4247-96c6-d30708ef63ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Prefabs\Enemies\ZenChan">
+      <UniqueIdentifier>{6e0e2448-ed4d-454a-aaef-ee6a327cc15a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Prefabs\Enemies\Maita">
+      <UniqueIdentifier>{4ac5cc39-abc8-41d2-bff8-61e4d240a10c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Bubble">
+      <UniqueIdentifier>{10e8e6a6-9feb-4f5d-a886-bd1bccb9b06c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -58,17 +67,11 @@
     <ClCompile Include="Box.cpp">
       <Filter>Prefabs\Box</Filter>
     </ClCompile>
-    <ClCompile Include="ControllerComponents.cpp">
-      <Filter>Components\Controllers</Filter>
-    </ClCompile>
     <ClCompile Include="Bullet.cpp">
       <Filter>Prefabs\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="BulletComponent.cpp">
       <Filter>Components\Bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Prefabs\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="ScoreComponent.cpp">
       <Filter>Components\Player</Filter>
@@ -78,6 +81,24 @@
     </ClCompile>
     <ClCompile Include="Bubble.cpp">
       <Filter>Prefabs\Bubble</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerControllerComponent.cpp">
+      <Filter>Components\Controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerStates.cpp">
+      <Filter>Components\States</Filter>
+    </ClCompile>
+    <ClCompile Include="ZenChan.cpp">
+      <Filter>Prefabs\Enemies\ZenChan</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyControllerComponent.cpp">
+      <Filter>Components\Controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyStates.cpp">
+      <Filter>Components\States</Filter>
+    </ClCompile>
+    <ClCompile Include="BubbleComponent.cpp">
+      <Filter>Components\Bubble</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -94,17 +115,11 @@
     <ClInclude Include="Box.h">
       <Filter>Prefabs\Box</Filter>
     </ClInclude>
-    <ClInclude Include="ControllerComponents.h">
-      <Filter>Components\Controllers</Filter>
-    </ClInclude>
     <ClInclude Include="Bullet.h">
       <Filter>Prefabs\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="BulletComponent.h">
       <Filter>Components\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Prefabs\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="ScoreComponent.h">
       <Filter>Components\Player</Filter>
@@ -114,6 +129,24 @@
     </ClInclude>
     <ClInclude Include="Bubble.h">
       <Filter>Prefabs\Bubble</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerControllerComponent.h">
+      <Filter>Components\Controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerStates.h">
+      <Filter>Components\States</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenChan.h">
+      <Filter>Prefabs\Enemies\ZenChan</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyControllerComponent.h">
+      <Filter>Components\Controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyStates.h">
+      <Filter>Components\States</Filter>
+    </ClInclude>
+    <ClInclude Include="BubbleComponent.h">
+      <Filter>Components\Bubble</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

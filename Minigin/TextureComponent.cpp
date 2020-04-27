@@ -40,6 +40,16 @@ void TextureComponent::SetFlipped(bool flipped)
 	m_Flipped = flipped;
 }
 
+float TextureComponent::GetWidth() const
+{
+	return m_Width;
+}
+
+float TextureComponent::GetHeight() const
+{
+	return m_Height;
+}
+
 TextureComponent::TextureComponent(const std::string& filename, float width, float height)
 	: BaseComponent{},
 	m_Width{ width },

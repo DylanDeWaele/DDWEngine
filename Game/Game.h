@@ -5,7 +5,6 @@ class Command;
 
 //Prefabs - should be instantiated on the stack
 #include "Player.h"
-#include "Enemy.h"
 #include "Box.h"
 
 class Game

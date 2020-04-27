@@ -27,6 +27,7 @@ public:
 	const glm::vec2& GetVelocity() const;
 	//Setters
 	void SetVelocity(float x, float y);
+	void SetUseGravity(bool useGravity);
 
 private:
 	//Private datamembers

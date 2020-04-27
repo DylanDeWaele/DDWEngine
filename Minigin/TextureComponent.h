@@ -17,11 +17,16 @@ public:
 	//Setters
 	void SetTexture(const std::string& filename, float width = 0, float height = 0);
 	void SetFlipped(bool flipped);
+	
+	//Getters
+	float GetWidth() const;
+	float GetHeight() const;
 
 	virtual void Initialize() override;
 	virtual void FixedUpdate() override;
 	virtual void Update() override;
 	virtual void Render() const override;
+
 
 private:
 	//Private datamembers

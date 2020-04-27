@@ -65,6 +65,11 @@ void RigidBodyComponent::SetVelocity(float x, float y)
 	m_Velocity = { x,y };
 }
 
+void RigidBodyComponent::SetUseGravity(bool useGravity)
+{
+	m_UseGravity = useGravity;
+}
+
 #pragma region COLLISION DETECTION
 void RigidBodyComponent::CheckCollisions()
 {

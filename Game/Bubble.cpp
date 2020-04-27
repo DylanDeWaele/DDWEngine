@@ -6,7 +6,7 @@
 #include "TextureComponent.h"
 #include "BoxColliderComponent.h"
 #include "RigidBodyComponent.h"
-
+#include "BubbleComponent.h"
 
 Bubble::Bubble(float x, float y, const std::string& name, const std::string& tag, const std::string& collisionLayer)
 	: Prefab{name, tag, collisionLayer}
@@ -18,6 +18,7 @@ Bubble::Bubble(float x, float y, const std::string& name, const std::string& tag
 	TextureComponent* pTexture = new TextureComponent{ "Bubble.png",size,size };
 	BoxColliderComponent* pBoxCollider = new BoxColliderComponent{ size,size,true }; //Trigger
 	RigidBodyComponent* pRigidbody = new RigidBodyComponent{ false }; //Dont use gravity
+	BubbleComponent* pBubble = new BubbleComponent{ 5.f }; //Lifetime of 5 seconds
 
 	const float floatSpeed{ 100.f };
 	pRigidbody->SetVelocity(0, floatSpeed);
@@ -27,4 +28,5 @@ Bubble::Bubble(float x, float y, const std::string& name, const std::string& tag
 	m_pGameObject->AddComponent(pTexture);
 	m_pGameObject->AddComponent(pBoxCollider);
 	m_pGameObject->AddComponent(pRigidbody);
+	m_pGameObject->AddComponent(pBubble);
 }

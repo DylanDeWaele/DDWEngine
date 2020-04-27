@@ -2,26 +2,31 @@
 #include "GamePCH.h"
 #include "SceneManager.h"
 #include "Scene.h"
-#include "ControllerComponents.h"
+#include "PlayerControllerComponent.h"
+#include <utility>
 
 void MoveLeftCommand::Execute()
 {
 	//Find the object the has the playerControllerComponent attached to it and move
 	//This can be optimized with a tag system
-	SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player")->GetComponent<PlayerControllerComponent>()->SetShouldMoveLeft(true);
+	const std::pair<std::string, bool> control{"MoveLeft",true};
+	SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player")->GetComponent<PlayerControllerComponent>()->SetControl(control);
 }
 
 void MoveRightCommand::Execute()
 {
-	SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player")->GetComponent<PlayerControllerComponent>()->SetShouldMoveRight(true);
+	const std::pair<std::string, bool> control{ "MoveRight",true };
+	SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player")->GetComponent<PlayerControllerComponent>()->SetControl(control);
 }
 
 void JumpCommand::Execute()
 {
-	SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player")->GetComponent<PlayerControllerComponent>()->SetShouldJump(true);
+	const std::pair<std::string, bool> control{ "Jump",true };
+	SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player")->GetComponent<PlayerControllerComponent>()->SetControl(control);
 }
 
 void ShootCommand::Execute()
 {
-	SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player")->GetComponent<PlayerControllerComponent>()->SetShouldShoot(true);
+	const std::pair<std::string, bool> control{ "Shoot",true };
+	SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player")->GetComponent<PlayerControllerComponent>()->SetControl(control);
 }

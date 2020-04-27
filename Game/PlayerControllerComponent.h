@@ -1,8 +1,9 @@
 #pragma once
 #include <BaseComponent.h>
+#include <map>
 class RigidBodyComponent;
+class PlayerState;
 
-#pragma region Player
 class PlayerControllerComponent : public BaseComponent
 {
 public:
@@ -10,7 +11,7 @@ public:
 	PlayerControllerComponent();
 
 	//Dtor
-	virtual ~PlayerControllerComponent() = default;
+	virtual ~PlayerControllerComponent();
 
 	//Public member functions
 	virtual void Initialize() override;
@@ -19,10 +20,7 @@ public:
 	virtual void Render() const;
 
 	//Setters
-	void SetShouldMoveRight(bool moveRight);
-	void SetShouldMoveLeft(bool moveLeft);
-	void SetShouldJump(bool jump);
-	void SetShouldShoot(bool shoot);
+	void SetControl(const std::pair<std::string, bool>& control);
 
 	//Movement
 	void MoveLeft();
@@ -37,11 +35,10 @@ private:
 	const float m_MoveSpeed;
 	const float m_JumpForce;
 
-	//Controls
-	bool m_ShouldMoveLeft;
-	bool m_ShouldMoveRight;
-	bool m_ShouldJump;
-	bool m_ShouldShoot;
+	//Controls and state
+	std::map<std::string, bool> m_Controls;
+	PlayerState* m_State;
+	std::map<std::string, PlayerState*> m_PossibleStates; //"kind of memory pool"
 
 	//Shooting
 	bool m_LookingRight; //If not looking right hes looking left
@@ -51,11 +48,6 @@ private:
 
 	//Private functions
 	void HandleInput();
-	void HandleJumpingTroughPlatforms();
 	void HandleAttackTimer();
+	void DecideState();
 };
-#pragma endregion
-
-#pragma region AI
-
-#pragma endregion
