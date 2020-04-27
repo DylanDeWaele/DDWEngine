@@ -41,10 +41,10 @@ const glm::vec2& TransformComponent::GetScale()
 	return m_Scale;
 }
 
-void TransformComponent::Move(float x, float y)
+void TransformComponent::Translate(float x, float y)
 {
-	m_Position.x += x * GameTime::GetInstance().GetElapsedTime();
-	m_Position.y -= y * GameTime::GetInstance().GetElapsedTime(); //-= because y axis points down
+	m_Position.x += x;
+	m_Position.y -= y; //-= because y axis points down
 }
 
 void TransformComponent::Initialize()

@@ -25,6 +25,11 @@ void  SceneManager::Render()
 	m_pActiveScene->Render();
 }
 
+void SceneManager::CleanUp()
+{
+	m_pActiveScene->CleanUp();
+}
+
 void SceneManager::SetActiveScene(const std::string& sceneName)
 {
 	for (Scene* pScene : m_Scenes)

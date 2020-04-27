@@ -1,20 +1,14 @@
 #pragma once
-#include "GamePCH.h"
+#include "Prefab.h"
 
-class Player
+class Player : public Prefab
 {
 public:
 	//Ctor
-	Player() = default;
-	Player(float x, float y, const std::string& tag = "Default", const std::string& collisionLayer = "Default");
+	Player(float x, float y, const std::string& name = "Player",
+							 const std::string& tag = "Player",
+							 const std::string& collisionLayer = "Default");
 	//Dtor
-	~Player() = default;
-	//Public member functions
-	//Getters
-	GameObject* GetGameObject() const;
-
-private:
-	//Components
-	GameObject* m_pGameObject;
+	virtual	~Player() = default;
 };
 

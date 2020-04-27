@@ -21,7 +21,6 @@
 #include "Box.h"
 
 Game::Game()
-	: m_pPlayer{}
 {
 	//Initialize the engine when creating the game
 	Minigin::GetInstance().Initialize();
@@ -90,26 +89,26 @@ void Game::InitializeTestScene()
 	const float windowHeight{ Minigin::GetInstance().GetWindowHeight() };
 
 	//Initialize ground
-	Box box = Box{ 0,20, windowWidth, 20 };
+	Box box = Box{ 0,20, windowWidth, 20, "Ground" };
 	scene.Add(box.GetGameObject());
 
 	//Initialize walls
-	box = Box{ 0, windowHeight, 30, windowHeight };
+	box = Box{ 0, windowHeight, 30, windowHeight, "Left Wall" };
 	scene.Add(box.GetGameObject());
-	box = Box{ windowWidth - 30, windowHeight, 30, windowHeight };
+	box = Box{ windowWidth - 30, windowHeight, 30, windowHeight, "Right Wall" };
 	scene.Add(box.GetGameObject());
 
 	//Platform
-	box = Box{ windowWidth / 2.f, 100, 200, 10,"Default", "Passable" };
+	box = Box{ windowWidth / 2.f, 100, 200, 10, "Platform", "Default", "Platform" };
 	scene.Add(box.GetGameObject());
 
 	//Initialize player
-	m_pPlayer = Player{ 350,150, "Player" };
-	scene.Add(m_pPlayer.GetGameObject());
+	Player player = Player{ 350,150};
+	scene.Add(player.GetGameObject());
 
 	//Initialize test enemy
-	Enemy enemy = Enemy{ 200,100, "Enemy" };
-	scene.Add(enemy.GetGameObject());
+	//Enemy enemy = Enemy{ 200,100, "Enemy" };
+	//scene.Add(enemy.GetGameObject());
 
 	SceneManager::GetInstance().SetActiveScene("TestScene");
 }

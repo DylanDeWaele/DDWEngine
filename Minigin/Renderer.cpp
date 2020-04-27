@@ -1,13 +1,12 @@
 #include "MiniginPCH.h"
 #include "Renderer.h"
-#include <SDL.h>
 #include "SceneManager.h"
 #include "Texture2D.h"
 
-void  Renderer::Init(SDL_Window * window)
+void  Renderer::Init(SDL_Window* window)
 {
 	m_Renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-	if (m_Renderer == nullptr) 
+	if (m_Renderer == nullptr)
 	{
 		throw std::runtime_error(std::string("SDL_CreateRenderer Error: ") + SDL_GetError());
 	}
@@ -18,7 +17,7 @@ void  Renderer::Render() const
 	SDL_RenderClear(m_Renderer);
 
 	SceneManager::GetInstance().Render();
-	
+
 	SDL_RenderPresent(m_Renderer);
 }
 
@@ -48,4 +47,14 @@ void  Renderer::RenderTexture(const Texture2D& texture, const float x, const flo
 	dst.w = static_cast<int>(width);
 	dst.h = static_cast<int>(height);
 	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst);
+}
+
+void Renderer::RenderTexture(const Texture2D& texture, float x, float y, float width, float height, float angle, SDL_RendererFlip fliptype) const
+{
+	SDL_Rect dst;
+	dst.x = static_cast<int>(x);
+	dst.y = static_cast<int>(y);
+	dst.w = static_cast<int>(width);
+	dst.h = static_cast<int>(height);
+	SDL_RenderCopyEx(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst, angle, nullptr, fliptype);
 }

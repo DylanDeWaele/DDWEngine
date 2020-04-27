@@ -40,15 +40,15 @@ void RigidBodyComponent::Update() //Check collisions and do movement
 	//Collisions
 	CheckCollisions();
 
-	if (!m_CanMoveDown && m_Velocity.y < 0)
+	//Resetting y velocity if hitting bottom or hitting top
+	if (!m_CanMoveDown && m_Velocity.y < 0 || !m_CanMoveUp && m_Velocity.y > 0)
 		m_Velocity.y = 0;
+	//Same for x velocity
+	if (!m_CanMoveLeft && m_Velocity.x < 0 || !m_CanMoveRight && m_Velocity.x > 0)
+		m_Velocity.x = 0;
 
-	//Apply y movement
-	m_pParent->GetComponent<TransformComponent>()->Move(0, m_Velocity.y);
-
-	//Apply x movement
-	if (m_Velocity.x > 0 && m_CanMoveRight || m_Velocity.x < 0 && m_CanMoveLeft)
-		m_pParent->GetComponent<TransformComponent>()->Move(m_Velocity.x, 0);
+	//Apply movement
+	m_pParent->GetComponent<TransformComponent>()->Translate(m_Velocity.x * GameTime::GetInstance().GetElapsedTime(), m_Velocity.y * GameTime::GetInstance().GetElapsedTime());
 }
 
 void RigidBodyComponent::Render() const
@@ -65,34 +65,24 @@ void RigidBodyComponent::SetVelocity(float x, float y)
 	m_Velocity = { x,y };
 }
 
-void RigidBodyComponent::SetXVelocity(float x)
-{
-	m_Velocity.x = x;
-}
-
-void RigidBodyComponent::SetYVelocity(float y)
-{
-	m_Velocity.y = y;
-}
-
 #pragma region COLLISION DETECTION
 void RigidBodyComponent::CheckCollisions()
 {
 	//Get this collider
-	BoxColliderComponent* thisCollider = m_pParent->GetComponent<BoxColliderComponent>();
+	BoxColliderComponent* pThisCollider = m_pParent->GetComponent<BoxColliderComponent>();
 
-	//For collision i will use 3 points that determine whether this object can still move left, right or down
+	//For collision i will use 3 points that determine whether this object can still move left, right, down or up
 	//I need to calculate a distance for this point
 	//We will just use the width(height)/2.f + 1 of the object for this
-	// S-------+
-	// |       |
+	// S---+---+
+	// |   |   |
 	//+----+----+
 	// |   |   |
 	// +---|---+
 	//     +
-	glm::vec2 collisionsPoints[3];
+	glm::vec2 collisionsPoints[4];
 
-	const DDWRect& thisColliderRect = thisCollider->GetRect();
+	const DDWRect& thisColliderRect = pThisCollider->GetRect();
 
 	//Left
 	collisionsPoints[0] = { thisColliderRect.x - 1,
@@ -103,11 +93,20 @@ void RigidBodyComponent::CheckCollisions()
 	//Bottom
 	collisionsPoints[2] = { thisColliderRect.x + thisColliderRect.width / 2.f,
 							thisColliderRect.y + thisColliderRect.height + 1 };
+	//Up
+	collisionsPoints[3] = { thisColliderRect.x + thisColliderRect.width / 2.f,
+							thisColliderRect.y + 1 };
+
 
 	//Reset the movement booleans
 	m_CanMoveDown = true;
 	m_CanMoveLeft = true;
 	m_CanMoveRight = true;
+	m_CanMoveUp = true;
+
+	//Reset collided object + trigger
+	pThisCollider->SetCollidedObject(nullptr);
+	pThisCollider->SetTriggered(false);
 
 	//Check collisions with all the other objects in the scene
 	//This can be optimized ALOT
@@ -123,7 +122,7 @@ void RigidBodyComponent::CheckCollisions()
 				if (this->m_pParent->GetComponent<BoxColliderComponent>()->IsTrigger() == false)
 					CheckMovementCollisions(collisionsPoints, pOther);
 				else
-					CheckTriggerCollisions(thisCollider, pOther);
+					CheckTriggerCollisions(pThisCollider, pOther);
 			}
 		}
 	}
@@ -131,21 +130,29 @@ void RigidBodyComponent::CheckCollisions()
 
 void RigidBodyComponent::CheckMovementCollisions(glm::vec2* collisionsPoints, BoxColliderComponent* pOtherCollider)
 {
+	BoxColliderComponent* pThisCollider = this->m_pParent->GetComponent<BoxColliderComponent>();
+
 	//Check if any of the defined collision points are inside another collider
-	//If they are, then they cannot move that direction + push it out
-	//Only do left and right checks if the object is not passable (so not a platform)
-	const std::string& collsionLayer = pOtherCollider->GetParent()->GetCollisionLayer();
-
-	if (collsionLayer != "Passable")
+	//If they are, then they cannot move that direction
+	//Left point
+	if (IsPointInRect(collisionsPoints[0], pOtherCollider->GetRect()) && m_CanMoveLeft)
 	{
-		//Left points
-		if (IsPointInRect(collisionsPoints[0], pOtherCollider->GetRect()) && m_CanMoveLeft)
-			m_CanMoveLeft = false;
-		//Right points
-		if (IsPointInRect(collisionsPoints[1], pOtherCollider->GetRect()) && m_CanMoveRight)
-			m_CanMoveRight = false;
+		m_CanMoveLeft = false;
+		pThisCollider->SetCollidedObject(pOtherCollider->GetParent());
 	}
+	//Right point
+	if (IsPointInRect(collisionsPoints[1], pOtherCollider->GetRect()) && m_CanMoveRight)
+	{
+		m_CanMoveRight = false;
+		pThisCollider->SetCollidedObject(pOtherCollider->GetParent());
 
+	}
+	//Up point
+	if (IsPointInRect(collisionsPoints[3], pOtherCollider->GetRect()) && m_CanMoveUp)
+	{
+		m_CanMoveUp = false;
+		pThisCollider->SetCollidedObject(pOtherCollider->GetParent());
+	}
 	//Bottom point
 	if (IsPointInRect(collisionsPoints[2], pOtherCollider->GetRect()) && m_CanMoveDown)
 	{
@@ -154,28 +161,19 @@ void RigidBodyComponent::CheckMovementCollisions(glm::vec2* collisionsPoints, Bo
 		{
 			m_CanMoveDown = false;
 			TransformComponent* pTransform = m_pParent->GetComponent<TransformComponent>();
-			pTransform->SetPosition({ pTransform->GetPosition().x, pOtherCollider->GetRect().GetModifiedY() + m_pParent->GetComponent<BoxColliderComponent>()->GetRect().height });
+			pTransform->SetPosition({ pTransform->GetPosition().x, pOtherCollider->GetRect().GetModifiedY() + pThisCollider->GetRect().height });
+
+			pThisCollider->SetCollidedObject(pOtherCollider->GetParent());
 		}
 	}
-
-	//Set collided objeccts
-	if (m_CanMoveLeft == false || m_CanMoveRight == false || m_CanMoveDown == false)
-		this->m_pParent->GetComponent<BoxColliderComponent>()->SetCollidedObject(pOtherCollider->GetParent());
-	else
-		this->m_pParent->GetComponent<BoxColliderComponent>()->SetCollidedObject(nullptr);
 }
 
-void RigidBodyComponent::CheckTriggerCollisions(BoxColliderComponent* thisCollider, BoxColliderComponent* pOther)
+void RigidBodyComponent::CheckTriggerCollisions(BoxColliderComponent* pThisCollider, BoxColliderComponent* pOtherCollider)
 {
-	if (IsOverlapping(thisCollider->GetRect(), pOther->GetRect()))
+	if (IsOverlapping(pThisCollider->GetRect(), pOtherCollider->GetRect()))
 	{
-		thisCollider->SetTriggered(true);
-		thisCollider->SetCollidedObject(pOther->GetParent());
-	}
-	else
-	{
-		thisCollider->SetTriggered(false);
-		thisCollider->SetCollidedObject(nullptr);
+		pThisCollider->SetTriggered(true);
+		pThisCollider->SetCollidedObject(pOtherCollider->GetParent());
 	}
 }
 #pragma endregion

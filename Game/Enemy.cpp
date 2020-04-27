@@ -1,3 +1,4 @@
+#include "GamePCH.h"
 #include "Enemy.h"
 #include "TransformComponent.h"
 #include "TextureComponent.h"
@@ -7,13 +8,9 @@
 #include "StateComponents.h"
 #include "WorthComponent.h"
 
-Enemy::Enemy(float x, float y, const std::string& tag, const std::string& collisionLayer)
+Enemy::Enemy(float x, float y, const std::string& name, const std::string& tag, const std::string& collisionLayer)
+	: Prefab{name, tag, collisionLayer}
 {
-	//Initialize gameObject
-	m_pGameObject = new GameObject{};
-	m_pGameObject->SetTag(tag);
-	m_pGameObject->SetCollisionLayer(collisionLayer);
-
 	//Initialize Components
 	TransformComponent* pTransform = new TransformComponent{ {x,y} };
 	TextureComponent* pTexture = new TextureComponent{ "Enemy.png",15,20 };
@@ -27,9 +24,4 @@ Enemy::Enemy(float x, float y, const std::string& tag, const std::string& collis
 	m_pGameObject->AddComponent(pBoxCollider);
 	m_pGameObject->AddComponent(pRigidbody);
 	m_pGameObject->AddComponent(pWorth);
-}
-
-GameObject* Enemy::GetGameObject() const
-{
-	return m_pGameObject;
 }

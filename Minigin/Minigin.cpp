@@ -73,6 +73,7 @@ void  Minigin::Run()
 			sceneManager.FixedUpdate();
 			doContinue = input.ProcessInput();
 			sceneManager.Update();
+			sceneManager.CleanUp();
 
 			renderer.Render();
 		}

@@ -1,20 +1,14 @@
 #pragma once
-#include "GamePCH.h"
-#include <string>
+#include "Prefab.h"
 
-class Bullet //"Bubble"
+class Bullet : public Prefab
 {
 public:
 	//Ctor
-	Bullet(float x, float y, bool goingRight, const std::string& tag = "Default", const std::string& collisionLayer = "Default");
+	Bullet(float x, float y, bool goingRight, const std::string& name = "Bullet", 
+											  const std::string& tag = "Default",
+											  const std::string& collisionLayer = "Default");
 	//Dtor
-	~Bullet() = default;
-	//Public member functions
-	//Getters
-	GameObject* GetGameObject() const;
-
-private:
-	//Components
-	GameObject* m_pGameObject;
+	virtual ~Bullet() = default;
 };
 

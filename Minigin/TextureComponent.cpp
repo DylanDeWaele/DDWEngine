@@ -21,7 +21,10 @@ void TextureComponent::Update()
 void TextureComponent::Render() const
 {
 	const glm::vec2 pos = m_pParent->GetComponent<TransformComponent>()->GetPosition();
-	Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x, pos.y, m_Width, m_Height);
+	if (m_Flipped)
+		Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x, pos.y, m_Width, m_Height, 0, SDL_FLIP_HORIZONTAL);
+	else
+		Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x, pos.y, m_Width, m_Height);
 }
 
 void TextureComponent::SetTexture(const std::string& filename, float width, float height)
@@ -32,10 +35,16 @@ void TextureComponent::SetTexture(const std::string& filename, float width, floa
 	if (height != 0) m_Height = height;
 }
 
+void TextureComponent::SetFlipped(bool flipped)
+{
+	m_Flipped = flipped;
+}
+
 TextureComponent::TextureComponent(const std::string& filename, float width, float height)
 	: BaseComponent{},
 	m_Width{ width },
-	m_Height{ height }
+	m_Height{ height },
+	m_Flipped{false}
 {
 	m_pTexture = ResourceManager::GetInstance().LoadTexture(filename);
 }

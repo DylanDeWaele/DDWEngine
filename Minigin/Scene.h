@@ -26,6 +26,8 @@ public:
 	void Update();
 	void Render() const;
 
+	void CleanUp(); //Handles deletion of gameobjects after update calls
+
 	//Getters
 	const std::string& GetName() const;
 	const std::vector<GameObject*>& GetObjects() const;

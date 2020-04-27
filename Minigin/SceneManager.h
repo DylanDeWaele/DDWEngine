@@ -18,6 +18,8 @@ public:
 	void Update();
 	void Render();
 
+	void CleanUp(); //Handles deletion of objects after the update loop is finished
+
 	//Setters
 	void SetActiveScene(const std::string& sceneName);
 	//Getters

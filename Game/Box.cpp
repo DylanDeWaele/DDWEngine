@@ -1,15 +1,12 @@
+#include "GamePCH.h"
 #include "Box.h"
 #include "TransformComponent.h"
 #include "TextureComponent.h"
 #include "BoxColliderComponent.h"
 
-Box::Box(float x, float y, float width, float height, const std::string& tag, const std::string& collisionLayer)
+Box::Box(float x, float y, float width, float height, const std::string& name, const std::string& tag, const std::string& collisionLayer)
+	: Prefab{name, tag, collisionLayer}
 {
-	//Initialize gameObject
-	m_pGameObject = new GameObject{};
-	m_pGameObject->SetTag(tag);
-	m_pGameObject->SetCollisionLayer(collisionLayer);
-
 	//Initialize Components
 	TransformComponent * pTransform = new TransformComponent{ {x,y} };
 	TextureComponent* pTexture = new TextureComponent{ "Collision.jpg",width,height };
@@ -19,9 +16,4 @@ Box::Box(float x, float y, float width, float height, const std::string& tag, co
 	m_pGameObject->AddComponent(pTransform);
 	m_pGameObject->AddComponent(pTexture);
 	m_pGameObject->AddComponent(pBoxCollider);
-}
-
-GameObject* Box::GetGameObject() const
-{
-	return m_pGameObject;
 }

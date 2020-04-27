@@ -2,10 +2,12 @@
 #include "BulletComponent.h"
 #include "BoxColliderComponent.h"
 #include "TextureComponent.h"
+#include "TransformComponent.h"
 #include "RigidBodyComponent.h"
 #include "GameTime.h"
 #include "SceneManager.h"
 #include "Scene.h"
+#include "Bubble.h"
 
 BulletComponent::BulletComponent(float lifeTime)
 	: m_Lifetime{ lifeTime },
@@ -24,7 +26,8 @@ void BulletComponent::FixedUpdate()
 
 void BulletComponent::Update()
 {
-	HandleCollision();
+	HandleBubbleChange();
+
 	HandleLifetime();
 }
 
@@ -42,23 +45,20 @@ void BulletComponent::HandleLifetime()
 	}
 }
 
-void BulletComponent::HandleCollision()
+void BulletComponent::HandleBubbleChange()
 {
-	BoxColliderComponent* pBoxCollider = m_pParent->GetComponent<BoxColliderComponent>();
-	GameObject* pCollidedObject = pBoxCollider->GetCollidedObject();
+	BoxColliderComponent* pBoxCollider{ m_pParent->GetComponent<BoxColliderComponent>() };
 
-	if (pCollidedObject != nullptr)
+	if (pBoxCollider->IsTriggered())
 	{
-		if (pCollidedObject->GetTag() != "Player")
+		if (pBoxCollider->GetCollidedObject()->GetTag() != "Player" && pBoxCollider->GetCollidedObject()->GetTag() != "Bubble")
 		{
-			const float bubbleSize{ 20.f };
-
-			//Change to bubble
-			m_pParent->GetComponent<TextureComponent>()->SetTexture("Bubble.png", bubbleSize, bubbleSize);
-			m_pParent->GetComponent<RigidBodyComponent>()->SetXVelocity(0);
-
-			pBoxCollider->SetWidthAndHeight(bubbleSize, bubbleSize);
-			pBoxCollider->SetIsTrigger(true);
+			//Instantiate a new bubble at this position
+			const glm::vec2 position = m_pParent->GetComponent<TransformComponent>()->GetPosition();
+			Bubble bubble = Bubble{position.x,Minigin::GetInstance().GetWindowHeight() - position.y};
+			SceneManager::GetInstance().GetActiveScene()->Add(bubble.GetGameObject());
+			//Delete this gameobject
+			SceneManager::GetInstance().GetActiveScene()->Remove(m_pParent);
 		}
 	}
 }

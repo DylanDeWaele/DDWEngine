@@ -27,8 +27,6 @@ public:
 	const glm::vec2& GetVelocity() const;
 	//Setters
 	void SetVelocity(float x, float y);
-	void SetXVelocity(float x);
-	void SetYVelocity(float y);
 
 private:
 	//Private datamembers
@@ -39,11 +37,12 @@ private:
 	bool m_CanMoveLeft;
 	bool m_CanMoveRight;
 	bool m_CanMoveDown;
+	bool m_CanMoveUp;
 
 	//Private functions
 	//Collision
 	void CheckCollisions();
 	void CheckMovementCollisions(glm::vec2* collisionsPoints, BoxColliderComponent* pOtherCollider);
-	void CheckTriggerCollisions(BoxColliderComponent* thisCollider, BoxColliderComponent* pOther);
+	void CheckTriggerCollisions(BoxColliderComponent* pThisCollider, BoxColliderComponent* pOtherCollider);
 };
 

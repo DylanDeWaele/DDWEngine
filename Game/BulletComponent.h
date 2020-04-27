@@ -22,6 +22,6 @@ private:
 
 	//Private functions
 	void HandleLifetime();
-	void HandleCollision();
+	void HandleBubbleChange();
 };
 

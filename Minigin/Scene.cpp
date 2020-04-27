@@ -23,15 +23,9 @@ void Scene::Add(GameObject* object)
 
 bool Scene::Remove(GameObject* pObject)
 {
-	std::vector<GameObject*>::iterator foundObject{ std::find(m_Objects.begin(), m_Objects.end(), pObject) };
-	if (foundObject != m_Objects.end())
-	{
-		m_Objects.erase(foundObject);
-		SAFE_DELETE(pObject);
-		return true;
-	}
-	std::cout << "ERROR - Trying to remove a Game Object that does not exist\n";
-	return false;
+	//Set object to delete to true
+	pObject->SetDelete(true);
+	return true;
 }
 
 void Scene::Initialize()
@@ -52,9 +46,10 @@ void Scene::FixedUpdate()
 
 void Scene::Update()
 {
-	for (auto& object : m_Objects)
+	//Changged this particular for loop to prevent a crash when adding new game objects inside the update
+	for (size_t i = 0; i < m_Objects.size(); i++)
 	{
-		object->Update();
+		m_Objects[i]->Update();
 	}
 }
 
@@ -63,6 +58,18 @@ void Scene::Render() const
 	for (const auto& object : m_Objects)
 	{
 		object->Render();
+	}
+}
+
+void Scene::CleanUp()
+{
+	for (GameObject* pGameObject : m_Objects)
+	{
+		if (pGameObject->GetDelete()) 
+		{
+			m_Objects.erase(std::find(m_Objects.begin(), m_Objects.end(), pGameObject));
+			SAFE_DELETE(pGameObject);
+		}
 	}
 }
 

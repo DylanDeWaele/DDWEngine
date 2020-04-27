@@ -5,15 +5,17 @@
 #include "TransformComponent.h"
 #include "TextureComponent.h"
 
-GameObject::GameObject()
-	: m_Tag{"Default"},
-	m_CollisionLayer{"Default"}
+GameObject::GameObject(const std::string& name, const std::string& tag, const std::string& collisionLayer)
+	:m_Name{ name },
+	m_Tag{ tag },
+	m_CollisionLayer{ collisionLayer },
+	m_ShouldDelete{false}
 {
 }
 
 GameObject::~GameObject()
 {
-	for(BaseComponent* component : m_Components)
+	for (BaseComponent* component : m_Components)
 	{
 		delete component;
 	}
@@ -65,6 +67,11 @@ void  GameObject::AddComponent(BaseComponent* pComponent)
 	pComponent->SetParent(this);
 }
 
+void GameObject::SetName(const std::string& name)
+{
+	m_Name = name;
+}
+
 void GameObject::SetTag(const std::string& tag)
 {
 	m_Tag = tag;
@@ -75,6 +82,16 @@ void GameObject::SetCollisionLayer(const std::string& layer)
 	m_CollisionLayer = layer;
 }
 
+void GameObject::SetDelete(bool shouldDelete)
+{
+	m_ShouldDelete = shouldDelete;
+}
+
+const std::string& GameObject::GetName() const
+{
+	return m_Name;
+}
+
 const std::string& GameObject::GetTag() const
 {
 	return m_Tag;
@@ -83,4 +100,9 @@ const std::string& GameObject::GetTag() const
 const std::string& GameObject::GetCollisionLayer() const
 {
 	return m_CollisionLayer;
+}
+
+bool GameObject::GetDelete() const
+{
+	return m_ShouldDelete;
 }

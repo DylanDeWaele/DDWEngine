@@ -29,10 +29,6 @@ private:
 	Command* m_pJumpCommand;
 	Command* m_pShootCommand;
 
-	//Important gameobjects
-	//Player
-	Player m_pPlayer;
-
 	//Private functions
 	void Initialize();
 #pragma region Scene Initialization

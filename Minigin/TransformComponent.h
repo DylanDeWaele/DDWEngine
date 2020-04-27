@@ -23,7 +23,7 @@ public:
 	const glm::vec2& GetRotation();
 	const glm::vec2& GetScale();
 
-	void Move(float x, float y);
+	void Translate(float x, float y);
 
 	virtual void Initialize() override;
 	virtual void FixedUpdate() override;

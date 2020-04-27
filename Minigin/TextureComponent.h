@@ -16,6 +16,7 @@ public:
 	//Public member functions
 	//Setters
 	void SetTexture(const std::string& filename, float width = 0, float height = 0);
+	void SetFlipped(bool flipped);
 
 	virtual void Initialize() override;
 	virtual void FixedUpdate() override;
@@ -27,4 +28,5 @@ private:
 	Texture2D* m_pTexture;
 	float m_Width;
 	float m_Height;
+	bool m_Flipped;
 };
