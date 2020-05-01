@@ -154,11 +154,13 @@
     <ClCompile Include="Commands.cpp" />
     <ClCompile Include="EnemyControllerComponent.cpp" />
     <ClCompile Include="EnemyStates.cpp" />
+    <ClCompile Include="PickupComponent.cpp" />
     <ClCompile Include="PlayerControllerComponent.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerStates.cpp" />
+    <ClCompile Include="Pickup.cpp" />
     <ClCompile Include="ScoreComponent.cpp" />
     <ClCompile Include="WorthComponent.cpp" />
     <ClCompile Include="ZenChan.cpp" />
@@ -177,11 +179,13 @@
     <ClInclude Include="Commands.h" />
     <ClInclude Include="EnemyControllerComponent.h" />
     <ClInclude Include="EnemyStates.h" />
+    <ClInclude Include="PickupComponent.h" />
     <ClInclude Include="PlayerControllerComponent.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GamePCH.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerStates.h" />
+    <ClInclude Include="Pickup.h" />
     <ClInclude Include="ScoreComponent.h" />
     <ClInclude Include="WorthComponent.h" />
     <ClInclude Include="ZenChan.h" />

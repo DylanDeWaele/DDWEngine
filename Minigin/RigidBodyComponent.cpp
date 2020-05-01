@@ -18,7 +18,8 @@ RigidBodyComponent::RigidBodyComponent(bool useGravity)
 	m_Velocity{ 0,0 },
 	m_CanMoveDown{ true },
 	m_CanMoveLeft{ true },
-	m_CanMoveRight{ true }
+	m_CanMoveRight{ true },
+	m_CanMoveUp{true}
 {
 }
 
@@ -124,7 +125,7 @@ void RigidBodyComponent::CheckCollisions()
 			BoxColliderComponent* pOther = pObject->GetComponent<BoxColliderComponent>();
 			if (pOther != nullptr)
 			{
-				if (this->m_pParent->GetComponent<BoxColliderComponent>()->IsTrigger() == false)
+				if (this->m_pParent->GetComponent<BoxColliderComponent>()->IsTrigger() == false && pOther->IsTrigger() == false)
 					CheckMovementCollisions(collisionsPoints, pOther);
 				else
 					CheckTriggerCollisions(pThisCollider, pOther);
@@ -178,7 +179,9 @@ void RigidBodyComponent::CheckTriggerCollisions(BoxColliderComponent* pThisColli
 	if (IsOverlapping(pThisCollider->GetRect(), pOtherCollider->GetRect()))
 	{
 		pThisCollider->SetTriggered(true);
+		pOtherCollider->SetTriggered(true);
 		pThisCollider->SetCollidedObject(pOtherCollider->GetParent());
+		pOtherCollider->SetCollidedObject(pThisCollider->GetParent());
 	}
 }
 #pragma endregion

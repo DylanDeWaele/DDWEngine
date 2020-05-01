@@ -36,6 +36,9 @@ void  Minigin::Initialize()
 
 	// tell the resource manager where he can find the game data
 	ResourceManager::GetInstance().Init("../Data/");
+
+	//Seeding rand
+	srand(unsigned int(time(nullptr)));
 }
 
 void  Minigin::Cleanup()

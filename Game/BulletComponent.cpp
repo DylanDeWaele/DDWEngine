@@ -54,7 +54,7 @@ void BulletComponent::HandleBubbleChange()
 		if (pBoxCollider->GetCollidedObject()->GetTag() != "Player" && pBoxCollider->GetCollidedObject()->GetTag() != "Bubble")
 		{
 			//Instantiate a new bubble at this position
-			const glm::vec2 position = m_pParent->GetComponent<TransformComponent>()->GetPosition();
+			const glm::vec2& position = m_pParent->GetComponent<TransformComponent>()->GetPosition();
 			Bubble bubble = Bubble{position.x,Minigin::GetInstance().GetWindowHeight() - position.y};
 			SceneManager::GetInstance().GetActiveScene()->Add(bubble.GetGameObject());
 			//Delete this gameobject

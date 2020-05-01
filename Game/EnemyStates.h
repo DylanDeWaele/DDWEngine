@@ -1,5 +1,6 @@
 #pragma once
 #include "GamePCH.h"
+#include <string>
 
 class EnemyState
 {
@@ -46,4 +47,8 @@ public:
 	virtual ~EnemyDeadState() = default;
 	//Public member functions
 	virtual void Update();
+
+private:
+	//Private functions
+	void SpawnPickup(const std::string& sprite, int worth);
 };

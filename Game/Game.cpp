@@ -88,7 +88,7 @@ void Game::InitializeTestScene()
 	const float windowHeight{ Minigin::GetInstance().GetWindowHeight() };
 
 	//Initialize ground
-	Box box = Box{ 0,20, windowWidth, 20, "Ground" };
+	Box box = Box{ 0,20, windowWidth, 20, "Ground", "Ground" };
 	scene.Add(box.GetGameObject());
 
 	//Initialize walls

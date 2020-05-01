@@ -1,10 +1,12 @@
 #include "EnemyControllerComponent.h"
 #include "EnemyStates.h"
 #include "TextureComponent.h"
+#include "RigidBodyComponent.h"
+#include "BoxColliderComponent.h"
 
 EnemyControllerComponent::EnemyControllerComponent()
 	: m_State{ nullptr },
-	m_pRigidbody{nullptr}
+	m_pRigidbody{ nullptr }
 {
 }
 
@@ -35,6 +37,7 @@ void EnemyControllerComponent::FixedUpdate()
 
 void EnemyControllerComponent::Update()
 {
+	m_State->Update();
 }
 
 void EnemyControllerComponent::Render() const
@@ -44,12 +47,14 @@ void EnemyControllerComponent::Render() const
 void EnemyControllerComponent::Bubble()
 {
 	//Change speed and apply float
-	const float floatSpeed{50.f};
+	const float floatSpeed{ 50.f };
 	m_pRigidbody->SetVelocity(0, floatSpeed);
 	m_pRigidbody->SetUseGravity(false);
 
 	//Change texture
 	m_pParent->GetComponent<TextureComponent>()->SetTexture("ZenChanBubble.png");
+	//Set as a trigger
+	m_pParent->GetComponent<BoxColliderComponent>()->SetIsTrigger(true);
 
 	//Change state
 	m_State = m_PossibleStates["Bubble"];
@@ -57,5 +62,11 @@ void EnemyControllerComponent::Bubble()
 
 void EnemyControllerComponent::Kill()
 {
+	//Change his sprite back
+	m_pParent->GetComponent<TextureComponent>()->SetTexture("ZenChan.png");
+	//Apply gravity again
+	m_pParent->GetComponent<RigidBodyComponent>()->SetUseGravity(true);
+
+	//Change to the dead state
 	m_State = m_PossibleStates["Dead"];
 }

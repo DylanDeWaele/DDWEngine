@@ -24,9 +24,6 @@
     <Filter Include="Components\Controllers">
       <UniqueIdentifier>{c9d2a9f7-5a15-46f8-a038-653e1d7caf59}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Components\States">
-      <UniqueIdentifier>{06c7174e-16ee-4297-beac-57de3bcd4df4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Prefabs\Bullet">
       <UniqueIdentifier>{4a087cfd-e9c4-4a11-8d2a-06fc18453847}</UniqueIdentifier>
     </Filter>
@@ -53,6 +50,15 @@
     </Filter>
     <Filter Include="Components\Bubble">
       <UniqueIdentifier>{10e8e6a6-9feb-4f5d-a886-bd1bccb9b06c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States">
+      <UniqueIdentifier>{06c7174e-16ee-4297-beac-57de3bcd4df4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Prefabs\Pickup">
+      <UniqueIdentifier>{e367c4ad-8413-46c0-ac84-7240b08474d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Pickup">
+      <UniqueIdentifier>{eb368217-20da-4969-b98a-da2cd43134a3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -86,7 +92,7 @@
       <Filter>Components\Controllers</Filter>
     </ClCompile>
     <ClCompile Include="PlayerStates.cpp">
-      <Filter>Components\States</Filter>
+      <Filter>States</Filter>
     </ClCompile>
     <ClCompile Include="ZenChan.cpp">
       <Filter>Prefabs\Enemies\ZenChan</Filter>
@@ -95,10 +101,16 @@
       <Filter>Components\Controllers</Filter>
     </ClCompile>
     <ClCompile Include="EnemyStates.cpp">
-      <Filter>Components\States</Filter>
+      <Filter>States</Filter>
     </ClCompile>
     <ClCompile Include="BubbleComponent.cpp">
       <Filter>Components\Bubble</Filter>
+    </ClCompile>
+    <ClCompile Include="Pickup.cpp">
+      <Filter>Prefabs\Pickup</Filter>
+    </ClCompile>
+    <ClCompile Include="PickupComponent.cpp">
+      <Filter>Components\Pickup</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -134,7 +146,7 @@
       <Filter>Components\Controllers</Filter>
     </ClInclude>
     <ClInclude Include="PlayerStates.h">
-      <Filter>Components\States</Filter>
+      <Filter>States</Filter>
     </ClInclude>
     <ClInclude Include="ZenChan.h">
       <Filter>Prefabs\Enemies\ZenChan</Filter>
@@ -143,10 +155,16 @@
       <Filter>Components\Controllers</Filter>
     </ClInclude>
     <ClInclude Include="EnemyStates.h">
-      <Filter>Components\States</Filter>
+      <Filter>States</Filter>
     </ClInclude>
     <ClInclude Include="BubbleComponent.h">
       <Filter>Components\Bubble</Filter>
+    </ClInclude>
+    <ClInclude Include="Pickup.h">
+      <Filter>Prefabs\Pickup</Filter>
+    </ClInclude>
+    <ClInclude Include="PickupComponent.h">
+      <Filter>Components\Pickup</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
