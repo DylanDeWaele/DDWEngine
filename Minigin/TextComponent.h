@@ -17,8 +17,6 @@ public:
 	//Setters
 	void SetText(const std::string& text);
 
-	virtual void Initialize() override;
-	virtual void FixedUpdate() override;
 	virtual void Update() override;
 	virtual void Render() const override;
 

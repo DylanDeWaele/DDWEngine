@@ -27,7 +27,7 @@ void FpsCounterComponent::Update()
 	m_Counter += GameTime::GetInstance().GetElapsedTime();
 	if (m_Counter > 1)
 	{
-		m_pParent->GetComponent<TextComponent>()->SetText(std::to_string(m_Frames));
+		m_pGameObject->GetComponent<TextComponent>()->SetText(std::to_string(m_Frames));
 		m_Counter = 0;
 		m_Frames = 0;
 	}

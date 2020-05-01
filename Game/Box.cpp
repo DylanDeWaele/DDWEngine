@@ -8,7 +8,7 @@ Box::Box(float x, float y, float width, float height, const std::string& name, c
 	: Prefab{name, tag, collisionLayer}
 {
 	//Initialize Components
-	TransformComponent * pTransform = new TransformComponent{ {x,y} };
+	TransformComponent * pTransform = new TransformComponent{ {x,y}};
 	TextureComponent* pTexture = new TextureComponent{ "Collision.jpg",width,height };
 	BoxColliderComponent* pBoxCollider = new BoxColliderComponent{ width,height };
 

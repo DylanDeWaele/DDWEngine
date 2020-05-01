@@ -28,6 +28,7 @@ public:
 
 	//Setters
 	void AddComponent(BaseComponent* pComponent);
+	void AddChild(GameObject* pGameObject);
 	void SetName(const std::string& name);
 	void SetTag(const std::string& tag);
 	void SetCollisionLayer(const std::string& layer);
@@ -39,6 +40,9 @@ public:
 	const std::string& GetName() const;
 	const std::string& GetTag() const;
 	const std::string& GetCollisionLayer() const;
+	const std::vector<GameObject*>& GetChildren() const;
+	GameObject* GetChild(const std::string& name) const;
+	GameObject* GetChild(int index) const;
 	bool GetDelete() const;
 
 private:
@@ -46,6 +50,8 @@ private:
 	std::string m_Tag;
 	std::string m_CollisionLayer;
 	std::vector<BaseComponent*> m_Components;
+
+	std::vector<GameObject*> m_Children;
 
 	bool m_ShouldDelete;
 };
@@ -60,9 +66,6 @@ inline Component* GameObject::GetComponent() const
 		if (component && typeid(*component) == ti)
 			return static_cast<Component*>(component);
 	}
-
-	std::cout << "Component of type: " << typeid(Component).name() << " could not be found\n";
-
 	return nullptr;
 }
 

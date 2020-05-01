@@ -5,19 +5,7 @@ WorthComponent::WorthComponent(int worth)
 {
 }
 
-void WorthComponent::Initialize()
-{
-}
-
-void WorthComponent::FixedUpdate()
-{
-}
-
 void WorthComponent::Update()
-{
-}
-
-void WorthComponent::Render() const
 {
 }
 

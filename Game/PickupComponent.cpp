@@ -11,30 +11,18 @@ PickupComponent::PickupComponent()
 {
 }
 
-void PickupComponent::Initialize()
-{
-}
-
-void PickupComponent::FixedUpdate()
-{
-}
-
 void PickupComponent::Update()
 {
 	//If the player touches the pickup
-	GameObject* pCollidedObject = m_pParent->GetComponent<BoxColliderComponent>()->GetCollidedObject();
+	GameObject* pCollidedObject = m_pGameObject->GetComponent<BoxColliderComponent>()->GetCollidedObject();
 	if (pCollidedObject)
 	{
 		if (pCollidedObject->GetTag() == "Player")
 		{
 			//Add the score to his points
-			pCollidedObject->GetComponent<ScoreComponent>()->AddPoints(m_pParent->GetComponent<WorthComponent>()->GetWorth());
+			pCollidedObject->GetComponent<ScoreComponent>()->AddPoints(m_pGameObject->GetComponent<WorthComponent>()->GetWorth());
 			//Delete itself
-			SceneManager::GetInstance().GetActiveScene()->Remove(m_pParent);
+			SceneManager::GetInstance().GetActiveScene()->Remove(m_pGameObject);
 		}
 	}
-}
-
-void PickupComponent::Render() const
-{
 }

@@ -13,8 +13,6 @@ public:
 	virtual ~BoxColliderComponent() = default;
 
 	//Public member functions	
-	virtual void Initialize() override;
-	virtual void FixedUpdate() override;
 	virtual void Update() override;
 	virtual void Render() const override;
 

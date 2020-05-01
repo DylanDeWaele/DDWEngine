@@ -18,9 +18,6 @@ public:
 	void Run();
 private:
 	//Private datamembers
-	//The Game class is also the class that keeps a hold of reusable resources
-	//The font that will be used troughout the game
-	Font* m_pFont;
 
 	//Commands
 	Command* m_pMoveLeftCommand;

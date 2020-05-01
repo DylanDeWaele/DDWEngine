@@ -14,6 +14,9 @@ public:
 
 protected:
 	GameObject* m_pEnemy;
+	
+	//Function to check if enemy hit a player
+	void CheckPlayerHit();
 };
 
 class EnemyIdleState : public EnemyState //Renamed the states to a "Enemy" in their name to avoid any confusion
@@ -49,6 +52,8 @@ public:
 	virtual void Update();
 
 private:
+	//Private datamembers
+	const float m_RotationSpeed;
 	//Private functions
 	void SpawnPickup(const std::string& sprite, int worth);
 };

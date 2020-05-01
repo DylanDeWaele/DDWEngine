@@ -22,10 +22,8 @@ public:
 	float GetWidth() const;
 	float GetHeight() const;
 
-	virtual void Initialize() override;
-	virtual void FixedUpdate() override;
-	virtual void Update() override;
 	virtual void Render() const override;
+	virtual void Update() override;
 
 
 private:

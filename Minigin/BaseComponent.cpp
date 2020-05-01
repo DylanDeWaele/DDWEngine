@@ -2,17 +2,17 @@
 #include "BaseComponent.h"
 #include "GameObject.h"
 
-void BaseComponent::SetParent(GameObject* pParent)
+void BaseComponent::SetGameObject(GameObject* pGameObject)
 {
-	m_pParent = pParent;
+	m_pGameObject = pGameObject;
 }
 
-GameObject* BaseComponent::GetParent() const
+GameObject* BaseComponent::GetGameObject() const
 {
-	return m_pParent;
+	return m_pGameObject;
 }
 
 BaseComponent::BaseComponent()
-	: m_pParent{}
+	: m_pGameObject{}
 {
 }

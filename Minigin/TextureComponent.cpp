@@ -6,25 +6,20 @@
 #include "GameObject.h"
 #include "SDL.h"
 
-void TextureComponent::Initialize()
+void TextureComponent::Render() const
 {
-}
+	TransformComponent* pTransform = m_pGameObject->GetComponent<TransformComponent>();
+	const glm::vec2 pos = pTransform->GetPosition();
+	const float rotation = pTransform->GetRotation();
 
-void TextureComponent::FixedUpdate()
-{
+	if (m_Flipped)
+		Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x, pos.y, m_Width, m_Height, rotation , SDL_FLIP_HORIZONTAL);
+	else
+		Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x, pos.y, m_Width, m_Height, rotation, SDL_FLIP_NONE);
 }
 
 void TextureComponent::Update()
 {
-}
-
-void TextureComponent::Render() const
-{
-	const glm::vec2 pos = m_pParent->GetComponent<TransformComponent>()->GetPosition();
-	if (m_Flipped)
-		Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x, pos.y, m_Width, m_Height, 0, SDL_FLIP_HORIZONTAL);
-	else
-		Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x, pos.y, m_Width, m_Height);
 }
 
 void TextureComponent::SetTexture(const std::string& filename, float width, float height)

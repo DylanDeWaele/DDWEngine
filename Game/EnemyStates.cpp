@@ -2,6 +2,7 @@
 #include "TransformComponent.h"
 #include "BoxColliderComponent.h"
 #include "EnemyControllerComponent.h"
+#include "LivesComponent.h"
 #include "SceneManager.h"
 #include "Scene.h"
 #include "Pickup.h"
@@ -11,6 +12,18 @@ EnemyState::EnemyState(GameObject* pEnemy)
 {
 }
 
+void EnemyState::CheckPlayerHit()
+{
+	GameObject* pCollidedObject = m_pEnemy->GetComponent<BoxColliderComponent>()->GetCollidedObject();
+	if (pCollidedObject) 
+	{
+		if (pCollidedObject->GetTag() == "Player") 
+		{
+			pCollidedObject->GetComponent<LivesComponent>()->ReduceLives(1);
+		}
+	}
+}
+
 EnemyIdleState::EnemyIdleState(GameObject* pEnemy)
 	: EnemyState{ pEnemy }
 {
@@ -18,6 +31,7 @@ EnemyIdleState::EnemyIdleState(GameObject* pEnemy)
 
 void EnemyIdleState::Update()
 {
+	CheckPlayerHit();
 }
 
 EnemyBubbleState::EnemyBubbleState(GameObject* pEnemy)
@@ -41,13 +55,16 @@ void EnemyBubbleState::Update()
 }
 
 EnemyDeadState::EnemyDeadState(GameObject* pEnemy)
-	: EnemyState{ pEnemy }
+	: EnemyState{ pEnemy },
+	m_RotationSpeed{10.f}
 {
 }
 
 void EnemyDeadState::Update()
 {
 	//Rotate until it hits the ground
+	m_pEnemy->GetComponent<TransformComponent>()->Rotate(m_RotationSpeed);
+
 	//If it hits the ground delete it and spawn a pickup
 	GameObject* pCollidedObject{ m_pEnemy->GetComponent<BoxColliderComponent>()->GetCollidedObject() };
 	if (pCollidedObject)

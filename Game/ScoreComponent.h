@@ -10,10 +10,7 @@ public:
 	virtual ~ScoreComponent() = default;
 
 	//Public member functions
-	virtual void Initialize() override;
-	virtual void FixedUpdate() override;
 	virtual void Update() override;
-	virtual void Render() const;
 
 	//Getters
 	int GetPoints() const;

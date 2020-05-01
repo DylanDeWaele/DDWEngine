@@ -6,7 +6,6 @@
 //Engine
 #include "Scene.h"
 #include "SceneManager.h"
-#include "ResourceManager.h"
 #include "PhysicsSettings.h"
 
 //Input
@@ -18,6 +17,7 @@
 #include "Player.h"
 #include "Box.h"
 #include "ZenChan.h" 
+#include "HUD.h"
 
 Game::Game()
 {
@@ -30,9 +30,6 @@ Game::Game()
 
 Game::~Game()
 {
-	//Font
-	SAFE_DELETE(m_pFont);
-
 	//Commands - Perhaps move this to the engine
 	SAFE_DELETE(m_pMoveLeftCommand);
 	SAFE_DELETE(m_pMoveRightCommand);
@@ -49,9 +46,6 @@ void Game::Run()
 #pragma region Private functions
 void Game::Initialize()
 {
-	//Initialize the resources
-	m_pFont = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
-
 	//Initialize custom gravity
 	PhysicsSettings::GetInstance().SetGravity(-981.f);
 
@@ -83,6 +77,7 @@ void Game::InitializeInput()
 void Game::InitializeTestScene()
 {
 	Scene& scene = SceneManager::GetInstance().CreateScene("TestScene");
+ 	SceneManager::GetInstance().SetActiveScene("TestScene");
 
 	const float windowWidth{ Minigin::GetInstance().GetWindowWidth() };
 	const float windowHeight{ Minigin::GetInstance().GetWindowHeight() };
@@ -109,7 +104,10 @@ void Game::InitializeTestScene()
 	ZenChan enemy = ZenChan{ 200,100 };
 	scene.Add(enemy.GetGameObject());
 
-	SceneManager::GetInstance().SetActiveScene("TestScene");
+	//Initialize HUD
+	HUD hud = HUD{};
+	scene.Add(hud.GetGameObject());
+	hud.AddChildrenToScene();
 }
 #pragma endregion
 #pragma endregion

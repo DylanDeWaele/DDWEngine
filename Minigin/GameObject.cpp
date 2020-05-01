@@ -4,12 +4,15 @@
 #include "Renderer.h"
 #include "TransformComponent.h"
 #include "TextureComponent.h"
+#include "SceneManager.h"
+#include "Scene.h"
 
 GameObject::GameObject(const std::string& name, const std::string& tag, const std::string& collisionLayer)
 	:m_Name{ name },
 	m_Tag{ tag },
 	m_CollisionLayer{ collisionLayer },
-	m_ShouldDelete{false}
+	m_ShouldDelete{ false },
+	m_Children{}
 {
 }
 
@@ -64,7 +67,18 @@ void  GameObject::AddComponent(BaseComponent* pComponent)
 		}
 	}
 	m_Components.push_back(pComponent);
-	pComponent->SetParent(this);
+	pComponent->SetGameObject(this);
+}
+
+//BEFORE YOU CAN ADD A CHILD TO A GAMEOBJECT MAKE SURE IT IS ADDED TO THE SCENE
+void GameObject::AddChild(GameObject* pGameObject)
+{
+	//Search the object in the scene
+	//If it was not found it should not be added
+	const std::vector<GameObject*>& objects = SceneManager::GetInstance().GetActiveScene()->GetObjects();
+
+	if (std::find(objects.cbegin(), objects.cend(), pGameObject) != objects.cend())
+		m_Children.push_back(pGameObject);
 }
 
 void GameObject::SetName(const std::string& name)
@@ -100,6 +114,27 @@ const std::string& GameObject::GetTag() const
 const std::string& GameObject::GetCollisionLayer() const
 {
 	return m_CollisionLayer;
+}
+
+const std::vector<GameObject*>& GameObject::GetChildren() const
+{
+	return m_Children;
+}
+
+//Please make sure gameobjects dont have the same name
+GameObject* GameObject::GetChild(const std::string& name) const
+{
+	for (GameObject* pChild : m_Children) 
+	{
+		if (pChild->GetName() == name)
+			return pChild;
+	}
+	return nullptr;
+}
+
+GameObject* GameObject::GetChild(int index) const
+{
+	return m_Children[index];
 }
 
 bool GameObject::GetDelete() const

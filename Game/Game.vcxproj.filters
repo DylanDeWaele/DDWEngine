@@ -60,6 +60,12 @@
     <Filter Include="Components\Pickup">
       <UniqueIdentifier>{eb368217-20da-4969-b98a-da2cd43134a3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Prefabs\HUD">
+      <UniqueIdentifier>{df034015-b2b6-42fe-b578-79467e404167}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\HUD">
+      <UniqueIdentifier>{9cd724bb-327d-45bc-b6e8-2ff48b030018}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
@@ -111,6 +117,15 @@
     </ClCompile>
     <ClCompile Include="PickupComponent.cpp">
       <Filter>Components\Pickup</Filter>
+    </ClCompile>
+    <ClCompile Include="HUD.cpp">
+      <Filter>Prefabs\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="HudComponent.cpp">
+      <Filter>Components\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="LivesComponent.cpp">
+      <Filter>Components\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -165,6 +180,15 @@
     </ClInclude>
     <ClInclude Include="PickupComponent.h">
       <Filter>Components\Pickup</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD.h">
+      <Filter>Prefabs\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="HudComponent.h">
+      <Filter>Components\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="LivesComponent.h">
+      <Filter>Components\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -154,6 +154,9 @@
     <ClCompile Include="Commands.cpp" />
     <ClCompile Include="EnemyControllerComponent.cpp" />
     <ClCompile Include="EnemyStates.cpp" />
+    <ClCompile Include="HUD.cpp" />
+    <ClCompile Include="HudComponent.cpp" />
+    <ClCompile Include="LivesComponent.cpp" />
     <ClCompile Include="PickupComponent.cpp" />
     <ClCompile Include="PlayerControllerComponent.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -179,6 +182,9 @@
     <ClInclude Include="Commands.h" />
     <ClInclude Include="EnemyControllerComponent.h" />
     <ClInclude Include="EnemyStates.h" />
+    <ClInclude Include="HUD.h" />
+    <ClInclude Include="HudComponent.h" />
+    <ClInclude Include="LivesComponent.h" />
     <ClInclude Include="PickupComponent.h" />
     <ClInclude Include="PlayerControllerComponent.h" />
     <ClInclude Include="Game.h" />

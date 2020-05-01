@@ -38,7 +38,7 @@ PlayerControllerComponent::~PlayerControllerComponent()
 void PlayerControllerComponent::Initialize()
 {
 	//Rigidbody
-	m_pRigidbody = m_pParent->GetComponent<RigidBodyComponent>();
+	m_pRigidbody = m_pGameObject->GetComponent<RigidBodyComponent>();
 
 	//Initialize controls
 	m_Controls.insert(std::pair<std::string, bool>("MoveLeft", false));
@@ -47,24 +47,20 @@ void PlayerControllerComponent::Initialize()
 	m_Controls.insert(std::pair<std::string, bool>("Shoot", false));
 
 	//Initialize states
-	m_PossibleStates.insert(std::pair<std::string, PlayerState*>("Idle", new IdleState{ m_pParent, m_Controls }));
-	m_PossibleStates.insert(std::pair<std::string, PlayerState*>("Moving", new MovingState{ m_pParent, m_Controls }));
-	m_PossibleStates.insert(std::pair<std::string, PlayerState*>("Jumping", new JumpingState{ m_pParent, m_Controls }));
-	m_PossibleStates.insert(std::pair<std::string, PlayerState*>("Falling", new FallingState{ m_pParent, m_Controls }));
-	m_PossibleStates.insert(std::pair<std::string, PlayerState*>("Bubble", new BubbleState{ m_pParent, m_Controls }));
-	m_PossibleStates.insert(std::pair<std::string, PlayerState*>("Dead", new DeadState{ m_pParent, m_Controls }));
+	m_PossibleStates.insert(std::pair<std::string, PlayerState*>("Idle", new IdleState{ m_pGameObject, m_Controls }));
+	m_PossibleStates.insert(std::pair<std::string, PlayerState*>("Moving", new MovingState{ m_pGameObject, m_Controls }));
+	m_PossibleStates.insert(std::pair<std::string, PlayerState*>("Jumping", new JumpingState{ m_pGameObject, m_Controls }));
+	m_PossibleStates.insert(std::pair<std::string, PlayerState*>("Falling", new FallingState{ m_pGameObject, m_Controls }));
+	m_PossibleStates.insert(std::pair<std::string, PlayerState*>("Bubble", new BubbleState{ m_pGameObject, m_Controls }));
+	m_PossibleStates.insert(std::pair<std::string, PlayerState*>("Dead", new DeadState{ m_pGameObject, m_Controls }));
 	m_State = m_PossibleStates["Idle"];
-}
-
-void PlayerControllerComponent::FixedUpdate()
-{
 }
 
 void PlayerControllerComponent::Update()
 {
 	//Reset x velocity and trigger
 	m_pRigidbody->SetVelocity(0, m_pRigidbody->GetVelocity().y);
-	m_pParent->GetComponent<BoxColliderComponent>()->SetIsTrigger(false);
+	m_pGameObject->GetComponent<BoxColliderComponent>()->SetIsTrigger(false);
 
 	//Update the state
 	m_State->Update();
@@ -76,10 +72,6 @@ void PlayerControllerComponent::Update()
 	HandleAttackTimer();
 }
 
-void PlayerControllerComponent::Render() const
-{
-}
-
 void PlayerControllerComponent::SetControl(const std::pair<std::string, bool>& control)
 {
 	m_Controls[control.first] = control.second;
@@ -89,14 +81,14 @@ void PlayerControllerComponent::MoveLeft()
 {
 	m_LookingRight = false;
 	//Flip the texture
-	m_pParent->GetComponent<TextureComponent>()->SetFlipped(true);
+	m_pGameObject->GetComponent<TextureComponent>()->SetFlipped(true);
 	m_pRigidbody->SetVelocity(-m_MoveSpeed, m_pRigidbody->GetVelocity().y);
 }
 
 void PlayerControllerComponent::MoveRight()
 {
 	m_LookingRight = true;
-	m_pParent->GetComponent<TextureComponent>()->SetFlipped(false);
+	m_pGameObject->GetComponent<TextureComponent>()->SetFlipped(false);
 	m_pRigidbody->SetVelocity(m_MoveSpeed, m_pRigidbody->GetVelocity().y);
 }
 
@@ -110,11 +102,11 @@ void PlayerControllerComponent::Shoot()
 	if (m_AttackReady)
 	{
 		//Get necesarry variables
-		const glm::vec2& position{ m_pParent->GetComponent<TransformComponent>()->GetPosition() };
+		const glm::vec2& position{ m_pGameObject->GetComponent<TransformComponent>()->GetPosition() };
 		float x = position.x;
 		const float offset{ 10 };
 		if (m_LookingRight)
-			x += m_pParent->GetComponent<BoxColliderComponent>()->GetRect().width;
+			x += m_pGameObject->GetComponent<BoxColliderComponent>()->GetRect().width;
 
 		//Instantiate
 		Bullet bullet = Bullet{ x, Minigin::GetInstance().GetWindowHeight() - position.y - offset, m_LookingRight };

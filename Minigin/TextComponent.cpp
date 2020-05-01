@@ -15,25 +15,18 @@ void TextComponent::Render() const
 {
 	if (m_pTexture != nullptr)
 	{
-		const auto pos = m_pParent->GetComponent<TransformComponent>()->GetPosition();
+		const auto pos = m_pGameObject->GetComponent<TransformComponent>()->GetPosition();
 		Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x, pos.y);
 	}
 }
 
-void TextComponent::Initialize()
-{
-}
-
-void TextComponent::FixedUpdate()
-{
-}
-
 void TextComponent::Update()
 {
-
 	if (m_NeedsUpdate)
 	{
-		const SDL_Color color = { 255,255,255 }; // only white text is supported now //TODO: wtf please add multi color support
+		delete m_pTexture;
+
+		const SDL_Color color = { 255,255,255 };
 		const auto surf = TTF_RenderText_Blended(m_pFont->GetFont(), m_Text.c_str(), color);
 		if (surf == nullptr)
 		{
@@ -45,7 +38,7 @@ void TextComponent::Update()
 			throw std::runtime_error(std::string("Create text texture from surface failed: ") + SDL_GetError());
 		}
 		SDL_FreeSurface(surf);
-		m_pTexture = new Texture2D{texture};
+		m_pTexture = new Texture2D{ texture };
 		m_NeedsUpdate = false;
 	}
 }
@@ -58,7 +51,7 @@ void TextComponent::SetText(const std::string& text)
 
 TextComponent::TextComponent(const std::string& text, Font* pFont)
 	: BaseComponent{},
-	m_NeedsUpdate(true), 
+	m_NeedsUpdate(true),
 	m_Text(text),
 	m_pFont(pFont),
 	m_pTexture(nullptr)
@@ -68,5 +61,6 @@ TextComponent::TextComponent(const std::string& text, Font* pFont)
 
 TextComponent::~TextComponent()
 {
+	SAFE_DELETE(m_pFont);
 	SAFE_DELETE(m_pTexture);
 }

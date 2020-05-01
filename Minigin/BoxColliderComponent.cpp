@@ -18,14 +18,6 @@ BoxColliderComponent::BoxColliderComponent(float width, float height, bool isTri
 	m_Rect.height = height;
 }
 
-void BoxColliderComponent::Initialize()
-{
-}
-
-void BoxColliderComponent::FixedUpdate()
-{
-}
-
 void BoxColliderComponent::Update()
 {
 	//Follow the parent movement - AFTER physics have been calculated and executed on it
@@ -87,7 +79,7 @@ void BoxColliderComponent::FollowParent()
 {
 	//Could optimize this but dont want to include the whole vec3 hpp for it
 	//Only if the parent has a transformComponent
-	TransformComponent* pTransform = m_pParent->GetComponent<TransformComponent>();
+	TransformComponent* pTransform = m_pGameObject->GetComponent<TransformComponent>();
 	if (pTransform)
 	{
 		m_Rect.x = pTransform->GetPosition().x;

@@ -18,10 +18,8 @@ public:
 	virtual ~RigidBodyComponent() = default;
 
 	//Public member functions
-	virtual void Initialize() override;
 	virtual void FixedUpdate() override;
 	virtual void Update() override;
-	virtual void Render() const override;
 
 	//Getters
 	const glm::vec2& GetVelocity() const;
