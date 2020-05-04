@@ -6,6 +6,7 @@
 #include "SceneManager.h"
 #include "Scene.h"
 #include "Pickup.h"
+#include "GameTime.h"
 
 EnemyState::EnemyState(GameObject* pEnemy)
 	: m_pEnemy{ pEnemy }
@@ -15,9 +16,9 @@ EnemyState::EnemyState(GameObject* pEnemy)
 void EnemyState::CheckPlayerHit()
 {
 	GameObject* pCollidedObject = m_pEnemy->GetComponent<BoxColliderComponent>()->GetCollidedObject();
-	if (pCollidedObject) 
+	if (pCollidedObject)
 	{
-		if (pCollidedObject->GetTag() == "Player") 
+		if (pCollidedObject->GetTag() == "Player")
 		{
 			pCollidedObject->GetComponent<LivesComponent>()->ReduceLives(1);
 		}
@@ -35,7 +36,9 @@ void EnemyIdleState::Update()
 }
 
 EnemyBubbleState::EnemyBubbleState(GameObject* pEnemy)
-	: EnemyState{ pEnemy }
+	: EnemyState{ pEnemy },
+	m_CurrentTime{},
+	m_BubbleTime{ 5.f } //After the enemy is in a bubble for 5 seconds, release it
 {
 }
 
@@ -52,11 +55,20 @@ void EnemyBubbleState::Update()
 		}
 	}
 
+	//Increase the time and if its long enough, release the enemy from the bubble
+	m_CurrentTime += GameTime::GetInstance().GetElapsedTime();
+	if (m_CurrentTime > m_BubbleTime)
+	{
+		//Change the texture again, turn the collider into a non trigger and change the state
+		m_pEnemy->GetComponent<EnemyControllerComponent>()->Free();
+		//Reset
+		m_CurrentTime = 0;
+	}
 }
 
 EnemyDeadState::EnemyDeadState(GameObject* pEnemy)
 	: EnemyState{ pEnemy },
-	m_RotationSpeed{10.f}
+	m_RotationSpeed{ 10.f }
 {
 }
 
@@ -74,17 +86,8 @@ void EnemyDeadState::Update()
 			//Remove the enemy
 			SceneManager::GetInstance().GetActiveScene()->Remove(m_pEnemy);
 
-			//Choose which pickup to spawn
-			int powerup = rand() % 3; //0,1,2
-			switch (powerup)
-			{
-			case 0: SpawnPickup("Watermelon.png", 100);
-				break;
-			case 1: SpawnPickup("Banana.png", 75);
-				break;
-			case 2: SpawnPickup("Apple.png", 50);
-				break;
-			}
+			//Spawn pickup
+			SpawnPickup("Watermelon.png", 100);
 		}
 	}
 

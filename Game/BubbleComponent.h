@@ -19,7 +19,7 @@ private:
 
 	//Private functions
 	void HandleLifetime();
-	//This functions handles if something shoudl be "Put inside the bubble"
-	void HandleBubbling();
+	//If the player hits the bubble give him points
+	void HandlePopping();
 };
 

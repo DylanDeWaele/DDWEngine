@@ -22,6 +22,8 @@ public:
 
 	void Bubble();
 	void Kill();
+	void Free();
+
 private:
 	//Private datamembers
 	//Movement

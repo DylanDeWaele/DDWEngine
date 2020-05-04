@@ -12,7 +12,10 @@ bool InputManager::ProcessInput()
 		m_pLeftDPAD->Execute();
 	if (IsPressed(ControllerButton::RightDPad))
 		m_pRightDPAD->Execute();
-
+	if (IsPressed(ControllerButton::SouthButton))
+		m_pSouthButton->Execute();
+	if (IsPressed(ControllerButton::WestButton))
+		m_pWestButton->Execute();
 
 	//Keyboard - single hit events
 	SDL_Event e;
@@ -55,6 +58,16 @@ void InputManager::AssignCommandToRightDPad(Command* pCommand)
 	m_pRightDPAD = pCommand;
 }
 
+void InputManager::AssignCommandToSouthButton(Command* pCommand)
+{
+	m_pSouthButton = pCommand;
+}
+
+void InputManager::AssignCommandToWestButton(Command* pCommand)
+{
+	m_pWestButton = pCommand;
+}
+
 void InputManager::AssignCommandToSpacebarKey(Command* pCommand)
 {
 	m_pSpacebarKey = pCommand;
@@ -84,6 +97,10 @@ bool InputManager::IsPressed(ControllerButton button) const
 		return (m_CurrentState.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_LEFT);
 	case ControllerButton::RightDPad:
 		return (m_CurrentState.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_RIGHT);
+	case ControllerButton::SouthButton:
+		return (m_CurrentState.Gamepad.wButtons & XINPUT_GAMEPAD_A);
+	case ControllerButton::WestButton:
+		return (m_CurrentState.Gamepad.wButtons & XINPUT_GAMEPAD_X);
 	default: return false;
 	}
 }

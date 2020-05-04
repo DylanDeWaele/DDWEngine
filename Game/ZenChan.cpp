@@ -19,6 +19,7 @@ ZenChan::ZenChan(float x, float y, const std::string& name, const std::string& t
 	BoxColliderComponent* pBoxCollider = new BoxColliderComponent{ width,height };
 	RigidBodyComponent* pRigidbody = new RigidBodyComponent{ };
 	EnemyControllerComponent* pEnemyController = new EnemyControllerComponent{};
+	WorthComponent* pWorth = new WorthComponent{ 1000 }; //1000 points when player kills enemy
 
 	//Add components to gameobject
 	m_pGameObject->AddComponent(pTransform);
@@ -26,4 +27,5 @@ ZenChan::ZenChan(float x, float y, const std::string& name, const std::string& t
 	m_pGameObject->AddComponent(pBoxCollider);
 	m_pGameObject->AddComponent(pRigidbody);
 	m_pGameObject->AddComponent(pEnemyController);
+	m_pGameObject->AddComponent(pWorth);
 }

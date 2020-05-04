@@ -3,6 +3,10 @@
 #include "TextureComponent.h"
 #include "RigidBodyComponent.h"
 #include "BoxColliderComponent.h"
+#include "ScoreComponent.h"
+#include "WorthComponent.h"
+#include "SceneManager.h"
+#include "Scene.h"
 
 EnemyControllerComponent::EnemyControllerComponent()
 	: m_State{ nullptr },
@@ -58,7 +62,20 @@ void EnemyControllerComponent::Kill()
 	m_pGameObject->GetComponent<TextureComponent>()->SetTexture("ZenChan.png");
 	//Apply gravity again
 	m_pGameObject->GetComponent<RigidBodyComponent>()->SetUseGravity(true);
-
+	//Give the player his points
+	SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player")->GetComponent<ScoreComponent>()->AddPoints(m_pGameObject->GetComponent<WorthComponent>()->GetWorth());
 	//Change to the dead state
 	m_State = m_PossibleStates["Dead"];
+}
+
+void EnemyControllerComponent::Free()
+{
+	//Change his sprite back
+	m_pGameObject->GetComponent<TextureComponent>()->SetTexture("ZenChan.png");
+	//Apply gravity again
+	m_pGameObject->GetComponent<RigidBodyComponent>()->SetUseGravity(true);
+	//Change back to colliding object
+	m_pGameObject->GetComponent<BoxColliderComponent>()->SetIsTrigger(false);
+	//Change to the idle state
+	m_State = m_PossibleStates["Idle"];
 }

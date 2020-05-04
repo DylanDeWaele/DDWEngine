@@ -10,7 +10,9 @@ public:
 	enum class ControllerButton
 	{
 		LeftDPad,
-		RightDPad
+		RightDPad,
+		SouthButton, //A (XBOX)
+		WestButton //X (XBOX)
 	};
 
 	//Ctor
@@ -25,6 +27,8 @@ public:
 	//Controller
 	void AssignCommandToLeftDPad(Command* pCommand);
 	void AssignCommandToRightDPad(Command* pCommand);
+	void AssignCommandToSouthButton(Command* pCommand);
+	void AssignCommandToWestButton(Command* pCommand);
 	//Keyboard
 	void AssignCommandToAKey(Command* pCommand);
 	void AssignCommandToDKey(Command* pCommand);
@@ -40,6 +44,8 @@ private:
 	//Controller
 	Command* m_pLeftDPAD;
 	Command* m_pRightDPAD;
+	Command* m_pSouthButton;
+	Command* m_pWestButton;
 
 	//Keyboard
 	Command* m_pAKey;

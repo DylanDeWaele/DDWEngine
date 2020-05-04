@@ -75,6 +75,8 @@ void Game::InitializeInput()
 	//Controller
 	InputManager::GetInstance().AssignCommandToLeftDPad(m_pMoveLeftCommand);
 	InputManager::GetInstance().AssignCommandToRightDPad(m_pMoveRightCommand);
+	InputManager::GetInstance().AssignCommandToSouthButton(m_pJumpCommand);
+	InputManager::GetInstance().AssignCommandToWestButton(m_pShootCommand);
 	//Keyboard
 	InputManager::GetInstance().AssignCommandToAKey(m_pMoveLeftCommand);
 	InputManager::GetInstance().AssignCommandToDKey(m_pMoveRightCommand);

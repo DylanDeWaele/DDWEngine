@@ -3,6 +3,7 @@
 #include "BoxColliderComponent.h"
 #include "TextureComponent.h"
 #include "TransformComponent.h"
+#include "EnemyControllerComponent.h"
 #include "RigidBodyComponent.h"
 #include "GameTime.h"
 #include "SceneManager.h"
@@ -39,12 +40,29 @@ void BulletComponent::HandleBubbleChange()
 
 	if (pBoxCollider->IsTriggered())
 	{
-		if (pBoxCollider->GetCollidedObject()->GetTag() != "Player" && pBoxCollider->GetCollidedObject()->GetTag() != "Bubble")
+		GameObject* pCollidedObject = pBoxCollider->GetCollidedObject();
+		if (pCollidedObject->GetTag() != "Player" && pCollidedObject->GetTag() != "Bubble")
 		{
-			//Instantiate a new bubble at this position
-			const glm::vec2& position = m_pGameObject->GetComponent<TransformComponent>()->GetPosition();
-			Bubble bubble = Bubble{position.x,Minigin::GetInstance().GetWindowHeight() - position.y};
-			SceneManager::GetInstance().GetActiveScene()->Add(bubble.GetGameObject());
+			//If we hit an enemy, we bubble him
+			if (pCollidedObject->GetTag() == "Enemy")
+			{
+				pCollidedObject->GetComponent<EnemyControllerComponent>()->Bubble();
+			}
+			//else, instantiate a new bubble at this position
+			else
+			{
+				const glm::vec2& position = m_pGameObject->GetComponent<TransformComponent>()->GetPosition();
+					float x{};
+
+					//Push the bubble a bit outwards
+					if (m_pGameObject->GetComponent<RigidBodyComponent>()->GetVelocity().x < 0) //going left
+						x = position.x + pBoxCollider->GetRect().width / 2.f;
+					else
+						x = position.x - pBoxCollider->GetRect().width;
+
+				Bubble bubble = Bubble{ x, Minigin::GetInstance().GetWindowHeight() - position.y };
+				SceneManager::GetInstance().GetActiveScene()->Add(bubble.GetGameObject());
+			}
 			//Delete this gameobject
 			SceneManager::GetInstance().GetActiveScene()->Remove(m_pGameObject);
 		}

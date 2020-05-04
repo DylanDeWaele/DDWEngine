@@ -4,7 +4,8 @@
 #include "SceneManager.h"
 #include "Scene.h"
 #include "BoxColliderComponent.h"
-#include "EnemyControllerComponent.h"
+#include "ScoreComponent.h"
+#include "WorthComponent.h"
 
 BubbleComponent::BubbleComponent(float lifeTime)
 	: m_Lifetime{ lifeTime },
@@ -15,7 +16,7 @@ BubbleComponent::BubbleComponent(float lifeTime)
 void BubbleComponent::Update()
 {
 	HandleLifetime();
-	HandleBubbling();
+	HandlePopping();
 }
 
 void BubbleComponent::HandleLifetime()
@@ -27,18 +28,20 @@ void BubbleComponent::HandleLifetime()
 	}
 }
 
-void BubbleComponent::HandleBubbling()
+void BubbleComponent::HandlePopping()
 {
-	//If this collides with a an enemy, bubble him
-	GameObject* pCollidedObject = m_pGameObject->GetComponent<BoxColliderComponent>()->GetCollidedObject();
-	if (pCollidedObject)
+	BoxColliderComponent* pBoxCollider{ m_pGameObject->GetComponent<BoxColliderComponent>() };
+
+	if (pBoxCollider->IsTriggered())
 	{
-		if (pCollidedObject->GetTag() == "Enemy")
+		GameObject* pCollidedObject = pBoxCollider->GetCollidedObject();
+		if (pCollidedObject->GetTag() == "Player")
 		{
-			//Bubble enemy
-			pCollidedObject->GetComponent<EnemyControllerComponent>()->Bubble();
-			//Remove bubble
-			SceneManager::GetInstance().GetActiveScene()->Remove(this->m_pGameObject);
+			//Add points
+			pCollidedObject->GetComponent<ScoreComponent>()->AddPoints(m_pGameObject->GetComponent<WorthComponent>()->GetWorth());
+
+			//Remove from scene
+			SceneManager::GetInstance().GetActiveScene()->Remove(m_pGameObject);
 		}
 	}
 }

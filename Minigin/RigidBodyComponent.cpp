@@ -54,6 +54,26 @@ const glm::vec2& RigidBodyComponent::GetVelocity() const
 	return m_Velocity;
 }
 
+bool RigidBodyComponent::GetCanMoveDown() const
+{
+	return m_CanMoveDown;
+}
+
+bool RigidBodyComponent::GetCanMoveUp() const
+{
+	return m_CanMoveUp;
+}
+
+bool RigidBodyComponent::GetCanMoveRight() const
+{
+	return m_CanMoveRight;
+}
+
+bool RigidBodyComponent::GetCanMoveLeft() const
+{
+	return m_CanMoveLeft;
+}
+
 void RigidBodyComponent::SetVelocity(float x, float y)
 {
 	m_Velocity = { x,y };

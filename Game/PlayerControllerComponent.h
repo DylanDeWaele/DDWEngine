@@ -32,6 +32,8 @@ public:
 	void Jump();
 	void Shoot();
 
+	void HandleBubbleRiding();
+
 private:
 	//Private datamembers
 	//Movement

@@ -68,6 +68,9 @@ void JumpingState::Update()
 {
 	//Reset x
 	m_pPlayer->GetComponent<RigidBodyComponent>()->SetVelocity(0, m_pPlayer->GetComponent<RigidBodyComponent>()->GetVelocity().y);
+	//Reset jump controls incase they got activated
+	m_Controls["Jump"] = false;
+
 
 	if (m_Controls["MoveLeft"])
 	{
@@ -106,6 +109,12 @@ FallingState::FallingState(GameObject* pPlayer, std::map<std::string, bool>& con
 
 void FallingState::Update()
 {
+	//Reset x
+	m_pPlayer->GetComponent<RigidBodyComponent>()->SetVelocity(0, m_pPlayer->GetComponent<RigidBodyComponent>()->GetVelocity().y);
+
+	//Reset jump controls incase they got activated
+	m_Controls["Jump"] = false;
+
 	if (m_Controls["MoveLeft"])
 	{
 		m_pPlayer->GetComponent<PlayerControllerComponent>()->MoveLeft();

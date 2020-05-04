@@ -21,7 +21,7 @@ Player::Player(float x, float y, const std::string& name, const std::string& tag
 	RigidBodyComponent* pRigidbody = new RigidBodyComponent{ };
 	PlayerControllerComponent* pPlayerController = new PlayerControllerComponent{};
 	ScoreComponent* pScore = new ScoreComponent{};
-	LivesComponent* pLives = new LivesComponent{ 3 };
+	LivesComponent* pLives = new LivesComponent{ 4 };
 
 	//Add components to gameobject
 	m_pGameObject->AddComponent(pTransform);

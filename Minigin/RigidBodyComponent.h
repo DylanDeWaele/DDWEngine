@@ -23,6 +23,11 @@ public:
 
 	//Getters
 	const glm::vec2& GetVelocity() const;
+	bool GetCanMoveDown() const;
+	bool GetCanMoveUp() const;
+	bool GetCanMoveRight() const;
+	bool GetCanMoveLeft() const;
+
 	//Setters
 	void SetVelocity(float x, float y);
 	void SetUseGravity(bool useGravity);

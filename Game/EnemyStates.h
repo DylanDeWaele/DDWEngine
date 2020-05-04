@@ -39,6 +39,10 @@ public:
 	virtual ~EnemyBubbleState() = default;
 	//Public member functions
 	virtual void Update();
+private:
+	//Private datamembers
+	const float m_BubbleTime;
+	float m_CurrentTime;
 };
 
 class EnemyDeadState : public EnemyState

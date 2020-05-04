@@ -73,6 +73,9 @@ void PlayerControllerComponent::Update()
 
 	//Attack timer handling
 	HandleAttackTimer();
+
+	//Handle riding a bubble
+	HandleBubbleRiding();
 }
 
 void PlayerControllerComponent::SetControl(const std::pair<std::string, bool>& control)
@@ -134,6 +137,11 @@ void PlayerControllerComponent::Shoot()
 
 		m_AttackReady = false;
 	}
+}
+
+void PlayerControllerComponent::HandleBubbleRiding()
+{
+	
 }
 
 void PlayerControllerComponent::HandleAttackTimer()
