@@ -30,5 +30,6 @@ private:
 #pragma region Scene Initialization
 	void InitializeInput();
 	void InitializeTestScene();
+	void InitializeGameOverScene();
 #pragma endregion
 };

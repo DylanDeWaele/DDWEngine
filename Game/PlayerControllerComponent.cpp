@@ -5,6 +5,7 @@
 #include "BoxColliderComponent.h"
 #include "TextureComponent.h"
 #include "RigidBodyComponent.h"
+#include "LivesComponent.h"
 #include "PhysicsSettings.h"
 #include <iostream>
 #include "GameTime.h"
@@ -22,7 +23,8 @@ PlayerControllerComponent::PlayerControllerComponent()
 	m_AttackReady{ true },
 	m_Attackspeed{ 0.5f },
 	m_CurrentTime{ 0 },
-	m_State{ nullptr }
+	m_State{ },
+	m_Deceleration{ 125.f }
 {
 }
 
@@ -51,19 +53,20 @@ void PlayerControllerComponent::Initialize()
 	m_PossibleStates.insert(std::pair<std::string, PlayerState*>("Moving", new MovingState{ m_pGameObject, m_Controls }));
 	m_PossibleStates.insert(std::pair<std::string, PlayerState*>("Jumping", new JumpingState{ m_pGameObject, m_Controls }));
 	m_PossibleStates.insert(std::pair<std::string, PlayerState*>("Falling", new FallingState{ m_pGameObject, m_Controls }));
+	m_PossibleStates.insert(std::pair<std::string, PlayerState*>("Hit", new HitState{ m_pGameObject, m_Controls }));
 	m_PossibleStates.insert(std::pair<std::string, PlayerState*>("Bubble", new BubbleState{ m_pGameObject, m_Controls }));
 	m_PossibleStates.insert(std::pair<std::string, PlayerState*>("Dead", new DeadState{ m_pGameObject, m_Controls }));
-	m_State = m_PossibleStates["Idle"];
+	m_State.first = "Idle";
+	m_State.second = m_PossibleStates["Idle"];
 }
 
 void PlayerControllerComponent::Update()
 {
-	//Reset x velocity and trigger
-	m_pRigidbody->SetVelocity(0, m_pRigidbody->GetVelocity().y);
+	//Reset trigger
 	m_pGameObject->GetComponent<BoxColliderComponent>()->SetIsTrigger(false);
 
 	//Update the state
-	m_State->Update();
+	m_State.second->Update();
 
 	//What is the state now?
 	DecideState();
@@ -75,6 +78,23 @@ void PlayerControllerComponent::Update()
 void PlayerControllerComponent::SetControl(const std::pair<std::string, bool>& control)
 {
 	m_Controls[control.first] = control.second;
+}
+
+void PlayerControllerComponent::SetState(const std::string& state)
+{
+	m_State.first = state;
+	m_State.second = m_PossibleStates[state];
+}
+
+bool PlayerControllerComponent::IsLookingRight() const
+{
+	return m_LookingRight;
+}
+
+const std::string& PlayerControllerComponent::GetState() const
+{
+	// TODO: insert return statement here
+	return m_State.first;
 }
 
 void PlayerControllerComponent::MoveLeft()
@@ -132,14 +152,18 @@ void PlayerControllerComponent::DecideState()
 {
 	//Go from lowest "priority to highest", example a player can still have a x velocity >/< 0 when in the air,
 	//but it should be the "in air part" that determines the state
-	m_State = m_PossibleStates["Idle"];
 
-	if (m_pRigidbody->GetVelocity().x != 0)
-		m_State = m_PossibleStates["Moving"]; 
-	if(m_pRigidbody->GetVelocity().y > 0)
-		m_State = m_PossibleStates["Jumping"];
-	if (m_pRigidbody->GetVelocity().y < 0)
-		m_State = m_PossibleStates["Falling"];
+	if (m_State.first != "Hit")
+	{
+		SetState("Idle");
+
+		if (m_pRigidbody->GetVelocity().x != 0)
+			SetState("Moving");
+		if (m_pRigidbody->GetVelocity().y > 0)
+			SetState("Jumping");
+		if (m_pRigidbody->GetVelocity().y < 0)
+			SetState("Falling");
+	}
 
 	//Add more conditions
 }

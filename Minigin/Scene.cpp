@@ -38,9 +38,13 @@ void Scene::Initialize()
 
 void Scene::FixedUpdate()
 {
-	for (auto& object : m_Objects)
+	if (SceneManager::GetInstance().GetActiveScene() == this)
 	{
-		object->FixedUpdate();
+		for (auto& object : m_Objects)
+		{
+			//Only do when this scene is still the active scene
+			object->FixedUpdate();
+		}
 	}
 }
 
@@ -49,26 +53,36 @@ void Scene::Update()
 	//Changged this particular for loop to prevent a crash when adding new game objects inside the update
 	for (size_t i = 0; i < m_Objects.size(); i++)
 	{
+		//Only do when this scene is still the active scene
+		if (SceneManager::GetInstance().GetActiveScene() != this)
+			return;
 		m_Objects[i]->Update();
 	}
 }
 
 void Scene::Render() const
 {
-	for (const auto& object : m_Objects)
+	if (SceneManager::GetInstance().GetActiveScene() == this)
 	{
-		object->Render();
+		for (const auto& object : m_Objects)
+		{
+			//Only do when this scene is still the active scene
+			object->Render();
+		}
 	}
 }
 
 void Scene::CleanUp()
 {
-	for (GameObject* pGameObject : m_Objects)
+	if (SceneManager::GetInstance().GetActiveScene() == this)
 	{
-		if (pGameObject->GetDelete()) 
+		for (GameObject* pGameObject : m_Objects)
 		{
-			m_Objects.erase(std::find(m_Objects.begin(), m_Objects.end(), pGameObject));
-			SAFE_DELETE(pGameObject);
+			if (pGameObject->GetDelete())
+			{
+				m_Objects.erase(std::find(m_Objects.begin(), m_Objects.end(), pGameObject));
+				SAFE_DELETE(pGameObject);
+			}
 		}
 	}
 }

@@ -65,6 +65,22 @@ public:
 	virtual void Update();
 };
 
+class HitState : public PlayerState
+{
+public:
+	//Ctor
+	HitState(GameObject* pPlayer, std::map<std::string, bool>& controls);
+	//Dtor
+	virtual ~HitState() = default;
+	//Public member functions
+	virtual void Update();
+private:
+	//Private datamembers
+	const float m_PushbackForce;
+	const float m_HitTime;
+	float m_CurrentTimer;
+};
+
 class BubbleState : public PlayerState
 {
 public:

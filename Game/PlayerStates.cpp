@@ -1,6 +1,10 @@
 #include "PlayerStates.h"
 #include "PlayerControllerComponent.h"
 #include "BoxColliderComponent.h"
+#include "RigidBodyComponent.h"
+#include "GameTime.h"
+#include "SceneManager.h"
+#include "Scene.h"
 
 PlayerState::PlayerState(GameObject* pPlayer, std::map<std::string, bool>& controls)
 	: m_Controls{ controls },
@@ -49,6 +53,8 @@ MovingState::MovingState(GameObject* pPlayer, std::map<std::string, bool>& contr
 
 void MovingState::Update()
 {
+	//Reset x
+	m_pPlayer->GetComponent<RigidBodyComponent>()->SetVelocity(0, m_pPlayer->GetComponent<RigidBodyComponent>()->GetVelocity().y);
 	HandleAllInput();
 }
 
@@ -60,6 +66,9 @@ JumpingState::JumpingState(GameObject* pPlayer, std::map<std::string, bool>& con
 
 void JumpingState::Update()
 {
+	//Reset x
+	m_pPlayer->GetComponent<RigidBodyComponent>()->SetVelocity(0, m_pPlayer->GetComponent<RigidBodyComponent>()->GetVelocity().y);
+
 	if (m_Controls["MoveLeft"])
 	{
 		m_pPlayer->GetComponent<PlayerControllerComponent>()->MoveLeft();
@@ -114,6 +123,45 @@ void FallingState::Update()
 	}
 }
 
+
+HitState::HitState(GameObject* pPlayer, std::map<std::string, bool>& controls)
+	: PlayerState{ pPlayer, controls },
+	m_CurrentTimer{},
+	m_HitTime{ 0.5f },
+	m_PushbackForce{ 250.f }
+{
+}
+
+void HitState::Update()
+{
+	RigidBodyComponent* pRigidBody = m_pPlayer->GetComponent<RigidBodyComponent>();
+
+	if (m_CurrentTimer == 0) //DO PUSHBACK
+	{
+		const bool isLookingRight = m_pPlayer->GetComponent<PlayerControllerComponent>()->IsLookingRight();
+		const float yForce = m_PushbackForce;
+		float xForce = m_PushbackForce;
+
+		if (isLookingRight) xForce *= -1;
+
+		//Apply the force
+		pRigidBody->SetVelocity(xForce, yForce);
+	}
+
+	m_CurrentTimer += GameTime::GetInstance().GetElapsedTime();
+
+	//If we hit the ground reset x back to 0
+	if (pRigidBody->GetVelocity().y == 0)
+		pRigidBody->SetVelocity(0, pRigidBody->GetVelocity().y);
+
+	if(m_CurrentTimer > m_HitTime)
+	{
+		//Go back to idle state
+		m_pPlayer->GetComponent<PlayerControllerComponent>()->SetState("Idle");
+		m_CurrentTimer = 0;
+	}
+}
+
 BubbleState::BubbleState(GameObject* pPlayer, std::map<std::string, bool>& controls)
 	: PlayerState{ pPlayer, controls }
 {
@@ -130,4 +178,6 @@ DeadState::DeadState(GameObject* pPlayer, std::map<std::string, bool>& controls)
 
 void DeadState::Update()
 {
+	//Transition to gameover screen
+	SceneManager::GetInstance().SetActiveScene("GameOverScene");
 }

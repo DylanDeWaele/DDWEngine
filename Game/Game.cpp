@@ -7,9 +7,16 @@
 #include "Scene.h"
 #include "SceneManager.h"
 #include "PhysicsSettings.h"
+#include "ResourceManager.h"
+
+//Components
+#include "TransformComponent.h"
+#include "TextureComponent.h"
+#include "TextComponent.h"
 
 //Input
 #include "InputManager.h"
+
 //Commands
 #include "Commands.h"
 
@@ -54,6 +61,7 @@ void Game::Initialize()
 
 	//Initialize the scenes
 	InitializeTestScene();
+	InitializeGameOverScene();
 }
 #pragma region Scene Initialization
 void Game::InitializeInput()
@@ -108,6 +116,22 @@ void Game::InitializeTestScene()
 	HUD hud = HUD{};
 	scene.Add(hud.GetGameObject());
 	hud.AddChildrenToScene();
+}
+void Game::InitializeGameOverScene()
+{
+	Scene& scene = SceneManager::GetInstance().CreateScene("GameOverScene");
+
+	const float windowWidth{ Minigin::GetInstance().GetWindowWidth() };
+	const float windowHeight{ Minigin::GetInstance().GetWindowHeight() };
+
+	//Create game over screen
+	GameObject* screen = new GameObject{};
+	const float offset{ 100.f };
+	screen->AddComponent(new TransformComponent{ {windowWidth / 2.f - offset ,windowHeight / 2.f} });
+	screen->AddComponent(new TextureComponent{ "Black.jpg", windowWidth,windowHeight });
+	screen->AddComponent(new TextComponent{ "GAME OVER", ResourceManager::GetInstance().LoadFont("Lingua.otf", 46) });
+
+	scene.Add(screen);
 }
 #pragma endregion
 #pragma endregion

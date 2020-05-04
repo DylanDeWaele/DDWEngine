@@ -19,6 +19,12 @@ public:
 
 	//Setters
 	void SetControl(const std::pair<std::string, bool>& control);
+	void SetState(const std::string& state);
+
+	//Getters 
+	//If this function returns false he is looking left (obviously)
+	bool IsLookingRight() const;
+	const std::string& GetState() const;
 
 	//Movement
 	void MoveLeft();
@@ -32,10 +38,11 @@ private:
 	RigidBodyComponent* m_pRigidbody;
 	const float m_MoveSpeed;
 	const float m_JumpForce;
+	const float m_Deceleration;
 
 	//Controls and state
 	std::map<std::string, bool> m_Controls;
-	PlayerState* m_State;
+	std::pair<std::string, PlayerState*> m_State;
 	std::map<std::string, PlayerState*> m_PossibleStates; //"kind of memory pool"
 
 	//Shooting

@@ -29,5 +29,7 @@ private:
 	friend class Singleton<SceneManager>;
 	std::vector<Scene*> m_Scenes;
 	Scene* m_pActiveScene;
+
+	bool m_SkipScene = false; //This boolean determines whether we should skip updating all the components/gameobjects in a scene (scene transition)
 };
 

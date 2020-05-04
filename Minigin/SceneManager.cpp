@@ -37,7 +37,6 @@ void SceneManager::SetActiveScene(const std::string& sceneName)
 		if (pScene->GetName() == sceneName)
 		{
 			m_pActiveScene = pScene;
-			return;
 		}
 	}
 }
