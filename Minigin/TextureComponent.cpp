@@ -9,7 +9,7 @@
 void TextureComponent::Render() const
 {
 	TransformComponent* pTransform = m_pGameObject->GetComponent<TransformComponent>();
-	const glm::vec2 pos = pTransform->GetPosition();
+	const glm::vec2 pos = pTransform->GetRenderPosition();
 	const float rotation = pTransform->GetRotation();
 
 	if (m_Flipped)

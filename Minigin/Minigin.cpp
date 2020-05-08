@@ -9,11 +9,19 @@
 #include <SDL.h>
 #include "GameTime.h"
 
+//UNIT TESTING
+#define CATCH_CONFIG_RUNNER
+#include "catch.hpp"
+
+
 using namespace std;
 using namespace std::chrono;
 
 void  Minigin::Initialize()
 {
+	//Initiliaze Catch
+	Catch::Session().run();
+
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
 	{
 		throw std::runtime_error(std::string("SDL_Init Error: ") + SDL_GetError());

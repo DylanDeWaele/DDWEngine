@@ -66,6 +66,18 @@
     <Filter Include="Components\HUD">
       <UniqueIdentifier>{9cd724bb-327d-45bc-b6e8-2ff48b030018}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Prefabs\Teleporter">
+      <UniqueIdentifier>{3fc1af1e-2ce0-4781-89bc-1922cf34bf1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Teleporter">
+      <UniqueIdentifier>{3047139b-38e1-4c85-948e-2ceb9295035f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LevelCreator">
+      <UniqueIdentifier>{8d044711-eea2-4d30-91f7-e5ac5aa4ad96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Prefabs\LevelCounter">
+      <UniqueIdentifier>{bc810f8f-1714-4b18-b82f-f6b4b5390186}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
@@ -126,6 +138,18 @@
     </ClCompile>
     <ClCompile Include="LivesComponent.cpp">
       <Filter>Components\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Teleporter.cpp">
+      <Filter>Prefabs\Teleporter</Filter>
+    </ClCompile>
+    <ClCompile Include="TeleportComponent.cpp">
+      <Filter>Components\Teleporter</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelCreator.cpp">
+      <Filter>LevelCreator</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelCounter.cpp">
+      <Filter>Prefabs\LevelCounter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -189,6 +213,18 @@
     </ClInclude>
     <ClInclude Include="LivesComponent.h">
       <Filter>Components\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Teleporter.h">
+      <Filter>Prefabs\Teleporter</Filter>
+    </ClInclude>
+    <ClInclude Include="TeleportComponent.h">
+      <Filter>Components\Teleporter</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelCreator.h">
+      <Filter>LevelCreator</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelCounter.h">
+      <Filter>Prefabs\LevelCounter</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -70,15 +70,9 @@ void  GameObject::AddComponent(BaseComponent* pComponent)
 	pComponent->SetGameObject(this);
 }
 
-//BEFORE YOU CAN ADD A CHILD TO A GAMEOBJECT MAKE SURE IT IS ADDED TO THE SCENE
 void GameObject::AddChild(GameObject* pGameObject)
 {
-	//Search the object in the scene
-	//If it was not found it should not be added
-	const std::vector<GameObject*>& objects = SceneManager::GetInstance().GetActiveScene()->GetObjects();
-
-	if (std::find(objects.cbegin(), objects.cend(), pGameObject) != objects.cend())
-		m_Children.push_back(pGameObject);
+	m_Children.push_back(pGameObject);
 }
 
 void GameObject::SetName(const std::string& name)
@@ -124,7 +118,7 @@ const std::vector<GameObject*>& GameObject::GetChildren() const
 //Please make sure gameobjects dont have the same name
 GameObject* GameObject::GetChild(const std::string& name) const
 {
-	for (GameObject* pChild : m_Children) 
+	for (GameObject* pChild : m_Children)
 	{
 		if (pChild->GetName() == name)
 			return pChild;

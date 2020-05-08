@@ -18,13 +18,12 @@ PlayerControllerComponent::PlayerControllerComponent()
 	:BaseComponent{},
 	m_pRigidbody{},
 	m_MoveSpeed{ 250.f },
-	m_JumpForce{ 400.f },
+	m_JumpForce{ 450.f },
 	m_LookingRight{ true },
 	m_AttackReady{ true },
 	m_Attackspeed{ 0.5f },
 	m_CurrentTime{ 0 },
-	m_State{ },
-	m_Deceleration{ 125.f }
+	m_State{ }
 {
 }
 
@@ -132,7 +131,7 @@ void PlayerControllerComponent::Shoot()
 			x += m_pGameObject->GetComponent<BoxColliderComponent>()->GetRect().width;
 
 		//Instantiate
-		Bullet bullet = Bullet{ x, Minigin::GetInstance().GetWindowHeight() - position.y - offset, m_LookingRight };
+		Bullet bullet = Bullet{ x, position.y - offset, m_LookingRight };
 		SceneManager::GetInstance().GetActiveScene()->Add(bullet.GetGameObject());
 
 		m_AttackReady = false;

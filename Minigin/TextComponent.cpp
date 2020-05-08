@@ -15,7 +15,7 @@ void TextComponent::Render() const
 {
 	if (m_pTexture != nullptr)
 	{
-		const auto pos = m_pGameObject->GetComponent<TransformComponent>()->GetPosition();
+		const auto pos = m_pGameObject->GetComponent<TransformComponent>()->GetRenderPosition();
 		Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x, pos.y);
 	}
 }

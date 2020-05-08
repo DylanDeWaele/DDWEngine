@@ -5,7 +5,7 @@
 #include "GameObject.h"
 
 TransformComponent::TransformComponent(const glm::vec2& position, float rotation, const glm::vec2& scale)
-	: m_Position{ position.x,  Minigin::GetInstance().GetWindowHeight() - position.y },
+	: m_Position{ position.x, position.y },
 	m_Rotation{ rotation },
 	m_Scale{ scale }
 {
@@ -14,7 +14,7 @@ TransformComponent::TransformComponent(const glm::vec2& position, float rotation
 void  TransformComponent::SetPosition(const glm::vec2& position)
 {
 	m_Position.x = position.x;
-	m_Position.y = Minigin::GetInstance().GetWindowHeight() - position.y;
+	m_Position.y = position.y;
 
 	//Set the position of all all children too (+)
 	const std::vector<GameObject*>& children = m_pGameObject->GetChildren();
@@ -56,6 +56,11 @@ const glm::vec2& TransformComponent::GetPosition() const
 	return m_Position;
 }
 
+glm::vec2 TransformComponent::GetRenderPosition() const
+{
+	return { m_Position.x, Minigin::GetInstance().GetWindowHeight() - m_Position.y };
+}
+
 float TransformComponent::GetRotation() const
 {
 	return m_Rotation;
@@ -69,7 +74,7 @@ const glm::vec2& TransformComponent::GetScale() const
 void TransformComponent::Translate(float x, float y)
 {
 	m_Position.x += x;
-	m_Position.y -= y; //-= because y axis points down
+	m_Position.y += y;
 	
 	//Translate all children too
 	const std::vector<GameObject*>& children = m_pGameObject->GetChildren();

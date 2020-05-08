@@ -9,9 +9,6 @@ public:
 	//Ctor
 	HUD();
 
-	//Public member functions
-	void AddChildrenToScene() const;
-
 private:
 	//2 Game objects
 	//Children

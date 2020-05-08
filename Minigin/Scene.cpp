@@ -19,6 +19,13 @@ Scene::~Scene()
 void Scene::Add(GameObject* object)
 {
 	m_Objects.push_back(object);
+
+	//Also pushback the objects children
+	const std::vector<GameObject*>& children = object->GetChildren();
+	for (GameObject* pChild : children) 
+	{
+		m_Objects.push_back(pChild);
+	}
 }
 
 bool Scene::Remove(GameObject* pObject)

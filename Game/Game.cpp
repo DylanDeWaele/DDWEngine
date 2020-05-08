@@ -25,6 +25,7 @@
 #include "Box.h"
 #include "ZenChan.h" 
 #include "HUD.h"
+#include "Teleporter.h"
 
 Game::Game()
 {
@@ -59,8 +60,11 @@ void Game::Initialize()
 	//Initialize input commands
 	InitializeInput();
 
+	//Write and export levels if necesarry
+	//m_LevelCreator.CreateLevels();
+	
 	//Initialize the scenes
-	InitializeTestScene();
+	InitializeLevel1();
 	InitializeGameOverScene();
 }
 #pragma region Scene Initialization
@@ -84,40 +88,24 @@ void Game::InitializeInput()
 	InputManager::GetInstance().AssignCommandToFKey(m_pShootCommand);
 
 }
-void Game::InitializeTestScene()
+void Game::InitializeMainMenu()
 {
-	Scene& scene = SceneManager::GetInstance().CreateScene("TestScene");
- 	SceneManager::GetInstance().SetActiveScene("TestScene");
+}
+void Game::InitializeLevel1()
+{
+	Scene& scene = SceneManager::GetInstance().CreateScene("Level1");
+	SceneManager::GetInstance().SetActiveScene("Level1");
 
-	const float windowWidth{ Minigin::GetInstance().GetWindowWidth() };
-	const float windowHeight{ Minigin::GetInstance().GetWindowHeight() };
-
-	//Initialize ground
-	Box box = Box{ 0,20, windowWidth, 20, "Ground", "Ground" };
-	scene.Add(box.GetGameObject());
-
-	//Initialize walls
-	box = Box{ 0, windowHeight, 30, windowHeight, "Left Wall" };
-	scene.Add(box.GetGameObject());
-	box = Box{ windowWidth - 30, windowHeight, 30, windowHeight, "Right Wall" };
-	scene.Add(box.GetGameObject());
-
-	//Platform
-	box = Box{ windowWidth / 2.f, 100, 200, 10, "Platform", "Default", "Platform" };
-	scene.Add(box.GetGameObject());
+	//Load the level from the levelCreator - Level 1 - Index 0
+	m_LevelCreator.LoadLevel(0);
 
 	//Initialize player
-	Player player = Player{ 350,150};
+	Player player = Player{ 350,200 };
 	scene.Add(player.GetGameObject());
-
-	//Initialize test enemy
-	ZenChan enemy = ZenChan{ 200,100 };
-	scene.Add(enemy.GetGameObject());
 
 	//Initialize HUD
 	HUD hud = HUD{};
 	scene.Add(hud.GetGameObject());
-	hud.AddChildrenToScene();
 }
 void Game::InitializeGameOverScene()
 {

@@ -82,8 +82,8 @@ void BoxColliderComponent::FollowParent()
 	TransformComponent* pTransform = m_pGameObject->GetComponent<TransformComponent>();
 	if (pTransform)
 	{
-		m_Rect.x = pTransform->GetPosition().x;
-		m_Rect.y = pTransform->GetPosition().y;
+		m_Rect.x = pTransform->GetRenderPosition().x;
+		m_Rect.y = pTransform->GetRenderPosition().y;
 	}
 	else
 	{

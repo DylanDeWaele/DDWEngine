@@ -6,6 +6,7 @@ class Command;
 //Prefabs - should be instantiated on the stack
 #include "Player.h"
 #include "Box.h"
+#include "LevelCreator.h"
 
 class Game
 {
@@ -18,6 +19,8 @@ public:
 	void Run();
 private:
 	//Private datamembers
+	//Level manager
+	LevelCreator m_LevelCreator;
 
 	//Commands
 	Command* m_pMoveLeftCommand;
@@ -29,7 +32,8 @@ private:
 	void Initialize();
 #pragma region Scene Initialization
 	void InitializeInput();
-	void InitializeTestScene();
+	void InitializeMainMenu();
+	void InitializeLevel1();
 	void InitializeGameOverScene();
 #pragma endregion
 };

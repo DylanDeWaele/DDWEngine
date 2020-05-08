@@ -36,6 +36,12 @@
     <Filter Include="Utils">
       <UniqueIdentifier>{7ea446b1-ad2f-491a-8899-e501de61ad25}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BinaryReaderWriter">
+      <UniqueIdentifier>{fb01902c-10ad-43e9-bf0a-72c1260f2d14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Unit Testing">
+      <UniqueIdentifier>{a1c494c4-9d3b-41a1-9971-9fa4c305212b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MiniginPCH.h">
@@ -108,6 +114,18 @@
     <ClInclude Include="Prefab.h">
       <Filter>Scene</Filter>
     </ClInclude>
+    <ClInclude Include="BinaryBase.h">
+      <Filter>BinaryReaderWriter</Filter>
+    </ClInclude>
+    <ClInclude Include="BinaryReader.h">
+      <Filter>BinaryReaderWriter</Filter>
+    </ClInclude>
+    <ClInclude Include="BinaryWriter.h">
+      <Filter>BinaryReaderWriter</Filter>
+    </ClInclude>
+    <ClInclude Include="catch.hpp">
+      <Filter>Unit Testing</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InputManager.cpp">
@@ -167,6 +185,15 @@
     </ClCompile>
     <ClCompile Include="Prefab.cpp">
       <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="BinaryBase.cpp">
+      <Filter>BinaryReaderWriter</Filter>
+    </ClCompile>
+    <ClCompile Include="BinaryReader.cpp">
+      <Filter>BinaryReaderWriter</Filter>
+    </ClCompile>
+    <ClCompile Include="BinaryWriter.cpp">
+      <Filter>BinaryReaderWriter</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

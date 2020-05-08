@@ -21,6 +21,7 @@ public:
 
 	//Getters
 	const glm::vec2& GetPosition() const;
+	glm::vec2 GetRenderPosition() const;
 	const glm::vec2& GetScale() const;
 	float GetRotation() const;
 

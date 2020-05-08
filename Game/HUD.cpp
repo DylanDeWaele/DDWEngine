@@ -65,16 +65,6 @@ HUD::HUD()
 	m_pHealth->AddComponent(pHealthTransform);
 	m_pHealth->AddComponent(pHealth);
 
-}
-
-void HUD::AddChildrenToScene() const
-{
-	SceneManager::GetInstance().GetActiveScene()->Add(m_pBackground);
-	SceneManager::GetInstance().GetActiveScene()->Add(m_pScoreText);
-	SceneManager::GetInstance().GetActiveScene()->Add(m_pScore);
-	SceneManager::GetInstance().GetActiveScene()->Add(m_pHealthText);
-	SceneManager::GetInstance().GetActiveScene()->Add(m_pHealth);
-
 	//Make them children
 	m_pGameObject->AddChild(m_pBackground);
 	m_pGameObject->AddChild(m_pScoreText);

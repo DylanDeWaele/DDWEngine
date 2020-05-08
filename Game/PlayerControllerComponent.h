@@ -40,7 +40,6 @@ private:
 	RigidBodyComponent* m_pRigidbody;
 	const float m_MoveSpeed;
 	const float m_JumpForce;
-	const float m_Deceleration;
 
 	//Controls and state
 	std::map<std::string, bool> m_Controls;

@@ -60,7 +60,7 @@ void BulletComponent::HandleBubbleChange()
 					else
 						x = position.x - pBoxCollider->GetRect().width;
 
-				Bubble bubble = Bubble{ x, Minigin::GetInstance().GetWindowHeight() - position.y };
+				Bubble bubble = Bubble{ x, position.y };
 				SceneManager::GetInstance().GetActiveScene()->Add(bubble.GetGameObject());
 			}
 			//Delete this gameobject
