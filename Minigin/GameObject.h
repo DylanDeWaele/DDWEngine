@@ -33,6 +33,7 @@ public:
 	void SetTag(const std::string& tag);
 	void SetCollisionLayer(const std::string& layer);
 	void SetDelete(bool shouldDelete);
+	void SetActive(bool active);
 
 	//Getters
 	template <typename Component>
@@ -44,6 +45,7 @@ public:
 	GameObject* GetChild(const std::string& name) const;
 	GameObject* GetChild(int index) const;
 	bool GetDelete() const;
+	bool IsActive() const;
 
 private:
 	std::string m_Name;
@@ -54,6 +56,7 @@ private:
 	std::vector<GameObject*> m_Children;
 
 	bool m_ShouldDelete;
+	bool m_IsActive;
 };
 
 template<typename Component>

@@ -22,9 +22,9 @@ void Scene::Add(GameObject* object)
 
 	//Also pushback the objects children
 	const std::vector<GameObject*>& children = object->GetChildren();
-	for (GameObject* pChild : children) 
+	for (GameObject* pChild : children)
 	{
-		m_Objects.push_back(pChild);
+		Add(pChild);
 	}
 }
 
@@ -37,9 +37,12 @@ bool Scene::Remove(GameObject* pObject)
 
 void Scene::Initialize()
 {
-	for (auto& object : m_Objects)
+	if (SceneManager::GetInstance().GetActiveScene() == this)
 	{
-		object->Initialize();
+		for (auto& object : m_Objects)
+		{
+			object->Initialize();
+		}
 	}
 }
 
@@ -49,8 +52,8 @@ void Scene::FixedUpdate()
 	{
 		for (auto& object : m_Objects)
 		{
-			//Only do when this scene is still the active scene
-			object->FixedUpdate();
+			if (object->IsActive())
+				object->FixedUpdate();
 		}
 	}
 }
@@ -63,7 +66,9 @@ void Scene::Update()
 		//Only do when this scene is still the active scene
 		if (SceneManager::GetInstance().GetActiveScene() != this)
 			return;
-		m_Objects[i]->Update();
+
+		if (m_Objects[i]->IsActive())
+			m_Objects[i]->Update();
 	}
 }
 
@@ -74,7 +79,8 @@ void Scene::Render() const
 		for (const auto& object : m_Objects)
 		{
 			//Only do when this scene is still the active scene
-			object->Render();
+			if (object->IsActive())
+				object->Render();
 		}
 	}
 }

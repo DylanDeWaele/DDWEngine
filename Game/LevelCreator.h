@@ -8,6 +8,8 @@
 #include "Teleporter.h"
 #include "LevelCounter.h"
 
+#include "Scene.h"
+
 class LevelCreator
 {
 public:
@@ -31,7 +33,7 @@ public:
 	~LevelCreator() = default;
 
 	void CreateLevels(); //Write all levels to a file
-	void LoadLevel(int index); ////read the level from the file and add it to the scenemanager by index
+	void LoadLevel(int index, Scene* pScene); ////read the level from the file and add it to the scenemanager by index
 
 private:
 	//Private datamembers

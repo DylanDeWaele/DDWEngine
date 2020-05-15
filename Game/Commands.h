@@ -1,47 +1,68 @@
 #pragma once
 #include "Command.h" //BASE CLASS
 
-class MoveLeftCommand : public Command
+class LeftCommand : public Command
 {
 public:
 	//Ctor
-	MoveLeftCommand() = default;
+	LeftCommand() = default;
 	//Dtor
-	virtual ~MoveLeftCommand() = default;
+	virtual ~LeftCommand() = default;
 	//Public member functions
 	virtual void Execute() override;
 };
 
-class MoveRightCommand : public Command
+class RightCommand : public Command
 {
 public:
 	//Ctor
-	MoveRightCommand() = default;
+	RightCommand() = default;
 	//Dtor
-	virtual ~MoveRightCommand() = default;
+	virtual ~RightCommand() = default;
 	//Public member functions
 	virtual void Execute() override;
 };
 
-class JumpCommand : public Command
+class Action1Command : public Command
 {
 public:
 	//Ctor
-	JumpCommand() = default;
+	Action1Command() = default;
 	//Dtor
-	virtual ~JumpCommand() = default;
+	virtual ~Action1Command() = default;
 	//Public member functions
 	virtual void Execute() override;
 };
 
-class ShootCommand : public Command
+class Action2Command : public Command
 {
 public:
 	//Ctor
-	ShootCommand() = default;
+	Action2Command() = default;
 	//Dtor
-	virtual ~ShootCommand() = default;
+	virtual ~Action2Command() = default;
 	//Public member functions
 	virtual void Execute() override;
 };
 
+class UpCommand : public Command
+{
+public:
+	//Ctor
+	UpCommand() = default;
+	//Dtor
+	virtual ~UpCommand() = default;
+	//Public member functions
+	virtual void Execute() override;
+};
+
+class DownCommand : public Command
+{
+public:
+	//Ctor
+	DownCommand() = default;
+	//Dtor
+	virtual ~DownCommand() = default;
+	//Public member functions
+	virtual void Execute() override;
+};

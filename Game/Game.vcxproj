@@ -146,7 +146,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Box.cpp" />
     <ClCompile Include="Bubble.cpp" />
     <ClCompile Include="BubbleComponent.cpp" />
     <ClCompile Include="Bullet.cpp" />
@@ -154,11 +153,15 @@
     <ClCompile Include="Commands.cpp" />
     <ClCompile Include="EnemyControllerComponent.cpp" />
     <ClCompile Include="EnemyStates.cpp" />
+    <ClCompile Include="GameOverScreen.cpp" />
+    <ClCompile Include="GameOverScreenComponent.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="HudComponent.cpp" />
     <ClCompile Include="LevelCounter.cpp" />
     <ClCompile Include="LevelCreator.cpp" />
     <ClCompile Include="LivesComponent.cpp" />
+    <ClCompile Include="MainMenu.cpp" />
+    <ClCompile Include="MainMenuComponent.cpp" />
     <ClCompile Include="PickupComponent.cpp" />
     <ClCompile Include="PlayerControllerComponent.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -167,6 +170,7 @@
     <ClCompile Include="PlayerStates.cpp" />
     <ClCompile Include="Pickup.cpp" />
     <ClCompile Include="ScoreComponent.cpp" />
+    <ClCompile Include="SelectionPointer.cpp" />
     <ClCompile Include="TeleportComponent.cpp" />
     <ClCompile Include="Teleporter.cpp" />
     <ClCompile Include="WorthComponent.cpp" />
@@ -178,7 +182,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Box.h" />
     <ClInclude Include="Bubble.h" />
     <ClInclude Include="BubbleComponent.h" />
     <ClInclude Include="Bullet.h" />
@@ -186,11 +189,15 @@
     <ClInclude Include="Commands.h" />
     <ClInclude Include="EnemyControllerComponent.h" />
     <ClInclude Include="EnemyStates.h" />
+    <ClInclude Include="GameOverScreen.h" />
+    <ClInclude Include="GameOverScreenComponent.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="HudComponent.h" />
     <ClInclude Include="LevelCounter.h" />
     <ClInclude Include="LevelCreator.h" />
     <ClInclude Include="LivesComponent.h" />
+    <ClInclude Include="MainMenu.h" />
+    <ClInclude Include="MainMenuComponent.h" />
     <ClInclude Include="PickupComponent.h" />
     <ClInclude Include="PlayerControllerComponent.h" />
     <ClInclude Include="Game.h" />
@@ -199,6 +206,7 @@
     <ClInclude Include="PlayerStates.h" />
     <ClInclude Include="Pickup.h" />
     <ClInclude Include="ScoreComponent.h" />
+    <ClInclude Include="SelectionPointer.h" />
     <ClInclude Include="TeleportComponent.h" />
     <ClInclude Include="Teleporter.h" />
     <ClInclude Include="WorthComponent.h" />

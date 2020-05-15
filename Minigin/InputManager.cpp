@@ -1,6 +1,7 @@
 #include "MiniginPCH.h"
 #include "InputManager.h"
 #include <SDL.h>
+#include "Minigin.h"
 
 bool InputManager::ProcessInput()
 {
@@ -12,6 +13,10 @@ bool InputManager::ProcessInput()
 		m_pLeftDPAD->Execute();
 	if (IsPressed(ControllerButton::RightDPad))
 		m_pRightDPAD->Execute();
+	if (IsPressed(ControllerButton::UpDPad))
+		m_pUpDPAD->Execute();
+	if (IsPressed(ControllerButton::DownDPad))
+		m_pDownDPAD->Execute();
 	if (IsPressed(ControllerButton::SouthButton))
 		m_pSouthButton->Execute();
 	if (IsPressed(ControllerButton::WestButton))
@@ -33,6 +38,15 @@ bool InputManager::ProcessInput()
 			case SDLK_f:
 				m_pFKey->Execute();
 				break;
+			case SDLK_UP:
+				m_pUpArrowKey->Execute();
+				break;
+			case SDLK_DOWN:
+				m_pDownArrowKey->Execute();
+				break;
+			case SDLK_RETURN:
+				m_pEnterKey->Execute();
+				break;
 			}
 		}
 	}
@@ -44,8 +58,11 @@ bool InputManager::ProcessInput()
 		m_pAKey->Execute();
 	if (keystate[SDL_SCANCODE_D])
 		m_pDKey->Execute();
-	
-	return true;
+
+	if (!Minigin::GetInstance().GetContinue())
+		return false;
+	else
+		return true;
 }
 
 void InputManager::AssignCommandToLeftDPad(Command* pCommand)
@@ -56,6 +73,16 @@ void InputManager::AssignCommandToLeftDPad(Command* pCommand)
 void InputManager::AssignCommandToRightDPad(Command* pCommand)
 {
 	m_pRightDPAD = pCommand;
+}
+
+void InputManager::AssignCommandToDownDPad(Command* pCommand)
+{
+	m_pDownDPAD = pCommand;
+}
+
+void InputManager::AssignCommandToUpDPad(Command* pCommand)
+{
+	m_pUpDPAD = pCommand;
 }
 
 void InputManager::AssignCommandToSouthButton(Command* pCommand)
@@ -78,6 +105,21 @@ void InputManager::AssignCommandToFKey(Command* pCommand)
 	m_pFKey = pCommand;
 }
 
+void InputManager::AssignCommandToUpArrowKey(Command* pCommand)
+{
+	m_pUpArrowKey = pCommand;
+}
+
+void InputManager::AssignCommandToDownArrowKey(Command* pCommand)
+{
+	m_pDownArrowKey = pCommand;
+}
+
+void InputManager::AssignCommandToEnterKey(Command* pCommand)
+{
+	m_pEnterKey = pCommand;
+}
+
 void InputManager::AssignCommandToAKey(Command* pCommand)
 {
 	m_pAKey = pCommand;
@@ -97,6 +139,10 @@ bool InputManager::IsPressed(ControllerButton button) const
 		return (m_CurrentState.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_LEFT);
 	case ControllerButton::RightDPad:
 		return (m_CurrentState.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_RIGHT);
+	case ControllerButton::DownDPad:
+		return (m_CurrentState.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_DOWN);
+	case ControllerButton::UpDPad:
+		return (m_CurrentState.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_UP);
 	case ControllerButton::SouthButton:
 		return (m_CurrentState.Gamepad.wButtons & XINPUT_GAMEPAD_A);
 	case ControllerButton::WestButton:

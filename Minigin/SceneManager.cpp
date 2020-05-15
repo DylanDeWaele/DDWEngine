@@ -37,6 +37,7 @@ void SceneManager::SetActiveScene(const std::string& sceneName)
 		if (pScene->GetName() == sceneName)
 		{
 			m_pActiveScene = pScene;
+			m_pActiveScene->Initialize(); //Reinitialize the scene
 		}
 	}
 }
@@ -44,6 +45,16 @@ void SceneManager::SetActiveScene(const std::string& sceneName)
 Scene* SceneManager::GetActiveScene() const
 {
 	return m_pActiveScene;
+}
+
+Scene* SceneManager::GetSceneByName(const std::string& name) const
+{
+	for (Scene* pScene : m_Scenes)
+	{
+		if (pScene->GetName() == name)
+			return pScene;
+	}
+	return nullptr;
 }
 
 SceneManager::SceneManager()

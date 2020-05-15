@@ -21,11 +21,10 @@
 #include "Commands.h"
 
 //Prefabs
-#include "Player.h"
-#include "Box.h"
-#include "ZenChan.h" 
 #include "HUD.h"
-#include "Teleporter.h"
+#include "MainMenu.h"
+#include "GameOverScreen.h"
+#include "ZenChan.h"
 
 Game::Game()
 {
@@ -39,10 +38,12 @@ Game::Game()
 Game::~Game()
 {
 	//Commands - Perhaps move this to the engine
-	SAFE_DELETE(m_pMoveLeftCommand);
-	SAFE_DELETE(m_pMoveRightCommand);
-	SAFE_DELETE(m_pJumpCommand);
-	SAFE_DELETE(m_pShootCommand);
+	SAFE_DELETE(m_pLeftCommand);
+	SAFE_DELETE(m_pRightCommand);
+	SAFE_DELETE(m_pUpCommand);
+	SAFE_DELETE(m_pDownCommand);
+	SAFE_DELETE(m_pAction1Command);
+	SAFE_DELETE(m_pAction2Command);
 }
 
 void Game::Run()
@@ -62,8 +63,9 @@ void Game::Initialize()
 
 	//Write and export levels if necesarry
 	//m_LevelCreator.CreateLevels();
-	
+
 	//Initialize the scenes
+	InitializeMainMenu();
 	InitializeLevel1();
 	InitializeGameOverScene();
 }
@@ -71,37 +73,53 @@ void Game::Initialize()
 void Game::InitializeInput()
 {
 	//Commands
-	m_pMoveLeftCommand = new MoveLeftCommand{};
-	m_pMoveRightCommand = new MoveRightCommand{};
-	m_pJumpCommand = new JumpCommand{};
-	m_pShootCommand = new ShootCommand{};
+	m_pLeftCommand = new LeftCommand{};
+	m_pRightCommand = new RightCommand{};
+	m_pAction1Command = new Action1Command{};
+	m_pAction2Command = new Action2Command{};
+	m_pUpCommand = new UpCommand{};
+	m_pDownCommand = new DownCommand{};
 
 	//Controller
-	InputManager::GetInstance().AssignCommandToLeftDPad(m_pMoveLeftCommand);
-	InputManager::GetInstance().AssignCommandToRightDPad(m_pMoveRightCommand);
-	InputManager::GetInstance().AssignCommandToSouthButton(m_pJumpCommand);
-	InputManager::GetInstance().AssignCommandToWestButton(m_pShootCommand);
+	InputManager::GetInstance().AssignCommandToLeftDPad(m_pLeftCommand);
+	InputManager::GetInstance().AssignCommandToRightDPad(m_pRightCommand);
+	InputManager::GetInstance().AssignCommandToUpDPad(m_pUpCommand);
+	InputManager::GetInstance().AssignCommandToDownDPad(m_pDownCommand);
+	InputManager::GetInstance().AssignCommandToSouthButton(m_pAction1Command);
+	InputManager::GetInstance().AssignCommandToWestButton(m_pAction2Command);
+
 	//Keyboard
-	InputManager::GetInstance().AssignCommandToAKey(m_pMoveLeftCommand);
-	InputManager::GetInstance().AssignCommandToDKey(m_pMoveRightCommand);
-	InputManager::GetInstance().AssignCommandToSpacebarKey(m_pJumpCommand);
-	InputManager::GetInstance().AssignCommandToFKey(m_pShootCommand);
+	InputManager::GetInstance().AssignCommandToAKey(m_pLeftCommand);
+	InputManager::GetInstance().AssignCommandToDKey(m_pRightCommand);
+	InputManager::GetInstance().AssignCommandToSpacebarKey(m_pAction1Command);
+	InputManager::GetInstance().AssignCommandToFKey(m_pAction2Command);
+	InputManager::GetInstance().AssignCommandToDownArrowKey(m_pDownCommand);
+	InputManager::GetInstance().AssignCommandToUpArrowKey(m_pUpCommand);
+	InputManager::GetInstance().AssignCommandToEnterKey(m_pAction1Command);
 
 }
 void Game::InitializeMainMenu()
 {
+	Scene& scene = SceneManager::GetInstance().CreateScene("MainMenu");
+
+	MainMenu mainMenu = MainMenu{};
+	scene.Add(mainMenu.GetGameObject());
+
 }
 void Game::InitializeLevel1()
 {
 	Scene& scene = SceneManager::GetInstance().CreateScene("Level1");
-	SceneManager::GetInstance().SetActiveScene("Level1");
 
 	//Load the level from the levelCreator - Level 1 - Index 0
-	m_LevelCreator.LoadLevel(0);
+	m_LevelCreator.LoadLevel(0, &scene);
 
 	//Initialize player
 	Player player = Player{ 350,200 };
 	scene.Add(player.GetGameObject());
+
+	//Initialize enemy
+	ZenChan enemy = ZenChan{ 300,200 };
+	scene.Add(enemy.GetGameObject());
 
 	//Initialize HUD
 	HUD hud = HUD{};
@@ -109,19 +127,12 @@ void Game::InitializeLevel1()
 }
 void Game::InitializeGameOverScene()
 {
-	Scene& scene = SceneManager::GetInstance().CreateScene("GameOverScene");
+	Scene& scene = SceneManager::GetInstance().CreateScene("GameOverScreen");
+	SceneManager::GetInstance().SetActiveScene("GameOverScreen");
+	
+	GameOverScreen gameOverScreen{};
 
-	const float windowWidth{ Minigin::GetInstance().GetWindowWidth() };
-	const float windowHeight{ Minigin::GetInstance().GetWindowHeight() };
-
-	//Create game over screen
-	GameObject* screen = new GameObject{};
-	const float offset{ 100.f };
-	screen->AddComponent(new TransformComponent{ {windowWidth / 2.f - offset ,windowHeight / 2.f} });
-	screen->AddComponent(new TextureComponent{ "Black.jpg", windowWidth,windowHeight });
-	screen->AddComponent(new TextComponent{ "GAME OVER", ResourceManager::GetInstance().LoadFont("Lingua.otf", 46) });
-
-	scene.Add(screen);
+	scene.Add(gameOverScreen.GetGameObject());
 }
 #pragma endregion
 #pragma endregion

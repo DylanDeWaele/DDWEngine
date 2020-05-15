@@ -12,7 +12,8 @@ GameObject::GameObject(const std::string& name, const std::string& tag, const st
 	m_Tag{ tag },
 	m_CollisionLayer{ collisionLayer },
 	m_ShouldDelete{ false },
-	m_Children{}
+	m_Children{},
+	m_IsActive{true}
 {
 }
 
@@ -95,6 +96,17 @@ void GameObject::SetDelete(bool shouldDelete)
 	m_ShouldDelete = shouldDelete;
 }
 
+void GameObject::SetActive(bool active)
+{
+	m_IsActive = active;
+
+	//Also do it for the children
+	for (GameObject* pChild : m_Children)
+	{
+		pChild->SetActive(active);
+	}
+}
+
 const std::string& GameObject::GetName() const
 {
 	return m_Name;
@@ -134,4 +146,9 @@ GameObject* GameObject::GetChild(int index) const
 bool GameObject::GetDelete() const
 {
 	return m_ShouldDelete;
+}
+
+bool GameObject::IsActive() const
+{
+	return m_IsActive;
 }

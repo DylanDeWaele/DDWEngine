@@ -18,9 +18,6 @@
     <Filter Include="Prefabs\Player">
       <UniqueIdentifier>{fe2e7507-1cce-4692-a92a-1d8a0a1ba284}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Prefabs\Box">
-      <UniqueIdentifier>{232dbad1-5bbc-4d83-af6a-f2c714c547a7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Components\Controllers">
       <UniqueIdentifier>{c9d2a9f7-5a15-46f8-a038-653e1d7caf59}</UniqueIdentifier>
     </Filter>
@@ -78,6 +75,21 @@
     <Filter Include="Prefabs\LevelCounter">
       <UniqueIdentifier>{bc810f8f-1714-4b18-b82f-f6b4b5390186}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Prefabs\MainMenu">
+      <UniqueIdentifier>{4c113bd9-5c19-466a-8b78-720fd59b6095}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\MainMenu">
+      <UniqueIdentifier>{69112d86-843d-44cb-8900-1edad5d64175}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Prefabs\GameOverScreen">
+      <UniqueIdentifier>{6847c6f4-2538-432b-8269-b76b6154add3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Prefabs\SelectionPointer">
+      <UniqueIdentifier>{28045eb1-2dac-4fcb-aec8-2d29366c4493}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\GameOverScreen">
+      <UniqueIdentifier>{7001bff9-c01d-48cb-ae30-27ea7e879d72}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
@@ -87,9 +99,6 @@
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Prefabs\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Box.cpp">
-      <Filter>Prefabs\Box</Filter>
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
       <Filter>Prefabs\Bullet</Filter>
@@ -151,6 +160,21 @@
     <ClCompile Include="LevelCounter.cpp">
       <Filter>Prefabs\LevelCounter</Filter>
     </ClCompile>
+    <ClCompile Include="MainMenu.cpp">
+      <Filter>Prefabs\MainMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenuComponent.cpp">
+      <Filter>Components\MainMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOverScreen.cpp">
+      <Filter>Prefabs\GameOverScreen</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectionPointer.cpp">
+      <Filter>Prefabs\SelectionPointer</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOverScreenComponent.cpp">
+      <Filter>Components\GameOverScreen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -162,9 +186,6 @@
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Prefabs\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Box.h">
-      <Filter>Prefabs\Box</Filter>
     </ClInclude>
     <ClInclude Include="Bullet.h">
       <Filter>Prefabs\Bullet</Filter>
@@ -225,6 +246,21 @@
     </ClInclude>
     <ClInclude Include="LevelCounter.h">
       <Filter>Prefabs\LevelCounter</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenu.h">
+      <Filter>Prefabs\MainMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenuComponent.h">
+      <Filter>Components\MainMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverScreen.h">
+      <Filter>Prefabs\GameOverScreen</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectionPointer.h">
+      <Filter>Prefabs\SelectionPointer</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverScreenComponent.h">
+      <Filter>Components\GameOverScreen</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

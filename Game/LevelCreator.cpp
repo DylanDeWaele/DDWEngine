@@ -9,7 +9,7 @@
 #include "TransformComponent.h"
 #include "BoxColliderComponent.h"
 
-void LevelCreator::LoadLevel(int index)
+void LevelCreator::LoadLevel(int index, Scene* pScene)
 {
 	m_BinReader.SelectFile("../Data/Level_" + std::to_string(index + 1) + ".bin");
 	m_BinReader.Open();
@@ -70,13 +70,13 @@ void LevelCreator::LoadLevel(int index)
 
 	//Add to scene
 	//Add lvlcounter
-	SceneManager::GetInstance().GetActiveScene()->Add(lvlCounter.GetGameObject());
+	pScene->Add(lvlCounter.GetGameObject());
 	//Add teleporter
-	SceneManager::GetInstance().GetActiveScene()->Add(teleporter.GetGameObject());
+	pScene->Add(teleporter.GetGameObject());
 	//Add all the boxes
 	for (size_t i = 0; i < size; i++)
 	{
-		SceneManager::GetInstance().GetActiveScene()->Add(boxes[i].GetGameObject());
+		pScene->Add(boxes[i].GetGameObject());
 	}
 }
 

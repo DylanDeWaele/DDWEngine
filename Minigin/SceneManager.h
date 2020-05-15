@@ -24,6 +24,7 @@ public:
 	void SetActiveScene(const std::string& sceneName);
 	//Getters
 	Scene* GetActiveScene() const;
+	Scene* GetSceneByName(const std::string& name) const;
 
 private:
 	friend class Singleton<SceneManager>;

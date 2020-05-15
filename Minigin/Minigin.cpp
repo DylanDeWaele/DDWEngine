@@ -47,6 +47,8 @@ void  Minigin::Initialize()
 
 	//Seeding rand
 	srand(unsigned int(time(nullptr)));
+
+	m_DoContinue = true;
 }
 
 void  Minigin::Cleanup()
@@ -67,10 +69,9 @@ void  Minigin::Run()
 		//Initialization
 		sceneManager.Initialize();
 
-		bool doContinue = true;
 		auto lastTime = std::chrono::high_resolution_clock::now();
 
-		while (doContinue)
+		while (m_DoContinue)
 		{
 			//Changed the update loop to catch up in fixed steps
 			const auto currentTime = high_resolution_clock::now();
@@ -82,7 +83,7 @@ void  Minigin::Run()
 
 			//Before handling input, first process the physics
 			sceneManager.FixedUpdate();
-			doContinue = input.ProcessInput();
+			m_DoContinue = input.ProcessInput();
 			sceneManager.Update();
 			sceneManager.CleanUp();
 
@@ -93,6 +94,11 @@ void  Minigin::Run()
 	Cleanup();
 }
 
+void Minigin::SetContinue(bool continueEngine)
+{
+	m_DoContinue = continueEngine;
+}
+
 float Minigin::GetWindowWidth() const
 {
 	return m_Width;
@@ -101,4 +107,9 @@ float Minigin::GetWindowWidth() const
 float Minigin::GetWindowHeight() const
 {
 	return m_Height;
+}
+
+bool Minigin::GetContinue() const
+{
+	return m_DoContinue;
 }

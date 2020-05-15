@@ -23,15 +23,17 @@ private:
 	LevelCreator m_LevelCreator;
 
 	//Commands
-	Command* m_pMoveLeftCommand;
-	Command* m_pMoveRightCommand;
-	Command* m_pJumpCommand;
-	Command* m_pShootCommand;
+	Command* m_pLeftCommand;
+	Command* m_pRightCommand;
+	Command* m_pAction1Command;
+	Command* m_pAction2Command;
+	Command* m_pUpCommand;
+	Command* m_pDownCommand;
 
 	//Private functions
 	void Initialize();
-#pragma region Scene Initialization
 	void InitializeInput();
+#pragma region Scene Initialization
 	void InitializeMainMenu();
 	void InitializeLevel1();
 	void InitializeGameOverScene();

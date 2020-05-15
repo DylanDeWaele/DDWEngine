@@ -188,5 +188,5 @@ DeadState::DeadState(GameObject* pPlayer, std::map<std::string, bool>& controls)
 void DeadState::Update()
 {
 	//Transition to gameover screen
-	SceneManager::GetInstance().SetActiveScene("GameOverScene");
+	SceneManager::GetInstance().SetActiveScene("GameOverScreen");
 }

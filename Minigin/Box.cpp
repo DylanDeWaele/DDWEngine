@@ -1,4 +1,5 @@
-#include "GamePCH.h"
+#include "MiniginPCH.h"
+#include "GameObject.h"
 #include "Box.h"
 #include "TransformComponent.h"
 #include "TextureComponent.h"
