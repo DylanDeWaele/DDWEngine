@@ -175,6 +175,9 @@
     <ClCompile Include="GameOverScreenComponent.cpp">
       <Filter>Components\GameOverScreen</Filter>
     </ClCompile>
+    <ClCompile Include="Maita.cpp">
+      <Filter>Prefabs\Enemies\Maita</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -261,6 +264,9 @@
     </ClInclude>
     <ClInclude Include="GameOverScreenComponent.h">
       <Filter>Components\GameOverScreen</Filter>
+    </ClInclude>
+    <ClInclude Include="Maita.h">
+      <Filter>Prefabs\Enemies\Maita</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

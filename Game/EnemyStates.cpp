@@ -81,13 +81,21 @@ void EnemyDeadState::Update()
 	GameObject* pCollidedObject{ m_pEnemy->GetComponent<BoxColliderComponent>()->GetCollidedObject() };
 	if (pCollidedObject)
 	{
-		if (pCollidedObject->GetTag() == "Ground")
+		if (pCollidedObject->GetTag() == "Ground" || pCollidedObject->GetTag() == "Platform")
 		{
 			//Remove the enemy
 			SceneManager::GetInstance().GetActiveScene()->Remove(m_pEnemy);
 
 			//Spawn pickup
-			SpawnPickup("Watermelon.png", 100);
+			switch (m_pEnemy->GetComponent<EnemyControllerComponent>()->GetType())
+			{
+			case EnemyControllerComponent::Type::ZenChan:
+				SpawnPickup("Watermelon.png", 100);
+				break;
+			case EnemyControllerComponent::Type::Maita:
+				SpawnPickup("Fries.png", 200);
+				break;
+			}
 		}
 	}
 
@@ -96,8 +104,93 @@ void EnemyDeadState::SpawnPickup(const std::string& sprite, int worth)
 {
 	//Get position
 	const glm::vec2& position{ m_pEnemy->GetComponent<TransformComponent>()->GetPosition() };
+	GameObject* pCollidedObject{ m_pEnemy->GetComponent<BoxColliderComponent>()->GetCollidedObject() };
 
 	//Spawn powerup
-	Pickup pickup = Pickup{ position.x, Minigin::GetInstance().GetWindowHeight() - position.y, sprite ,worth };
+	Pickup pickup = Pickup{ position.x, pCollidedObject->GetComponent<TransformComponent>()->GetPosition().y, sprite ,worth };
+
+	//Translate up to make sure it always nicely on top of collided object
+	const float& height = pickup.GetGameObject()->GetComponent<BoxColliderComponent>()->GetRect().height;
+	pickup.GetGameObject()->GetComponent<TransformComponent>()->Translate(0, height);
+
 	SceneManager::GetInstance().GetActiveScene()->Add(pickup.GetGameObject());
+}
+
+EnemyMovingState::EnemyMovingState(GameObject* pEnemy)
+	: EnemyState{ pEnemy },
+	m_GoingLeft{ false },
+	m_ActionTime{ 3.f },
+	m_CurrentTime{ 0 }
+{
+}
+
+void EnemyMovingState::Update()
+{
+	//1. Check collision
+	CheckPlayerHit();
+
+	//2. Handle movement
+	EnemyControllerComponent* pController = m_pEnemy->GetComponent<EnemyControllerComponent>();
+	RigidBodyComponent* pRigidbody = m_pEnemy->GetComponent<RigidBodyComponent>();
+
+	//2.1 Check if random action was triggered
+	m_CurrentTime += GameTime::GetInstance().GetElapsedTime();
+	if (m_CurrentTime > m_ActionTime)
+	{
+		//Reset timer
+		m_CurrentTime = 0;
+		int action = rand() % 2; //0,1
+		switch (action)
+		{
+		case 0:
+			//Jump
+			pController->Jump();
+			break;
+		case 1:
+			//Switch directions
+			m_GoingLeft = !m_GoingLeft;
+			break;
+		}
+	}
+
+	//2.2 Check if switch needed
+	if (m_GoingLeft && !pRigidbody->GetCanMoveLeft())
+		m_GoingLeft = false;
+	else if (!m_GoingLeft && !pRigidbody->GetCanMoveRight())
+		m_GoingLeft = true;
+
+	//2.2 Move
+	if (m_GoingLeft)
+		pController->MoveLeft();
+	else
+		pController->MoveRight();
+}
+
+EnemyJumpingState::EnemyJumpingState(GameObject* pEnemy)
+	: EnemyState{ pEnemy }
+{
+}
+
+void EnemyJumpingState::Update()
+{
+	//Special condition for jumping trough platforms
+	BoxColliderComponent* pBoxCollider = m_pEnemy->GetComponent<BoxColliderComponent>();
+
+	GameObject* pCollided = pBoxCollider->GetCollidedObject();
+	if (pCollided)
+	{
+		if (pCollided->GetCollisionLayer() == "Default")
+		{
+			pBoxCollider->SetIsTrigger(false);
+		}
+	}
+}
+
+EnemyFallingState::EnemyFallingState(GameObject* pEnemy)
+	: EnemyState{ pEnemy }
+{
+}
+
+void EnemyFallingState::Update()
+{
 }

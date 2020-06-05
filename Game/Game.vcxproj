@@ -162,6 +162,7 @@
     <ClCompile Include="LivesComponent.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="MainMenuComponent.cpp" />
+    <ClCompile Include="Maita.cpp" />
     <ClCompile Include="PickupComponent.cpp" />
     <ClCompile Include="PlayerControllerComponent.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -198,6 +199,7 @@
     <ClInclude Include="LivesComponent.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="MainMenuComponent.h" />
+    <ClInclude Include="Maita.h" />
     <ClInclude Include="PickupComponent.h" />
     <ClInclude Include="PlayerControllerComponent.h" />
     <ClInclude Include="Game.h" />

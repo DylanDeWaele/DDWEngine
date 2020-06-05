@@ -111,11 +111,11 @@ void LevelCreator::CreateLevel1()
 	level1.environment.push_back(box);
 	
 	//Platform
-	box = Box{ 150, 120, 350, thickness, "Platform", "Default", "Platform" };
+	box = Box{ 150, 120, 350, thickness, "Platform", "Platform", "Platform" };
 	level1.environment.push_back(box);
-	box = Box{ 150, 220, 350, thickness, "Platform", "Default", "Platform" };
+	box = Box{ 150, 220, 350, thickness, "Platform", "Platform", "Platform" };
 	level1.environment.push_back(box);
-	box = Box{ 150, 320, 350, thickness, "Platform", "Default", "Platform" };
+	box = Box{ 150, 320, 350, thickness, "Platform", "Platform", "Platform" };
 	level1.environment.push_back(box);
 	
 	//Ceiling

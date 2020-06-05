@@ -19,9 +19,9 @@ GameObject::GameObject(const std::string& name, const std::string& tag, const st
 
 GameObject::~GameObject()
 {
-	for (BaseComponent* component : m_Components)
+	for (BaseComponent* pCOmponent : m_Components)
 	{
-		delete component;
+		SAFE_DELETE(pCOmponent);
 	}
 }
 

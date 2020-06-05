@@ -41,22 +41,25 @@ void PlayerControllerComponent::Initialize()
 	//Rigidbody
 	m_pRigidbody = m_pGameObject->GetComponent<RigidBodyComponent>();
 
-	//Initialize controls
-	m_Controls.insert(std::pair<std::string, bool>("MoveLeft", false));
-	m_Controls.insert(std::pair<std::string, bool>("MoveRight", false));
-	m_Controls.insert(std::pair<std::string, bool>("Jump", false));
-	m_Controls.insert(std::pair<std::string, bool>("Shoot", false));
+	if (m_Controls.size() == 0 && m_PossibleStates.size() == 0)
+	{
+		//Initialize controls
+		m_Controls.insert(std::pair<std::string, bool>("MoveLeft", false));
+		m_Controls.insert(std::pair<std::string, bool>("MoveRight", false));
+		m_Controls.insert(std::pair<std::string, bool>("Jump", false));
+		m_Controls.insert(std::pair<std::string, bool>("Shoot", false));
 
-	//Initialize states
-	m_PossibleStates.insert(std::pair<std::string, PlayerState*>("Idle", new IdleState{ m_pGameObject, m_Controls }));
-	m_PossibleStates.insert(std::pair<std::string, PlayerState*>("Moving", new MovingState{ m_pGameObject, m_Controls }));
-	m_PossibleStates.insert(std::pair<std::string, PlayerState*>("Jumping", new JumpingState{ m_pGameObject, m_Controls }));
-	m_PossibleStates.insert(std::pair<std::string, PlayerState*>("Falling", new FallingState{ m_pGameObject, m_Controls }));
-	m_PossibleStates.insert(std::pair<std::string, PlayerState*>("Hit", new HitState{ m_pGameObject, m_Controls }));
-	m_PossibleStates.insert(std::pair<std::string, PlayerState*>("Bubble", new BubbleState{ m_pGameObject, m_Controls }));
-	m_PossibleStates.insert(std::pair<std::string, PlayerState*>("Dead", new DeadState{ m_pGameObject, m_Controls }));
-	m_State.first = "Idle";
-	m_State.second = m_PossibleStates["Idle"];
+		//Initialize states
+		m_PossibleStates.insert(std::pair<std::string, PlayerState*>("Idle", new IdleState{ m_pGameObject, m_Controls }));
+		m_PossibleStates.insert(std::pair<std::string, PlayerState*>("Moving", new MovingState{ m_pGameObject, m_Controls }));
+		m_PossibleStates.insert(std::pair<std::string, PlayerState*>("Jumping", new JumpingState{ m_pGameObject, m_Controls }));
+		m_PossibleStates.insert(std::pair<std::string, PlayerState*>("Falling", new FallingState{ m_pGameObject, m_Controls }));
+		m_PossibleStates.insert(std::pair<std::string, PlayerState*>("Hit", new HitState{ m_pGameObject, m_Controls }));
+		m_PossibleStates.insert(std::pair<std::string, PlayerState*>("Bubble", new BubbleState{ m_pGameObject, m_Controls }));
+		m_PossibleStates.insert(std::pair<std::string, PlayerState*>("Dead", new DeadState{ m_pGameObject, m_Controls }));
+		m_State.first = "Idle";
+		m_State.second = m_PossibleStates["Idle"];
+	}
 }
 
 void PlayerControllerComponent::Update()
@@ -140,7 +143,7 @@ void PlayerControllerComponent::Shoot()
 
 void PlayerControllerComponent::HandleBubbleRiding()
 {
-	
+
 }
 
 void PlayerControllerComponent::HandleAttackTimer()
@@ -171,6 +174,4 @@ void PlayerControllerComponent::DecideState()
 		if (m_pRigidbody->GetVelocity().y < 0)
 			SetState("Falling");
 	}
-
-	//Add more conditions
 }

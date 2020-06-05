@@ -2,7 +2,7 @@
 #include "GamePCH.h"
 #include <string>
 
-class EnemyState
+class EnemyState //Renamed the states to a "Enemy" in their name to avoid any confusion
 {
 public:
 	//Ctor
@@ -19,13 +19,52 @@ protected:
 	void CheckPlayerHit();
 };
 
-class EnemyIdleState : public EnemyState //Renamed the states to a "Enemy" in their name to avoid any confusion
+class EnemyIdleState : public EnemyState 
 {
 public:
 	//Ctor
 	EnemyIdleState(GameObject* pEnemy);
 	//Dtor
 	virtual ~EnemyIdleState() = default;
+	//Public member functions
+	virtual void Update();
+};
+
+class EnemyMovingState : public EnemyState
+{
+public:
+	//Ctor
+	EnemyMovingState(GameObject* pEnemy);
+	//Dtor
+	virtual ~EnemyMovingState() = default;
+	//Public member functions
+	virtual void Update();
+
+private:
+	//Private datamembers
+	bool m_GoingLeft;
+	const float m_ActionTime; //Max it takes to do something (switch direction, jump, other)
+	float m_CurrentTime;
+};
+
+class EnemyJumpingState : public EnemyState
+{
+public:
+	//Ctor
+	EnemyJumpingState(GameObject* pEnemy);
+	//Dtor
+	virtual ~EnemyJumpingState() = default;
+	//Public member functions
+	virtual void Update();
+};
+
+class EnemyFallingState : public EnemyState
+{
+public:
+	//Ctor
+	EnemyFallingState(GameObject* pEnemy);
+	//Dtor
+	virtual ~EnemyFallingState() = default;
 	//Public member functions
 	virtual void Update();
 };

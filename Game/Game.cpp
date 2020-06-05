@@ -25,6 +25,7 @@
 #include "MainMenu.h"
 #include "GameOverScreen.h"
 #include "ZenChan.h"
+#include "Maita.h"
 
 Game::Game()
 {
@@ -68,6 +69,9 @@ void Game::Initialize()
 	InitializeMainMenu();
 	InitializeLevel1();
 	InitializeGameOverScene();
+
+	//Set active scene
+	SceneManager::GetInstance().SetActiveScene("Level1");
 }
 #pragma region Scene Initialization
 void Game::InitializeInput()
@@ -116,11 +120,15 @@ void Game::InitializeLevel1()
 	//Initialize player
 	Player player = Player{ 350,200 };
 	scene.Add(player.GetGameObject());
-
+	
 	//Initialize enemy
-	ZenChan enemy = ZenChan{ 300,200 };
-	scene.Add(enemy.GetGameObject());
-
+	ZenChan enemyZC = ZenChan{ 300,200 };
+	scene.Add(enemyZC.GetGameObject());
+	
+	//Initialize enemy
+	Maita enemyMaita = Maita{ 200,200 };
+	scene.Add(enemyMaita.GetGameObject());
+	
 	//Initialize HUD
 	HUD hud = HUD{};
 	scene.Add(hud.GetGameObject());
@@ -128,7 +136,6 @@ void Game::InitializeLevel1()
 void Game::InitializeGameOverScene()
 {
 	Scene& scene = SceneManager::GetInstance().CreateScene("GameOverScreen");
-	SceneManager::GetInstance().SetActiveScene("GameOverScreen");
 	
 	GameOverScreen gameOverScreen{};
 
