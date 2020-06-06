@@ -139,17 +139,33 @@ void EnemyMovingState::Update()
 	{
 		//Reset timer
 		m_CurrentTime = 0;
-		int action = rand() % 2; //0,1
+		int action = rand() % 3; //0,1,2
 		switch (action)
 		{
 		case 0:
 			//Jump
 			pController->Jump();
+			std::cout << "JUMP!\n";
 			break;
 		case 1:
 			//Switch directions
 			m_GoingLeft = !m_GoingLeft;
+			std::cout << "SWITCH!\n";
 			break;
+		case 2:
+			//Charge player/Throw builder
+			switch (pController->GetType())
+			{
+			case EnemyControllerComponent::Type::ZenChan:
+				//Charge
+				std::cout << "CHARGE!\n";
+				pController->SetState("Charge");
+				break;
+			case EnemyControllerComponent::Type::Maita:
+				//Shoot builder
+				pController->ShootBuilder();
+				break;
+			}
 		}
 	}
 
@@ -175,10 +191,12 @@ void EnemyJumpingState::Update()
 {
 	//Special condition for jumping trough platforms
 	BoxColliderComponent* pBoxCollider = m_pEnemy->GetComponent<BoxColliderComponent>();
+	pBoxCollider->SetIsTrigger(true);
 
 	GameObject* pCollided = pBoxCollider->GetCollidedObject();
 	if (pCollided)
 	{
+		//If we hit a wall when jumping
 		if (pCollided->GetCollisionLayer() == "Default")
 		{
 			pBoxCollider->SetIsTrigger(false);
@@ -193,4 +211,40 @@ EnemyFallingState::EnemyFallingState(GameObject* pEnemy)
 
 void EnemyFallingState::Update()
 {
+	BoxColliderComponent* pBoxCollider = m_pEnemy->GetComponent<BoxColliderComponent>();
+	GameObject* pCollidedObject = pBoxCollider->GetCollidedObject();
+
+	//Reset trigger
+	if (pBoxCollider->IsTrigger())
+		pBoxCollider->SetIsTrigger(false);
+
+	//If we hit the ground go back to moving
+	if (pCollidedObject)
+	{
+		m_pEnemy->GetComponent<EnemyControllerComponent>()->SetState("Moving");
+	}
+}
+
+EnemyChargeState::EnemyChargeState(GameObject* pEnemy)
+	: EnemyState{ pEnemy },
+	m_ResetDistance{ 2.5f } //If within 2.5 units go back to other state
+{
+}
+
+void EnemyChargeState::Update()
+{
+	EnemyControllerComponent* pController = m_pEnemy->GetComponent<EnemyControllerComponent>();
+
+	const glm::vec2& playerPosition = SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player")->GetComponent<TransformComponent>()->GetPosition();
+	const glm::vec2& enemyPosition = m_pEnemy->GetComponent<TransformComponent>()->GetPosition();
+
+	//Charge
+	if (playerPosition.x > enemyPosition.x)
+		pController->ChargeRight();
+	else
+		pController->ChargeLeft();
+
+	//Reset
+	if (abs(playerPosition.x - enemyPosition.x) < m_ResetDistance)
+		pController->SetState("Moving");
 }

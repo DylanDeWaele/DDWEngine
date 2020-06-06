@@ -5,8 +5,10 @@
 #include "BoxColliderComponent.h"
 #include "ScoreComponent.h"
 #include "WorthComponent.h"
+#include "TransformComponent.h"
 #include "SceneManager.h"
 #include "Scene.h"
+#include "Builder.h"
 
 EnemyControllerComponent::EnemyControllerComponent(Type enemyType)
 	: m_State{  },
@@ -38,6 +40,7 @@ void EnemyControllerComponent::Initialize()
 		m_PossibleStates.insert(std::pair<std::string, EnemyState*>("Moving", new EnemyMovingState{ m_pGameObject }));
 		m_PossibleStates.insert(std::pair<std::string, EnemyState*>("Jumping", new EnemyJumpingState{ m_pGameObject }));
 		m_PossibleStates.insert(std::pair<std::string, EnemyState*>("Falling", new EnemyFallingState{ m_pGameObject }));
+		m_PossibleStates.insert(std::pair<std::string, EnemyState*>("Charge", new EnemyChargeState{ m_pGameObject }));
 		m_PossibleStates.insert(std::pair<std::string, EnemyState*>("Bubble", new EnemyBubbleState{ m_pGameObject }));
 		m_PossibleStates.insert(std::pair<std::string, EnemyState*>("Dead", new EnemyDeadState{ m_pGameObject }));
 		SetState("Moving");
@@ -46,14 +49,14 @@ void EnemyControllerComponent::Initialize()
 
 void EnemyControllerComponent::Update()
 {
-	//Reset trigger
-	m_pGameObject->GetComponent<BoxColliderComponent>()->SetIsTrigger(false);
-
 	//Execute state functionality
 	m_State.second->Update();
 
 	//What is the state now?
 	DecideStates();
+
+	//State
+	//std::cout << m_State.first << '\n';
 }
 
 void EnemyControllerComponent::SetState(const std::string& state)
@@ -78,6 +81,18 @@ void EnemyControllerComponent::MoveRight()
 void EnemyControllerComponent::Jump()
 {
 	m_pRigidbody->SetVelocity(m_pRigidbody->GetVelocity().x, m_JumpForce);
+}
+
+void EnemyControllerComponent::ChargeLeft()
+{
+	m_pGameObject->GetComponent<TextureComponent>()->SetFlipped(true);
+	m_pRigidbody->SetVelocity(-m_MoveSpeed * 3, m_pRigidbody->GetVelocity().y);
+}
+
+void EnemyControllerComponent::ChargeRight()
+{
+	m_pGameObject->GetComponent<TextureComponent>()->SetFlipped(false);
+	m_pRigidbody->SetVelocity(m_MoveSpeed * 3, m_pRigidbody->GetVelocity().y);
 }
 
 void EnemyControllerComponent::Bubble()
@@ -144,6 +159,14 @@ void EnemyControllerComponent::Free()
 	SetState("Moving");
 }
 
+void EnemyControllerComponent::ShootBuilder()
+{
+	const glm::vec2& position = m_pGameObject->GetComponent<TransformComponent>()->GetPosition();
+	Builder builder = Builder{ position.x, position.y };
+
+	SceneManager::GetInstance().GetActiveScene()->Add(builder.GetGameObject());
+}
+
 const EnemyControllerComponent::Type& EnemyControllerComponent::GetType() const
 {
 	return m_Type;
@@ -151,7 +174,7 @@ const EnemyControllerComponent::Type& EnemyControllerComponent::GetType() const
 
 void EnemyControllerComponent::DecideStates()
 {
-	if (m_State.first != "Bubble" && m_State.first != "Dead")
+	if (m_State.first != "Bubble" && m_State.first != "Dead" && m_State.first != "Charge")
 	{
 		if (m_pRigidbody->GetVelocity().x != 0)
 			SetState("Moving");

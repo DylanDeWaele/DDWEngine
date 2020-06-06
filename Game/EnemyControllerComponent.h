@@ -36,11 +36,14 @@ public:
 	void MoveLeft();
 	void MoveRight();
 	void Jump();
+	void ChargeLeft();
+	void ChargeRight();
 
 	//Gameplay
 	void Bubble();
 	void Kill();
 	void Free();
+	void ShootBuilder();
 
 private:
 	//Private datamembers

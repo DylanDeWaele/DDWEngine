@@ -122,8 +122,8 @@ void Game::InitializeLevel1()
 	scene.Add(player.GetGameObject());
 	
 	//Initialize enemy
-	ZenChan enemyZC = ZenChan{ 300,200 };
-	scene.Add(enemyZC.GetGameObject());
+	//ZenChan enemyZC = ZenChan{ 300,200 };
+	//scene.Add(enemyZC.GetGameObject());
 	
 	//Initialize enemy
 	Maita enemyMaita = Maita{ 200,200 };

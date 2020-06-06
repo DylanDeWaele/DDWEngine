@@ -90,6 +90,12 @@
     <Filter Include="Components\GameOverScreen">
       <UniqueIdentifier>{7001bff9-c01d-48cb-ae30-27ea7e879d72}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Prefabs\Builder">
+      <UniqueIdentifier>{4ec0b854-7e81-454e-9344-260da4cbdaf7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Builder">
+      <UniqueIdentifier>{a9118ae9-8c80-4eaa-8bbc-53c5b140ffb4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
@@ -177,6 +183,12 @@
     </ClCompile>
     <ClCompile Include="Maita.cpp">
       <Filter>Prefabs\Enemies\Maita</Filter>
+    </ClCompile>
+    <ClCompile Include="Builder.cpp">
+      <Filter>Prefabs\Builder</Filter>
+    </ClCompile>
+    <ClCompile Include="BuilderComponent.cpp">
+      <Filter>Components\Builder</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -267,6 +279,12 @@
     </ClInclude>
     <ClInclude Include="Maita.h">
       <Filter>Prefabs\Enemies\Maita</Filter>
+    </ClInclude>
+    <ClInclude Include="Builder.h">
+      <Filter>Prefabs\Builder</Filter>
+    </ClInclude>
+    <ClInclude Include="BuilderComponent.h">
+      <Filter>Components\Builder</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

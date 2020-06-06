@@ -148,6 +148,8 @@
   <ItemGroup>
     <ClCompile Include="Bubble.cpp" />
     <ClCompile Include="BubbleComponent.cpp" />
+    <ClCompile Include="Builder.cpp" />
+    <ClCompile Include="BuilderComponent.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="BulletComponent.cpp" />
     <ClCompile Include="Commands.cpp" />
@@ -185,6 +187,8 @@
   <ItemGroup>
     <ClInclude Include="Bubble.h" />
     <ClInclude Include="BubbleComponent.h" />
+    <ClInclude Include="Builder.h" />
+    <ClInclude Include="BuilderComponent.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletComponent.h" />
     <ClInclude Include="Commands.h" />

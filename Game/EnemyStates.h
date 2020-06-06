@@ -69,6 +69,19 @@ public:
 	virtual void Update();
 };
 
+class EnemyChargeState : public EnemyState
+{
+public:
+	//Ctor
+	EnemyChargeState(GameObject* pEnemy);
+	//Dtor
+	virtual ~EnemyChargeState() = default;
+	//Public member functions
+	virtual void Update();
+private:
+	const float m_ResetDistance;
+};
+
 class EnemyBubbleState : public EnemyState
 {
 public:
