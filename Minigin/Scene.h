@@ -19,6 +19,7 @@ public:
 
 	//Public member functions
 	void Add(GameObject* object);
+	void AddWhileRunning(GameObject* pObject);
 	bool Remove(GameObject* pObject);
 
 	void Initialize();

@@ -43,5 +43,7 @@ private:
 	//Private functions
 	//Levels
 	void CreateLevel1(); //Put everything into place
+	void CreateLevel2();
+	void CreateLevel3();
 	void ExportLevel(int index); //Write a level to a binary file
 };

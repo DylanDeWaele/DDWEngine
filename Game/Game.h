@@ -36,6 +36,8 @@ private:
 #pragma region Scene Initialization
 	void InitializeMainMenu();
 	void InitializeLevel1();
+	void InitializeLevel2();
+	void InitializeLevel3();
 	void InitializeGameOverScene();
 #pragma endregion
 };

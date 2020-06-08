@@ -5,8 +5,10 @@
 unsigned int Scene::m_IdCounter = 0;
 
 Scene::Scene(const std::string& name)
-	: m_Name(name)
-{}
+	: m_Name(name),
+	m_Objects{}
+{
+}
 
 Scene::~Scene()
 {
@@ -26,6 +28,13 @@ void Scene::Add(GameObject* object)
 	{
 		Add(pChild);
 	}
+}
+
+void Scene::AddWhileRunning(GameObject* pObject)
+{
+	Add(pObject);
+
+	pObject->Initialize();
 }
 
 bool Scene::Remove(GameObject* pObject)
@@ -89,12 +98,16 @@ void Scene::CleanUp()
 {
 	if (SceneManager::GetInstance().GetActiveScene() == this)
 	{
-		for (GameObject* pGameObject : m_Objects)
+		for (size_t i = 0; i < m_Objects.size(); i++)
 		{
-			if (pGameObject->GetDelete())
+			GameObject* pObject = m_Objects[i];
+			if (pObject)
 			{
-				m_Objects.erase(std::find(m_Objects.begin(), m_Objects.end(), pGameObject));
-				SAFE_DELETE(pGameObject);
+				if (pObject->GetDelete())
+				{
+					m_Objects.erase(std::find(m_Objects.begin(), m_Objects.end(), pObject));
+					SAFE_DELETE(pObject);
+				}
 			}
 		}
 	}

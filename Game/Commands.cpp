@@ -12,7 +12,8 @@ void LeftCommand::Execute()
 	//Find the object the has the playerControllerComponent attached to it and move
 	//This can be optimized with a tag system
 	//Only if game scene
-	if (SceneManager::GetInstance().GetActiveScene()->GetName() == "Level1")
+	const std::string& sceneName = SceneManager::GetInstance().GetActiveScene()->GetName();
+	if (sceneName == "Level1" || sceneName == "Level2" || sceneName == "Level3")
 	{
 		const std::pair<std::string, bool> control{ "MoveLeft",true };
 		SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player")->GetComponent<PlayerControllerComponent>()->SetControl(control);
@@ -22,7 +23,8 @@ void LeftCommand::Execute()
 
 void RightCommand::Execute()
 {
-	if (SceneManager::GetInstance().GetActiveScene()->GetName() == "Level1")
+	const std::string& sceneName = SceneManager::GetInstance().GetActiveScene()->GetName();
+	if (sceneName == "Level1" || sceneName == "Level2" || sceneName == "Level3")
 	{
 		const std::pair<std::string, bool> control{ "MoveRight",true };
 		SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player")->GetComponent<PlayerControllerComponent>()->SetControl(control);
@@ -31,7 +33,8 @@ void RightCommand::Execute()
 
 void Action1Command::Execute()
 {
-	if (SceneManager::GetInstance().GetActiveScene()->GetName() == "Level1")
+	const std::string& sceneName = SceneManager::GetInstance().GetActiveScene()->GetName();
+	if (sceneName == "Level1" || sceneName == "Level2" || sceneName == "Level3")
 	{
 		const std::pair<std::string, bool> control{ "Jump",true };
 		SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player")->GetComponent<PlayerControllerComponent>()->SetControl(control);
@@ -48,7 +51,8 @@ void Action1Command::Execute()
 
 void Action2Command::Execute()
 {
-	if (SceneManager::GetInstance().GetActiveScene()->GetName() == "Level1")
+	const std::string& sceneName = SceneManager::GetInstance().GetActiveScene()->GetName();
+	if (sceneName == "Level1" || sceneName == "Level2" || sceneName == "Level3")
 	{
 		const std::pair<std::string, bool> control{ "Shoot",true };
 		SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player")->GetComponent<PlayerControllerComponent>()->SetControl(control);

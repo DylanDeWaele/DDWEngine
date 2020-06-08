@@ -10,6 +10,7 @@ public:
 	virtual ~LivesComponent() = default;
 
 	//Public member functions
+	virtual void Initialize() override;
 	virtual void Update() override;
 
 	//Getters
@@ -20,6 +21,7 @@ public:
 
 private:
 	//Private datamembers
+	const int m_MaxLives;
 	int m_CurrentLives;
 };
 

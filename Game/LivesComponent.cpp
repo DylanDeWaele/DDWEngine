@@ -5,8 +5,14 @@
 #include "GameTime.h"
 
 LivesComponent::LivesComponent(int amountOfLives)
-	: m_CurrentLives{ amountOfLives }
+	: m_MaxLives{ amountOfLives },
+	m_CurrentLives{amountOfLives}
 {
+}
+
+void LivesComponent::Initialize()
+{
+	m_CurrentLives = m_MaxLives;
 }
 
 void LivesComponent::Update()

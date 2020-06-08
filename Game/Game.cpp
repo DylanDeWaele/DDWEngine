@@ -13,6 +13,7 @@
 #include "TransformComponent.h"
 #include "TextureComponent.h"
 #include "TextComponent.h"
+#include "LevelComponent.h"
 
 //Input
 #include "InputManager.h"
@@ -68,6 +69,8 @@ void Game::Initialize()
 	//Initialize the scenes
 	InitializeMainMenu();
 	InitializeLevel1();
+	InitializeLevel2();
+	InitializeLevel3();
 	InitializeGameOverScene();
 
 	//Set active scene
@@ -105,10 +108,10 @@ void Game::InitializeInput()
 void Game::InitializeMainMenu()
 {
 	Scene& scene = SceneManager::GetInstance().CreateScene("MainMenu");
+	SceneManager::GetInstance().SetActiveScene("MainMenu");
 
 	MainMenu mainMenu = MainMenu{};
 	scene.Add(mainMenu.GetGameObject());
-
 }
 void Game::InitializeLevel1()
 {
@@ -120,23 +123,72 @@ void Game::InitializeLevel1()
 	//Initialize player
 	Player player = Player{ 350,200 };
 	scene.Add(player.GetGameObject());
-	
-	//Initialize enemy
-	//ZenChan enemyZC = ZenChan{ 300,200 };
-	//scene.Add(enemyZC.GetGameObject());
-	
-	//Initialize enemy
-	Maita enemyMaita = Maita{ 200,200 };
-	scene.Add(enemyMaita.GetGameObject());
-	
+
+	//Initialize Level controller
+	GameObject* pLevelManager = new GameObject{"LevelManager", "LevelManager"};
+	pLevelManager->AddComponent(new LevelComponent{ "Level2",0 });
+
+	scene.Add(pLevelManager);
+
 	//Initialize HUD
 	HUD hud = HUD{};
 	scene.Add(hud.GetGameObject());
 }
+void Game::InitializeLevel2()
+{
+	Scene& scene = SceneManager::GetInstance().CreateScene("Level2");
+
+	//Load the level from the levelCreator - Level 2 - Index 1
+	m_LevelCreator.LoadLevel(1, &scene);
+
+	//Initialize player
+	Player player = Player{ 350,200 };
+	scene.Add(player.GetGameObject());
+
+	//Initialize enemy
+	Maita enemyMaita = Maita{ 200,200 };
+	scene.Add(enemyMaita.GetGameObject());
+
+	//Initialize Level controller
+	GameObject* pLevelManager = new GameObject{ "LevelManager", "LevelManager" };
+	pLevelManager->AddComponent(new LevelComponent{ "Level3",1 });
+
+	scene.Add(pLevelManager);
+
+	//Initialize HUD
+	HUD hud = HUD{};
+	scene.Add(hud.GetGameObject());
+}
+void Game::InitializeLevel3()
+{
+	Scene& scene = SceneManager::GetInstance().CreateScene("Level3");
+
+	//Load the level from the levelCreator - Level 3 - Index 2
+	m_LevelCreator.LoadLevel(2, &scene);
+
+	//Initialize player
+	Player player = Player{ 350,200 };
+	scene.Add(player.GetGameObject());
+
+	//Initialize enemy
+	Maita enemyMaita = Maita{ 200,200 };
+	scene.Add(enemyMaita.GetGameObject());
+
+	//Initialize Level controller
+	GameObject* pLevelManager = new GameObject{ "LevelManager", "LevelManager" };
+	pLevelManager->AddComponent(new LevelComponent{ "GameOverScreen",2 });
+
+	scene.Add(pLevelManager);
+
+	//Initialize HUD
+	HUD hud = HUD{};
+	scene.Add(hud.GetGameObject());
+
+}
 void Game::InitializeGameOverScene()
 {
 	Scene& scene = SceneManager::GetInstance().CreateScene("GameOverScreen");
-	
+
 	GameOverScreen gameOverScreen{};
 
 	scene.Add(gameOverScreen.GetGameObject());

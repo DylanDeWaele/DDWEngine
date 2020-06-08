@@ -159,6 +159,7 @@
     <ClCompile Include="GameOverScreenComponent.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="HudComponent.cpp" />
+    <ClCompile Include="LevelComponent.cpp" />
     <ClCompile Include="LevelCounter.cpp" />
     <ClCompile Include="LevelCreator.cpp" />
     <ClCompile Include="LivesComponent.cpp" />
@@ -198,6 +199,7 @@
     <ClInclude Include="GameOverScreenComponent.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="HudComponent.h" />
+    <ClInclude Include="LevelComponent.h" />
     <ClInclude Include="LevelCounter.h" />
     <ClInclude Include="LevelCreator.h" />
     <ClInclude Include="LivesComponent.h" />

@@ -118,7 +118,7 @@ void EnemyDeadState::SpawnPickup(const std::string& sprite, int worth)
 
 EnemyMovingState::EnemyMovingState(GameObject* pEnemy)
 	: EnemyState{ pEnemy },
-	m_GoingLeft{ false },
+	m_GoingLeft{ bool(rand() % 2) }, //0 or 1 -> true or false
 	m_ActionTime{ 3.f },
 	m_CurrentTime{ 0 }
 {

@@ -83,6 +83,8 @@ void LevelCreator::LoadLevel(int index, Scene* pScene)
 void LevelCreator::CreateLevels()
 {
 	CreateLevel1();
+	CreateLevel2();
+	CreateLevel3();
 }
 
 void LevelCreator::CreateLevel1()
@@ -95,7 +97,7 @@ void LevelCreator::CreateLevel1()
 
 	level1.levelCounter = LevelCounter{ 305, windowHeight - thickness - 7, 01 };
 	level1.teleporter = Teleporter{ 0, -30,windowWidth, 10, 305, windowHeight };
-	
+
 	//Initialize ground 1
 	Box box = Box{ 0,thickness, windowWidth / 3.f, thickness, "Ground", "Ground" };
 	level1.environment.push_back(box);
@@ -109,15 +111,15 @@ void LevelCreator::CreateLevel1()
 	level1.environment.push_back(box);
 	box = Box{ windowWidth - 30, windowHeight, 30, windowHeight, "Right Wall" };
 	level1.environment.push_back(box);
-	
-	//Platform
+
+	//Platforms 1
 	box = Box{ 150, 120, 350, thickness, "Platform", "Platform", "Platform" };
 	level1.environment.push_back(box);
 	box = Box{ 150, 220, 350, thickness, "Platform", "Platform", "Platform" };
 	level1.environment.push_back(box);
 	box = Box{ 150, 320, 350, thickness, "Platform", "Platform", "Platform" };
 	level1.environment.push_back(box);
-	
+
 	//Ceiling
 	box = Box{ 0,windowHeight - thickness * 1.5f, 300, thickness, "Ground", "Ground" };
 	level1.environment.push_back(box);
@@ -127,6 +129,98 @@ void LevelCreator::CreateLevel1()
 	m_Levels.push_back(level1);
 
 	ExportLevel(0);
+}
+
+void LevelCreator::CreateLevel2()
+{
+	const float windowWidth{ Minigin::GetInstance().GetWindowWidth() };
+	const float windowHeight{ Minigin::GetInstance().GetWindowHeight() };
+	const float thickness{ 20.f };
+
+	Level level2{};
+
+	level2.levelCounter = LevelCounter{ 305, windowHeight - thickness - 7, 01 };
+
+	//Initialize ground 1
+	Box box = Box{ 0,thickness, windowWidth, thickness, "Ground", "Ground" };
+	level2.environment.push_back(box);
+
+	//Initialize walls
+	box = Box{ 0, windowHeight, 30, windowHeight, "Left Wall" };
+	level2.environment.push_back(box);
+	box = Box{ windowWidth - 30, windowHeight, 30, windowHeight, "Right Wall" };
+	level2.environment.push_back(box);
+
+	//Platform
+	box = Box{ 75, 120, 135, thickness, "Platform", "Platform", "Platform" };
+	level2.environment.push_back(box);
+	box = Box{ windowWidth / 2.f - (125 / 2.f), 120, 125, thickness, "Platform", "Platform", "Platform" };
+	level2.environment.push_back(box);
+	box = Box{ windowWidth / 2.f + (125 / 2.f) + 45, 120, 135, thickness, "Platform", "Platform", "Platform" };
+	level2.environment.push_back(box);
+
+	//Platform 2
+	box = Box{ windowWidth / 2.f - (300/ 2.f), 220, 300, thickness, "Platform", "Platform", "Platform" };
+	level2.environment.push_back(box);
+	////Platforms 3 
+	box = Box{ 200, 320, 100, thickness, "Platform", "Platform", "Platform" };
+	level2.environment.push_back(box);
+	box = Box{ 335, 320, 100, thickness, "Platform", "Platform", "Platform" };
+	level2.environment.push_back(box);
+
+	//Ceiling
+	box = Box{ 0,windowHeight - thickness * 1.5f, 300, thickness, "Ground", "Ground" };
+	level2.environment.push_back(box);
+	box = Box{ 340 ,windowHeight - thickness * 1.5f, 300, thickness, "Ground", "Ground" };
+	level2.environment.push_back(box);
+
+	m_Levels.push_back(level2);
+
+	ExportLevel(1);
+}
+
+void LevelCreator::CreateLevel3()
+{
+	const float windowWidth{ Minigin::GetInstance().GetWindowWidth() };
+	const float windowHeight{ Minigin::GetInstance().GetWindowHeight() };
+	const float thickness{ 20.f };
+
+	Level level3{};
+
+	level3.levelCounter = LevelCounter{ 305, windowHeight - thickness - 7, 01 };
+	level3.teleporter = Teleporter{ 0, -30,windowWidth, 10, 305, windowHeight };
+
+	//Initialize ground 1
+	Box box = Box{ 0,thickness, windowWidth / 3.f, thickness, "Ground", "Ground" };
+	level3.environment.push_back(box);
+	box = Box{ 2 * windowWidth / 3.f,thickness, windowWidth / 3.f, thickness, "Ground", "Ground" };
+	level3.environment.push_back(box);
+	box = Box{ 272.5, thickness, 100.f,thickness, "Ground", "Ground" };
+	level3.environment.push_back(box);
+
+	//Initialize walls
+	box = Box{ 0, windowHeight, 30, windowHeight, "Left Wall" };
+	level3.environment.push_back(box);
+	box = Box{ windowWidth - 30, windowHeight, 30, windowHeight, "Right Wall" };
+	level3.environment.push_back(box);
+
+	//Platforms
+	box = Box{ windowWidth-thickness-500, 320, 500, thickness, "Platform", "Platform", "Platform" };
+	level3.environment.push_back(box);
+	box = Box{0, 220, 500, thickness, "Platform", "Platform", "Platform" };
+	level3.environment.push_back(box);
+	box = Box{ windowWidth - thickness - 500, 120, 500, thickness, "Platform", "Platform", "Platform" };
+	level3.environment.push_back(box);
+
+	//Ceiling
+	box = Box{ 0,windowHeight - thickness * 1.5f, 300, thickness, "Ground", "Ground" };
+	level3.environment.push_back(box);
+	box = Box{ 340 ,windowHeight - thickness * 1.5f, 300, thickness, "Ground", "Ground" };
+	level3.environment.push_back(box);
+
+	m_Levels.push_back(level3);
+
+	ExportLevel(2);
 }
 
 void LevelCreator::ExportLevel(int index)

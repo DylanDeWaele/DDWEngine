@@ -33,7 +33,7 @@ void EnemyControllerComponent::Initialize()
 	//Point to rigidbody
 	m_pRigidbody = m_pGameObject->GetComponent<RigidBodyComponent>();
 
-	if (m_PossibleStates.size() == 0)
+	if (m_PossibleStates.empty())
 	{
 		//Initialize states
 		m_PossibleStates.insert(std::pair<std::string, EnemyState*>("Idle", new EnemyIdleState{ m_pGameObject }));
@@ -43,8 +43,8 @@ void EnemyControllerComponent::Initialize()
 		m_PossibleStates.insert(std::pair<std::string, EnemyState*>("Charge", new EnemyChargeState{ m_pGameObject }));
 		m_PossibleStates.insert(std::pair<std::string, EnemyState*>("Bubble", new EnemyBubbleState{ m_pGameObject }));
 		m_PossibleStates.insert(std::pair<std::string, EnemyState*>("Dead", new EnemyDeadState{ m_pGameObject }));
-		SetState("Moving");
 	}
+	SetState("Moving");
 }
 
 void EnemyControllerComponent::Update()

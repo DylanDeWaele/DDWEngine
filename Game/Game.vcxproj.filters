@@ -96,6 +96,9 @@
     <Filter Include="Components\Builder">
       <UniqueIdentifier>{a9118ae9-8c80-4eaa-8bbc-53c5b140ffb4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components\Level">
+      <UniqueIdentifier>{1a0d99cf-c5ab-4a37-889d-df287d07a4f6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
@@ -189,6 +192,9 @@
     </ClCompile>
     <ClCompile Include="BuilderComponent.cpp">
       <Filter>Components\Builder</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelComponent.cpp">
+      <Filter>Components\Level</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -285,6 +291,9 @@
     </ClInclude>
     <ClInclude Include="BuilderComponent.h">
       <Filter>Components\Builder</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelComponent.h">
+      <Filter>Components\Level</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
