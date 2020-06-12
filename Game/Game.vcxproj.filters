@@ -69,9 +69,6 @@
     <Filter Include="Components\Teleporter">
       <UniqueIdentifier>{3047139b-38e1-4c85-948e-2ceb9295035f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="LevelCreator">
-      <UniqueIdentifier>{8d044711-eea2-4d30-91f7-e5ac5aa4ad96}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Prefabs\LevelCounter">
       <UniqueIdentifier>{bc810f8f-1714-4b18-b82f-f6b4b5390186}</UniqueIdentifier>
     </Filter>
@@ -98,6 +95,12 @@
     </Filter>
     <Filter Include="Components\Level">
       <UniqueIdentifier>{1a0d99cf-c5ab-4a37-889d-df287d07a4f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameMode">
+      <UniqueIdentifier>{f84f30fb-c36f-455b-a714-7fe584591ca7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LevelCreator">
+      <UniqueIdentifier>{8d044711-eea2-4d30-91f7-e5ac5aa4ad96}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -195,6 +198,9 @@
     </ClCompile>
     <ClCompile Include="LevelComponent.cpp">
       <Filter>Components\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="GameMode.cpp">
+      <Filter>GameMode</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -294,6 +300,9 @@
     </ClInclude>
     <ClInclude Include="LevelComponent.h">
       <Filter>Components\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMode.h">
+      <Filter>GameMode</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

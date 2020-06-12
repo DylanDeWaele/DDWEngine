@@ -19,3 +19,8 @@ void ScoreComponent::AddPoints(int points)
 {
 	m_CurrentPoints += points;
 }
+
+void ScoreComponent::Reset()
+{
+	m_CurrentPoints = 0;
+}

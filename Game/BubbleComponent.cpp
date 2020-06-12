@@ -35,7 +35,7 @@ void BubbleComponent::HandlePopping()
 	if (pBoxCollider->IsTriggered())
 	{
 		GameObject* pCollidedObject = pBoxCollider->GetCollidedObject();
-		if (pCollidedObject->GetTag() == "Player")
+		if (pCollidedObject->GetTag() == "Player" || pCollidedObject->GetTag() == "Player2")
 		{
 			//Add points
 			pCollidedObject->GetComponent<ScoreComponent>()->AddPoints(m_pGameObject->GetComponent<WorthComponent>()->GetWorth());

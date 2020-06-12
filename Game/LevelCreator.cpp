@@ -96,7 +96,7 @@ void LevelCreator::CreateLevel1()
 	Level level1{};
 
 	level1.levelCounter = LevelCounter{ 305, windowHeight - thickness - 7, 01 };
-	level1.teleporter = Teleporter{ 0, -30,windowWidth, 10, 305, windowHeight };
+	level1.teleporter = Teleporter{ 0, -30,windowWidth, 10, 305, windowHeight-10 };
 
 	//Initialize ground 1
 	Box box = Box{ 0,thickness, windowWidth / 3.f, thickness, "Ground", "Ground" };
@@ -188,7 +188,7 @@ void LevelCreator::CreateLevel3()
 	Level level3{};
 
 	level3.levelCounter = LevelCounter{ 305, windowHeight - thickness - 7, 01 };
-	level3.teleporter = Teleporter{ 0, -30,windowWidth, 10, 305, windowHeight };
+	level3.teleporter = Teleporter{ 0, -30,windowWidth, 10, 305, windowHeight - 10 };
 
 	//Initialize ground 1
 	Box box = Box{ 0,thickness, windowWidth / 3.f, thickness, "Ground", "Ground" };

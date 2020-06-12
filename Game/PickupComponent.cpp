@@ -17,7 +17,7 @@ void PickupComponent::Update()
 	GameObject* pCollidedObject = m_pGameObject->GetComponent<BoxColliderComponent>()->GetCollidedObject();
 	if (pCollidedObject)
 	{
-		if (pCollidedObject->GetTag() == "Player")
+		if (pCollidedObject->GetTag() == "Player" || pCollidedObject->GetTag() == "Player2")
 		{
 			//Add the score to his points
 			pCollidedObject->GetComponent<ScoreComponent>()->AddPoints(m_pGameObject->GetComponent<WorthComponent>()->GetWorth());

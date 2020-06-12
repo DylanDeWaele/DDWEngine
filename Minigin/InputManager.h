@@ -4,6 +4,8 @@
 #include "Singleton.h"
 #include "Command.h"
 
+#define MAX_PLAYER_COUNT 4
+
 class InputManager final : public Singleton<InputManager>
 {
 public:
@@ -42,10 +44,13 @@ public:
 	void AssignCommandToDownArrowKey(Command* pCommand);
 	void AssignCommandToEnterKey(Command* pCommand);
 
+	int GetCurrentControllerIndex() const;
+
 private:
 	//Private datamembers
 	//Controller
-	XINPUT_STATE m_CurrentState{};
+	int m_CurrentControllerIndex;
+	XINPUT_STATE m_ControllerStates[MAX_PLAYER_COUNT]{};
 
 	//Commands
 	//Controller

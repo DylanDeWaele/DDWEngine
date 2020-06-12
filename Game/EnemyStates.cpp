@@ -2,11 +2,13 @@
 #include "TransformComponent.h"
 #include "BoxColliderComponent.h"
 #include "EnemyControllerComponent.h"
+#include "PlayerControllerComponent.h"
 #include "LivesComponent.h"
 #include "SceneManager.h"
 #include "Scene.h"
 #include "Pickup.h"
 #include "GameTime.h"
+#include "GameMode.h"
 
 EnemyState::EnemyState(GameObject* pEnemy)
 	: m_pEnemy{ pEnemy }
@@ -18,7 +20,7 @@ void EnemyState::CheckPlayerHit()
 	GameObject* pCollidedObject = m_pEnemy->GetComponent<BoxColliderComponent>()->GetCollidedObject();
 	if (pCollidedObject)
 	{
-		if (pCollidedObject->GetTag() == "Player")
+		if (pCollidedObject->GetTag() == "Player" || pCollidedObject->GetTag() == "Player2")
 		{
 			pCollidedObject->GetComponent<LivesComponent>()->ReduceLives(1);
 		}
@@ -44,6 +46,14 @@ EnemyBubbleState::EnemyBubbleState(GameObject* pEnemy)
 
 void EnemyBubbleState::Update()
 {
+	//Lock at top of screen
+	const float& windowHeight = Minigin::GetInstance().GetWindowHeight();
+	const float lockHeight = windowHeight - 50;
+	TransformComponent* pTransform = m_pEnemy->GetComponent<TransformComponent>();
+
+	if (pTransform->GetPosition().y > lockHeight)
+		pTransform->SetPosition({ pTransform->GetPosition().x, lockHeight });
+
 	//Check if the player collided with the enemy in this state
 	GameObject* pCollidedObject{ m_pEnemy->GetComponent<BoxColliderComponent>()->GetCollidedObject() };
 	if (pCollidedObject)
@@ -51,8 +61,9 @@ void EnemyBubbleState::Update()
 		if (pCollidedObject->GetTag() == "Player")
 		{
 			//If so then put the enemy in the dead state
-			m_pEnemy->GetComponent<EnemyControllerComponent>()->Kill();
-		}
+			m_pEnemy->GetComponent<EnemyControllerComponent>()->Kill(0);
+		} else if(pCollidedObject->GetTag() == "Player2")
+			m_pEnemy->GetComponent<EnemyControllerComponent>()->Kill(1);
 	}
 
 	//Increase the time and if its long enough, release the enemy from the bubble
@@ -145,12 +156,10 @@ void EnemyMovingState::Update()
 		case 0:
 			//Jump
 			pController->Jump();
-			std::cout << "JUMP!\n";
 			break;
 		case 1:
 			//Switch directions
 			m_GoingLeft = !m_GoingLeft;
-			std::cout << "SWITCH!\n";
 			break;
 		case 2:
 			//Charge player/Throw builder
@@ -158,7 +167,6 @@ void EnemyMovingState::Update()
 			{
 			case EnemyControllerComponent::Type::ZenChan:
 				//Charge
-				std::cout << "CHARGE!\n";
 				pController->SetState("Charge");
 				break;
 			case EnemyControllerComponent::Type::Maita:
@@ -227,7 +235,9 @@ void EnemyFallingState::Update()
 
 EnemyChargeState::EnemyChargeState(GameObject* pEnemy)
 	: EnemyState{ pEnemy },
-	m_ResetDistance{ 2.5f } //If within 2.5 units go back to other state
+	m_ResetDistance{ 2.5f }, //If within 2.5 units go back to other state
+	m_TargetSet{ false },
+	m_pPlayerPos{ nullptr }
 {
 }
 
@@ -235,16 +245,53 @@ void EnemyChargeState::Update()
 {
 	EnemyControllerComponent* pController = m_pEnemy->GetComponent<EnemyControllerComponent>();
 
-	const glm::vec2& playerPosition = SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player")->GetComponent<TransformComponent>()->GetPosition();
+	if (!m_TargetSet)
+	{
+		//Default player 1
+		m_pPlayerPos = &SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player")->GetComponent<TransformComponent>()->GetPosition();;
+
+		switch (GameMode::GetInstance().GetGameMode())
+		{
+		case GameMode::Mode::Coop:
+			GameObject* pPlayer1 = SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player");
+			GameObject* pPlayer2 = SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player2");
+			//If 1 of the 2 is already dead choose the other
+			if (pPlayer1->GetComponent<PlayerControllerComponent>()->GetState() == "Dead")
+				m_pPlayerPos = &pPlayer2->GetComponent<TransformComponent>()->GetPosition();
+			else if (pPlayer2->GetComponent<PlayerControllerComponent>()->GetState() == "Dead")
+				m_pPlayerPos = &pPlayer1->GetComponent<TransformComponent>()->GetPosition();
+			else
+			{
+				//Choose 1 of the 2
+				int player = rand() % 2; // 0 or 1
+				switch (player)
+				{
+				case 0:
+					//If not available
+					m_pPlayerPos = &pPlayer1->GetComponent<TransformComponent>()->GetPosition();
+					break;
+				case 1:
+					m_pPlayerPos = &pPlayer2->GetComponent<TransformComponent>()->GetPosition();
+					break;
+				}
+				break;
+			}
+		}
+		m_TargetSet = true;
+	}
+
 	const glm::vec2& enemyPosition = m_pEnemy->GetComponent<TransformComponent>()->GetPosition();
 
 	//Charge
-	if (playerPosition.x > enemyPosition.x)
+	if ((*m_pPlayerPos).x > enemyPosition.x)
 		pController->ChargeRight();
 	else
 		pController->ChargeLeft();
 
 	//Reset
-	if (abs(playerPosition.x - enemyPosition.x) < m_ResetDistance)
+	if (abs((*m_pPlayerPos).x - enemyPosition.x) < m_ResetDistance)
+	{
 		pController->SetState("Moving");
+		m_TargetSet = false;
+	}
 }

@@ -57,9 +57,10 @@ void PlayerControllerComponent::Initialize()
 		m_PossibleStates.insert(std::pair<std::string, PlayerState*>("Hit", new HitState{ m_pGameObject, m_Controls }));
 		m_PossibleStates.insert(std::pair<std::string, PlayerState*>("Bubble", new BubbleState{ m_pGameObject, m_Controls }));
 		m_PossibleStates.insert(std::pair<std::string, PlayerState*>("Dead", new DeadState{ m_pGameObject, m_Controls }));
-		m_State.first = "Idle";
-		m_State.second = m_PossibleStates["Idle"];
 	}
+
+	m_State.first = "Idle";
+	m_State.second = m_PossibleStates["Idle"];
 }
 
 void PlayerControllerComponent::Update()
@@ -163,7 +164,7 @@ void PlayerControllerComponent::DecideState()
 	//Go from lowest "priority to highest", example a player can still have a x velocity >/< 0 when in the air,
 	//but it should be the "in air part" that determines the state
 
-	if (m_State.first != "Hit")
+	if (m_State.first != "Hit" && m_State.first != "Dead")
 	{
 		SetState("Idle");
 

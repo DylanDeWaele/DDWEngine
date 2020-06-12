@@ -94,6 +94,12 @@ void GameObject::SetCollisionLayer(const std::string& layer)
 void GameObject::SetDelete(bool shouldDelete)
 {
 	m_ShouldDelete = shouldDelete;
+
+	//Also do it for the children
+	for (GameObject* pChild : m_Children)
+	{
+		pChild->m_ShouldDelete = shouldDelete;
+	}
 }
 
 void GameObject::SetActive(bool active)

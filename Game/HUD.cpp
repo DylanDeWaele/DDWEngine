@@ -17,29 +17,42 @@
 #include "SceneManager.h"
 #include "Scene.h"
 
-HUD::HUD(const std::string& name, const std::string& tag, const std::string& collisionLayer)
-	: Prefab{name, tag, collisionLayer}
+HUD::HUD(int playerNr, const std::string& name, const std::string& tag, const std::string& collisionLayer)
+	: Prefab{ name, tag, collisionLayer }
 {
 	//The hud is an empty gameobject which contains all of these child gameobjects
 	//It only contains the hud component which will handle all hud components
-	HudComponent* pHUD = new HudComponent{};
+	HudComponent* pHUD = new HudComponent{ playerNr };
 	m_pGameObject->AddComponent(pHUD);
+
+	//Decide y
+	float y = 0;
+	switch (playerNr)
+	{
+	case 0:
+		y = Minigin::GetInstance().GetWindowHeight();
+		break;
+	case 1:
+		y = Minigin::GetInstance().GetWindowHeight() - 25;
+		break;
+	}
 
 	//Initialize background
 	const float textureHeight{ 30.f };
 	GameObject* pBackground = new GameObject{ "HUD_Background", "HUD" };
-	TransformComponent* pBackgroundTransform = new TransformComponent{ {0, Minigin::GetInstance().GetWindowHeight()} };
+	TransformComponent* pBackgroundTransform = new TransformComponent{ {0, y} };
 	TextureComponent* pBackgroundTexture = new TextureComponent{ "Black.jpg", Minigin::GetInstance().GetWindowWidth(), textureHeight };
 	pBackground->AddComponent(pBackgroundTransform);
 	pBackground->AddComponent(pBackgroundTexture);
 
 	//Initialize score text
 	float x{ 5.f };
-	float y{ Minigin::GetInstance().GetWindowHeight() - 5.f };
-	Text scoreText = Text{ x,y, "Score: ", ResourceManager::GetInstance().LoadFont("Lingua.otf", 20), "HUD_ScoreText", "HUD" };
+	y -= 5.f;
+
+	Text scoreText = Text{ x,y, "Player " + std::to_string(playerNr + 1) + ": ", ResourceManager::GetInstance().LoadFont("Lingua.otf", 20), "HUD_ScoreText", "HUD" };
 	//Initialize score
 	y--;
-	x += 60.f;
+	x += 80.f;
 	Text score = Text{ x,y, "00000", ResourceManager::GetInstance().LoadFont("Lingua.otf", 20),"HUD_Score", "HUD" };
 	//Initialize health text
 	y++;

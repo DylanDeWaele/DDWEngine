@@ -7,6 +7,7 @@
 
 #include "SceneManager.h"
 #include "Scene.h"
+#include "GameMode.h"
 
 GameOverScreenComponent::GameOverScreenComponent()
 	: BaseComponent{},
@@ -19,20 +20,52 @@ GameOverScreenComponent::GameOverScreenComponent()
 
 void GameOverScreenComponent::Initialize()
 {
-	m_pOptions.push_back(m_pGameObject->GetChild(4)); //RESTART
-	m_pOptions.push_back(m_pGameObject->GetChild(5)); //QUIT
+	switch (GameMode::GetInstance().GetGameMode())
+	{
+	case GameMode::Mode::Singleplayer:
+		m_pOptions.push_back(m_pGameObject->GetChild(4)); //RESTART
+		m_pOptions.push_back(m_pGameObject->GetChild(5)); //QUIT
+		break;
+	case GameMode::Mode::Coop:
+	case GameMode::Mode::Versus:
+		m_pOptions.push_back(m_pGameObject->GetChild(6)); //RESTART
+		m_pOptions.push_back(m_pGameObject->GetChild(7)); //QUIT
+		break;
+	}
 
 	//Put the selection pointer at the first selection position
 	m_pSelectionPointer = SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("SelectionPointer");
 	m_CurrentOption = 0;
 	SetSelectionPointerToOption(m_CurrentOption);
 
-	//Get the players score
-	Scene* pScene = SceneManager::GetInstance().GetSceneByName("Level1");
-	int playerScore = pScene->GetGameObjectWithTag("Player")->GetComponent<ScoreComponent>()->GetPoints();
+	Scene* pScene = nullptr;
+	GameObject* pScore1 = nullptr;
+	GameObject* pScore2 = nullptr;
+	int playerScore1 = 0;
+	int playerScore2 = 0;
 
-	GameObject* pScore = m_pGameObject->GetChild(2);
-	pScore->GetComponent<TextComponent>()->SetText(std::to_string(playerScore));
+	//Get the scores
+	switch (GameMode::GetInstance().GetGameMode())
+	{
+	case GameMode::Mode::Singleplayer:
+		pScene = SceneManager::GetInstance().GetPreviousScene();
+		playerScore1 = pScene->GetGameObjectWithTag("Player")->GetComponent<ScoreComponent>()->GetPoints();
+
+		pScore1 = m_pGameObject->GetChild(2);
+		pScore1->GetComponent<TextComponent>()->SetText(std::to_string(playerScore1));
+		break;
+	case GameMode::Mode::Coop:
+	case GameMode::Mode::Versus:
+		pScene = SceneManager::GetInstance().GetPreviousScene();
+		playerScore1 = pScene->GetGameObjectWithTag("Player")->GetComponent<ScoreComponent>()->GetPoints();
+		playerScore2 = pScene->GetGameObjectWithTag("Player2")->GetComponent<ScoreComponent>()->GetPoints();
+
+		pScore1 = m_pGameObject->GetChild(2);
+		pScore1->GetComponent<TextComponent>()->SetText(std::to_string(playerScore1));
+		pScore2 = m_pGameObject->GetChild(4);
+		pScore2->GetComponent<TextComponent>()->SetText(std::to_string(playerScore2));
+		break;
+	}
 }
 
 void GameOverScreenComponent::Update()

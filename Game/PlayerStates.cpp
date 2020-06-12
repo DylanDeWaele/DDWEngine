@@ -5,6 +5,7 @@
 #include "GameTime.h"
 #include "SceneManager.h"
 #include "Scene.h"
+#include "TransformComponent.h"
 
 PlayerState::PlayerState(GameObject* pPlayer, std::map<std::string, bool>& controls)
 	: m_Controls{ controls },
@@ -187,6 +188,6 @@ DeadState::DeadState(GameObject* pPlayer, std::map<std::string, bool>& controls)
 
 void DeadState::Update()
 {
-	//Transition to gameover screen
-	SceneManager::GetInstance().SetActiveScene("GameOverScreen");
+	//Teleport off screen
+	m_pPlayer->GetComponent<TransformComponent>()->SetPosition({ 100000, 100000 });
 }

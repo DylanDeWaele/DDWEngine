@@ -2,6 +2,11 @@
 #include "GamePCH.h"
 #include <string>
 
+#pragma warning(push)
+#pragma warning (disable:4201)
+#include <glm/vec2.hpp>
+#pragma warning(pop)
+
 class EnemyState //Renamed the states to a "Enemy" in their name to avoid any confusion
 {
 public:
@@ -80,6 +85,8 @@ public:
 	virtual void Update();
 private:
 	const float m_ResetDistance;
+	bool m_TargetSet;
+	const glm::vec2* m_pPlayerPos;
 };
 
 class EnemyBubbleState : public EnemyState

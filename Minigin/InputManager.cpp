@@ -5,22 +5,27 @@
 
 bool InputManager::ProcessInput()
 {
-	//Controller
-	ZeroMemory(&m_CurrentState, sizeof(XINPUT_STATE));
-	XInputGetState(0, &m_CurrentState);
+	for (int i = 0; i < MAX_PLAYER_COUNT; i++)
+	{
+		//Controller
+		ZeroMemory(&m_ControllerStates[i], sizeof(XINPUT_STATE));
+		XInputGetState(i, &m_ControllerStates[i]);
 
-	if (IsPressed(ControllerButton::LeftDPad))
-		m_pLeftDPAD->Execute();
-	if (IsPressed(ControllerButton::RightDPad))
-		m_pRightDPAD->Execute();
-	if (IsPressed(ControllerButton::UpDPad))
-		m_pUpDPAD->Execute();
-	if (IsPressed(ControllerButton::DownDPad))
-		m_pDownDPAD->Execute();
-	if (IsPressed(ControllerButton::SouthButton))
-		m_pSouthButton->Execute();
-	if (IsPressed(ControllerButton::WestButton))
-		m_pWestButton->Execute();
+		m_CurrentControllerIndex = i;
+
+		if (IsPressed(ControllerButton::LeftDPad))
+			m_pLeftDPAD->Execute();
+		if (IsPressed(ControllerButton::RightDPad))
+			m_pRightDPAD->Execute();
+		if (IsPressed(ControllerButton::UpDPad))
+			m_pUpDPAD->Execute();
+		if (IsPressed(ControllerButton::DownDPad))
+			m_pDownDPAD->Execute();
+		if (IsPressed(ControllerButton::SouthButton))
+			m_pSouthButton->Execute();
+		if (IsPressed(ControllerButton::WestButton))
+			m_pWestButton->Execute();
+	}
 
 	//Keyboard - single hit events
 	SDL_Event e;
@@ -120,6 +125,11 @@ void InputManager::AssignCommandToEnterKey(Command* pCommand)
 	m_pEnterKey = pCommand;
 }
 
+int InputManager::GetCurrentControllerIndex() const
+{
+	return m_CurrentControllerIndex;
+}
+
 void InputManager::AssignCommandToAKey(Command* pCommand)
 {
 	m_pAKey = pCommand;
@@ -136,17 +146,17 @@ bool InputManager::IsPressed(ControllerButton button) const
 	switch (button)
 	{
 	case ControllerButton::LeftDPad:
-		return (m_CurrentState.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_LEFT);
+		return (m_ControllerStates[m_CurrentControllerIndex].Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_LEFT);
 	case ControllerButton::RightDPad:
-		return (m_CurrentState.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_RIGHT);
+		return (m_ControllerStates[m_CurrentControllerIndex].Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_RIGHT);
 	case ControllerButton::DownDPad:
-		return (m_CurrentState.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_DOWN);
+		return (m_ControllerStates[m_CurrentControllerIndex].Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_DOWN);
 	case ControllerButton::UpDPad:
-		return (m_CurrentState.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_UP);
+		return (m_ControllerStates[m_CurrentControllerIndex].Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_UP);
 	case ControllerButton::SouthButton:
-		return (m_CurrentState.Gamepad.wButtons & XINPUT_GAMEPAD_A);
+		return (m_ControllerStates[m_CurrentControllerIndex].Gamepad.wButtons & XINPUT_GAMEPAD_A);
 	case ControllerButton::WestButton:
-		return (m_CurrentState.Gamepad.wButtons & XINPUT_GAMEPAD_X);
+		return (m_ControllerStates[m_CurrentControllerIndex].Gamepad.wButtons & XINPUT_GAMEPAD_X);
 	default: return false;
 	}
 }

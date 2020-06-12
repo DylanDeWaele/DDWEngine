@@ -6,7 +6,7 @@
 
 LivesComponent::LivesComponent(int amountOfLives)
 	: m_MaxLives{ amountOfLives },
-	m_CurrentLives{amountOfLives}
+	m_CurrentLives{ amountOfLives }
 {
 }
 
@@ -30,7 +30,8 @@ void LivesComponent::ReduceLives(int amount)
 	PlayerControllerComponent* pPc = m_pGameObject->GetComponent<PlayerControllerComponent>();
 	if (pPc->GetState() != "Hit")
 	{
-		m_CurrentLives -= amount;
+		if (m_CurrentLives > 0)
+			m_CurrentLives -= amount;
 
 		//Set the player state
 		if (m_CurrentLives > 0)

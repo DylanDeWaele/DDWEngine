@@ -41,6 +41,8 @@ bool Scene::Remove(GameObject* pObject)
 {
 	//Set object to delete to true
 	pObject->SetDelete(true);
+
+	//Also delete all children
 	return true;
 }
 
@@ -50,7 +52,8 @@ void Scene::Initialize()
 	{
 		for (auto& object : m_Objects)
 		{
-			object->Initialize();
+			if (object)
+				object->Initialize();
 		}
 	}
 }
@@ -132,7 +135,6 @@ GameObject* Scene::GetGameObjectWithTag(const std::string& tag) const
 		if (pGameObject->GetTag() == tag)
 			return pGameObject;
 	}
-	std::cout << "ERROR - GetGameObjectWithTag(" << tag << ") - No GameObject was found with this tag\n";
 	return nullptr;
 }
 
@@ -146,8 +148,6 @@ const std::vector<GameObject*> Scene::GetGameObjecstWithTag(const std::string& t
 		if (pGameObject->GetTag() == tag)
 			found.push_back(pGameObject);
 	}
-	if (found.size() == 0)
-		std::cout << "ERROR - GetGameObjectsWithTag(" << tag << ") - No GameObjects were found with this tag\n";
 
 	return found;
 }

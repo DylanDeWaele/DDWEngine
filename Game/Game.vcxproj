@@ -155,6 +155,7 @@
     <ClCompile Include="Commands.cpp" />
     <ClCompile Include="EnemyControllerComponent.cpp" />
     <ClCompile Include="EnemyStates.cpp" />
+    <ClCompile Include="GameMode.cpp" />
     <ClCompile Include="GameOverScreen.cpp" />
     <ClCompile Include="GameOverScreenComponent.cpp" />
     <ClCompile Include="HUD.cpp" />
@@ -195,6 +196,7 @@
     <ClInclude Include="Commands.h" />
     <ClInclude Include="EnemyControllerComponent.h" />
     <ClInclude Include="EnemyStates.h" />
+    <ClInclude Include="GameMode.h" />
     <ClInclude Include="GameOverScreen.h" />
     <ClInclude Include="GameOverScreenComponent.h" />
     <ClInclude Include="HUD.h" />

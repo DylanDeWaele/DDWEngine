@@ -6,6 +6,8 @@
 #include <utility>
 #include "MainMenuComponent.h"
 #include "GameOverScreenComponent.h"
+#include "InputManager.h"
+#include "GameMode.h"
 
 void LeftCommand::Execute()
 {
@@ -13,37 +15,94 @@ void LeftCommand::Execute()
 	//This can be optimized with a tag system
 	//Only if game scene
 	const std::string& sceneName = SceneManager::GetInstance().GetActiveScene()->GetName();
-	if (sceneName == "Level1" || sceneName == "Level2" || sceneName == "Level3")
+	if (sceneName == "Level1SP" || sceneName == "Level2SP" || sceneName == "Level3SP" || 
+		sceneName == "Level1MP" || sceneName == "Level2MP" || sceneName == "Level3MP" ||
+		sceneName == "Level1VS" || sceneName == "Level2VS" || sceneName == "Level3VS")
 	{
 		const std::pair<std::string, bool> control{ "MoveLeft",true };
-		SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player")->GetComponent<PlayerControllerComponent>()->SetControl(control);
-	}
 
+		switch (GameMode::GetInstance().GetGameMode())
+		{
+		case GameMode::Mode::Singleplayer: 
+			SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player")->GetComponent<PlayerControllerComponent>()->SetControl(control);
+			break;
+		case GameMode::Mode::Coop: 
+		case GameMode::Mode::Versus:
+			switch (InputManager::GetInstance().GetCurrentControllerIndex())
+			{
+			case 0:
+				SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player")->GetComponent<PlayerControllerComponent>()->SetControl(control);
+				break;
+			case 1:
+				SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player2")->GetComponent<PlayerControllerComponent>()->SetControl(control);
+				break;
+			}
+			break;
+		}
+	}
 }
 
 void RightCommand::Execute()
 {
 	const std::string& sceneName = SceneManager::GetInstance().GetActiveScene()->GetName();
-	if (sceneName == "Level1" || sceneName == "Level2" || sceneName == "Level3")
+	if (sceneName == "Level1SP" || sceneName == "Level2SP" || sceneName == "Level3SP" ||
+		sceneName == "Level1MP" || sceneName == "Level2MP" || sceneName == "Level3MP" ||
+		sceneName == "Level1VS" || sceneName == "Level2VS" || sceneName == "Level3VS")
 	{
 		const std::pair<std::string, bool> control{ "MoveRight",true };
-		SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player")->GetComponent<PlayerControllerComponent>()->SetControl(control);
+		switch (GameMode::GetInstance().GetGameMode())
+		{
+		case GameMode::Mode::Singleplayer:
+			SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player")->GetComponent<PlayerControllerComponent>()->SetControl(control);
+			break;
+		case GameMode::Mode::Coop:
+		case GameMode::Mode::Versus:
+			switch (InputManager::GetInstance().GetCurrentControllerIndex())
+			{
+			case 0:
+				SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player")->GetComponent<PlayerControllerComponent>()->SetControl(control);
+				break;
+			case 1:
+				SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player2")->GetComponent<PlayerControllerComponent>()->SetControl(control);
+				break;
+			}
+			break;
+		}
 	}
 }
 
 void Action1Command::Execute()
 {
 	const std::string& sceneName = SceneManager::GetInstance().GetActiveScene()->GetName();
-	if (sceneName == "Level1" || sceneName == "Level2" || sceneName == "Level3")
+	if (sceneName == "Level1SP" || sceneName == "Level2SP" || sceneName == "Level3SP" ||
+		sceneName == "Level1MP" || sceneName == "Level2MP" || sceneName == "Level3MP" ||
+		sceneName == "Level1VS" || sceneName == "Level2VS" || sceneName == "Level3VS")
 	{
 		const std::pair<std::string, bool> control{ "Jump",true };
-		SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player")->GetComponent<PlayerControllerComponent>()->SetControl(control);
+		switch (GameMode::GetInstance().GetGameMode())
+		{
+		case GameMode::Mode::Singleplayer:
+			SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player")->GetComponent<PlayerControllerComponent>()->SetControl(control);
+			break;
+		case GameMode::Mode::Coop:
+		case GameMode::Mode::Versus:
+			switch (InputManager::GetInstance().GetCurrentControllerIndex())
+			{
+			case 0:
+				SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player")->GetComponent<PlayerControllerComponent>()->SetControl(control);
+				break;
+			case 1:
+				SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player2")->GetComponent<PlayerControllerComponent>()->SetControl(control);
+				break;
+			}
+			break;
+		}
 	}
-	if (SceneManager::GetInstance().GetActiveScene()->GetName() == "MainMenu")
+	if (sceneName == "MainMenu")
 	{
 		SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("MainMenu")->GetComponent<MainMenuComponent>()->Select();
 	}
-	if (SceneManager::GetInstance().GetActiveScene()->GetName() == "GameOverScreen")
+	if (sceneName == "GameOverScreenSP" || sceneName == "GameOverScreenMP" || sceneName == "GameOverScreenVS")
 	{
 		SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("GameOverScreen")->GetComponent<GameOverScreenComponent>()->Select();
 	}
@@ -52,20 +111,40 @@ void Action1Command::Execute()
 void Action2Command::Execute()
 {
 	const std::string& sceneName = SceneManager::GetInstance().GetActiveScene()->GetName();
-	if (sceneName == "Level1" || sceneName == "Level2" || sceneName == "Level3")
+	if (sceneName == "Level1SP" || sceneName == "Level2SP" || sceneName == "Level3SP" ||
+		sceneName == "Level1MP" || sceneName == "Level2MP" || sceneName == "Level3MP" ||
+		sceneName == "Level1VS" || sceneName == "Level2VS" || sceneName == "Level3VS")
 	{
 		const std::pair<std::string, bool> control{ "Shoot",true };
-		SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player")->GetComponent<PlayerControllerComponent>()->SetControl(control);
+		switch (GameMode::GetInstance().GetGameMode())
+		{
+		case GameMode::Mode::Singleplayer:
+			SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player")->GetComponent<PlayerControllerComponent>()->SetControl(control);
+			break;
+		case GameMode::Mode::Coop:
+		case GameMode::Mode::Versus:
+			switch (InputManager::GetInstance().GetCurrentControllerIndex())
+			{
+			case 0:
+				SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player")->GetComponent<PlayerControllerComponent>()->SetControl(control);
+				break;
+			case 1:
+				SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player2")->GetComponent<PlayerControllerComponent>()->SetControl(control);
+				break;
+			}
+			break;
+		}
 	}
 }
 
 void UpCommand::Execute()
 {
-	if (SceneManager::GetInstance().GetActiveScene()->GetName() == "MainMenu")
+	const std::string& sceneName = SceneManager::GetInstance().GetActiveScene()->GetName();
+	if (sceneName == "MainMenu")
 	{
 		SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("MainMenu")->GetComponent<MainMenuComponent>()->SelectUp();
 	}
-	if (SceneManager::GetInstance().GetActiveScene()->GetName() == "GameOverScreen")
+	if (sceneName == "GameOverScreenSP" || sceneName == "GameOverScreenMP" || sceneName == "GameOverScreenVS")
 	{
 		SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("GameOverScreen")->GetComponent<GameOverScreenComponent>()->SelectUp();
 	}
@@ -73,11 +152,12 @@ void UpCommand::Execute()
 
 void DownCommand::Execute()
 {
-	if (SceneManager::GetInstance().GetActiveScene()->GetName() == "MainMenu")
+	const std::string& sceneName = SceneManager::GetInstance().GetActiveScene()->GetName();
+	if (sceneName == "MainMenu")
 	{
 		SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("MainMenu")->GetComponent<MainMenuComponent>()->SelectDown();
 	}
-	if (SceneManager::GetInstance().GetActiveScene()->GetName() == "GameOverScreen")
+	if (sceneName == "GameOverScreenSP" || sceneName == "GameOverScreenMP" || sceneName == "GameOverScreenVS")
 	{
 		SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("GameOverScreen")->GetComponent<GameOverScreenComponent>()->SelectDown();
 	}

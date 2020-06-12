@@ -47,8 +47,6 @@ void  Minigin::Initialize()
 
 	//Seeding rand
 	srand(unsigned int(time(nullptr)));
-
-	m_DoContinue = true;
 }
 
 void  Minigin::Cleanup()

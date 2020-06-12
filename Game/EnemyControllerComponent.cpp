@@ -54,9 +54,6 @@ void EnemyControllerComponent::Update()
 
 	//What is the state now?
 	DecideStates();
-
-	//State
-	//std::cout << m_State.first << '\n';
 }
 
 void EnemyControllerComponent::SetState(const std::string& state)
@@ -119,7 +116,7 @@ void EnemyControllerComponent::Bubble()
 	SetState("Bubble");
 }
 
-void EnemyControllerComponent::Kill()
+void EnemyControllerComponent::Kill(int playerNr)
 {
 	//Change his sprite back
 	switch (m_Type)
@@ -134,7 +131,15 @@ void EnemyControllerComponent::Kill()
 	//Apply gravity again
 	m_pGameObject->GetComponent<RigidBodyComponent>()->SetUseGravity(true);
 	//Give the player his points
-	SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player")->GetComponent<ScoreComponent>()->AddPoints(m_pGameObject->GetComponent<WorthComponent>()->GetWorth());
+	switch (playerNr)
+	{
+	case 0:
+		SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player")->GetComponent<ScoreComponent>()->AddPoints(m_pGameObject->GetComponent<WorthComponent>()->GetWorth());
+		break;
+	case 1:
+		SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player2")->GetComponent<ScoreComponent>()->AddPoints(m_pGameObject->GetComponent<WorthComponent>()->GetWorth());
+		break;
+	}
 	//Change to the dead state
 	SetState("Dead");
 }

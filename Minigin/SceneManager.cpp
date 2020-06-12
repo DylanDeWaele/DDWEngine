@@ -36,6 +36,10 @@ void SceneManager::SetActiveScene(const std::string& sceneName)
 	{
 		if (pScene->GetName() == sceneName)
 		{
+			if (m_pActiveScene)
+				m_pActiveScene->CleanUp();
+
+			m_pPreviousScene = m_pActiveScene;
 			m_pActiveScene = pScene;
 			m_pActiveScene->Initialize(); //Reinitialize the scene
 		}
@@ -55,6 +59,11 @@ Scene* SceneManager::GetSceneByName(const std::string& name) const
 			return pScene;
 	}
 	return nullptr;
+}
+
+Scene* SceneManager::GetPreviousScene() const
+{
+	return m_pPreviousScene;
 }
 
 SceneManager::SceneManager()

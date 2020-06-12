@@ -16,6 +16,7 @@ public:
 	int GetPoints() const;
 	//Setters
 	void AddPoints(int points);
+	void Reset();
 
 private:
 	//Private datamembers

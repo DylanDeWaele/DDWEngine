@@ -8,7 +8,7 @@ class LevelComponent : public BaseComponent
 public:
 	//Ctor
 	//Type 1 = ZenChan, Type 2 = Maita, Type 3 = Both
-	LevelComponent(const std::string& nextLevel, int enemyType, int amountOfEnemies = 5);
+	LevelComponent(const std::string& nextLevel, int enemyType = 0, int amountOfEnemies = 5);
 	//Dtor
 	virtual ~LevelComponent() = default;
 
@@ -34,8 +34,12 @@ private:
 	float m_CurrentTime; //Use this variable on 2 different occasions -> Enemies and level ending
 
 	//Private functions
+	void UpdateNormal();
+	void UpdateVS();
+
 	void HandleEnemySpawn();
 	void HandleLevelEnd();
 	void HandleLevelSwap();
+	void HandleDeath();
 };
 

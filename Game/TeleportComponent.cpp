@@ -14,7 +14,7 @@ void TeleportComponent::Update()
 		GameObject* pCollidedObject = pBoxCollider->GetCollidedObject();
 		const std::string& tag = pCollidedObject->GetTag();
 
-		if (tag == "Player" || tag == "Enemy")
+		if (tag == "Player" || tag == "Enemy" || tag == "Player2")
 		{
 			const glm::vec2& tpPosition = m_pGameObject->GetChild(0)->GetComponent<TransformComponent>()->GetPosition();
 			pCollidedObject->GetComponent<TransformComponent>()->SetPosition({ tpPosition.x, tpPosition.y });

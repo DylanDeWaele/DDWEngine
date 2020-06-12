@@ -5,7 +5,7 @@ class HudComponent : public BaseComponent
 {
 public:
 	//Ctor
-	HudComponent() = default;
+	HudComponent(int playerNr);
 	//Dtor
 	virtual ~HudComponent() = default;
 
@@ -14,5 +14,8 @@ public:
 
 	void UpdateScore() const;
 	void UpdateLives() const;
+private:
+	//Private datamembers
+	const int m_PlayerNr;
 };
 

@@ -41,7 +41,7 @@ void BulletComponent::HandleBubbleChange()
 	if (pBoxCollider->IsTriggered())
 	{
 		GameObject* pCollidedObject = pBoxCollider->GetCollidedObject();
-		if (pCollidedObject->GetTag() != "Player" && pCollidedObject->GetTag() != "Bubble")
+		if (pCollidedObject->GetTag() != "Player" && pCollidedObject->GetTag() != "Player2" && pCollidedObject->GetTag() != "Bubble" && pCollidedObject->GetTag() != "Pickup")
 		{
 			//If we hit an enemy, we bubble him
 			if (pCollidedObject->GetTag() == "Enemy")

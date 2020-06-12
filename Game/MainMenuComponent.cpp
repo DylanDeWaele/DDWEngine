@@ -2,11 +2,13 @@
 #include "MainMenuComponent.h"
 
 #include "GameTime.h"
+#include "GameMode.h"
 #include "SceneManager.h"
 #include "Scene.h"
 
 //Components
 #include "TransformComponent.h"
+#include "ScoreComponent.h"
 
 MainMenuComponent::MainMenuComponent()
 	:BaseComponent{},
@@ -80,13 +82,23 @@ void MainMenuComponent::Select()
 		{
 		case 0:
 			//Load singeplayer
-			SceneManager::GetInstance().SetActiveScene("Level1");
+			GameMode::GetInstance().SetGameMode(GameMode::Mode::Singleplayer);
+			SceneManager::GetInstance().SetActiveScene("Level1SP");
+			SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player")->GetComponent<ScoreComponent>()->Reset();
 			break;
 		case 1:
 			//Load 2 player
+			GameMode::GetInstance().SetGameMode(GameMode::Mode::Coop);
+			SceneManager::GetInstance().SetActiveScene("Level1MP");
+			SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player")->GetComponent<ScoreComponent>()->Reset();
+			SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player2")->GetComponent<ScoreComponent>()->Reset();
 			break;
 		case 2:
 			//Load versus
+			GameMode::GetInstance().SetGameMode(GameMode::Mode::Versus);
+			SceneManager::GetInstance().SetActiveScene("Level1VS");
+			SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player")->GetComponent<ScoreComponent>()->Reset();
+			SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player2")->GetComponent<ScoreComponent>()->Reset();
 			break;
 		case 3:
 			//Quit game

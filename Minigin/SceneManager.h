@@ -25,11 +25,13 @@ public:
 	//Getters
 	Scene* GetActiveScene() const;
 	Scene* GetSceneByName(const std::string& name) const;
+	Scene* GetPreviousScene() const;
 
 private:
 	friend class Singleton<SceneManager>;
 	std::vector<Scene*> m_Scenes;
 	Scene* m_pActiveScene;
+	Scene* m_pPreviousScene;
 
 	bool m_SkipScene = false; //This boolean determines whether we should skip updating all the components/gameobjects in a scene (scene transition)
 };

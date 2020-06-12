@@ -41,7 +41,7 @@ public:
 
 	//Gameplay
 	void Bubble();
-	void Kill();
+	void Kill(int playerNr);
 	void Free();
 	void ShootBuilder();
 

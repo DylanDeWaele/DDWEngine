@@ -7,6 +7,8 @@ class Command;
 #include "Player.h"
 #include "Box.h"
 #include "LevelCreator.h"
+#include "Singleton.h"
+#include "GameMode.h"
 
 class Game
 {
@@ -17,6 +19,7 @@ public:
 	~Game();
 	//Public member functions
 	void Run();
+
 private:
 	//Private datamembers
 	//Level manager
@@ -35,9 +38,19 @@ private:
 	void InitializeInput();
 #pragma region Scene Initialization
 	void InitializeMainMenu();
-	void InitializeLevel1();
-	void InitializeLevel2();
-	void InitializeLevel3();
-	void InitializeGameOverScene();
+	void InitializeSP();
+	void InitializeMP();
+	void InitializeVS();
+	void InitializeLevel1SP();
+	void InitializeLevel2SP();
+	void InitializeLevel3SP();
+	void InitializeLevel1MP();
+	void InitializeLevel2MP();
+	void InitializeLevel3MP();
+	void InitializeLevel1VS();
+	void InitializeLevel2VS();
+	void InitializeLevel3VS();
+	void InitializeGameOverSceneSP();
+	void InitializeGameOverSceneMP();
 #pragma endregion
 };
