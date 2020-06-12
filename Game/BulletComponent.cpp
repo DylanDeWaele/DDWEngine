@@ -9,17 +9,24 @@
 #include "SceneManager.h"
 #include "Scene.h"
 #include "Bubble.h"
+#include "GameMode.h"
+#include "LivesComponent.h"
+#include "ScoreComponent.h"
 
-BulletComponent::BulletComponent(float lifeTime)
+BulletComponent::BulletComponent(float lifeTime, int playerNr)
 	: m_Lifetime{ lifeTime },
-	m_CurrentTime{}
+	m_CurrentTime{},
+	m_PlayerNr{playerNr}
 {
 
 }
 
 void BulletComponent::Update()
 {
-	HandleBubbleChange();
+	if (GameMode::GetInstance().GetGameMode() != GameMode::Mode::Versus)
+		HandleBubbleChange();
+	else
+		HandlePvp();
 
 	HandleLifetime();
 }
@@ -52,13 +59,13 @@ void BulletComponent::HandleBubbleChange()
 			else
 			{
 				const glm::vec2& position = m_pGameObject->GetComponent<TransformComponent>()->GetPosition();
-					float x{};
+				float x{};
 
-					//Push the bubble a bit outwards
-					if (m_pGameObject->GetComponent<RigidBodyComponent>()->GetVelocity().x < 0) //going left
-						x = position.x + pBoxCollider->GetRect().width / 2.f;
-					else
-						x = position.x - pBoxCollider->GetRect().width;
+				//Push the bubble a bit outwards
+				if (m_pGameObject->GetComponent<RigidBodyComponent>()->GetVelocity().x < 0) //going left
+					x = position.x + pBoxCollider->GetRect().width / 2.f;
+				else
+					x = position.x - pBoxCollider->GetRect().width;
 
 				Bubble bubble = Bubble{ x, position.y };
 				SceneManager::GetInstance().GetActiveScene()->Add(bubble.GetGameObject());
@@ -67,4 +74,35 @@ void BulletComponent::HandleBubbleChange()
 			SceneManager::GetInstance().GetActiveScene()->Remove(m_pGameObject);
 		}
 	}
+}
+
+void BulletComponent::HandlePvp()
+{
+	BoxColliderComponent* pBoxCollider{ m_pGameObject->GetComponent<BoxColliderComponent>() };
+
+	if (pBoxCollider->IsTriggered())
+	{
+		GameObject* pCollidedObject = pBoxCollider->GetCollidedObject();
+		if (m_PlayerNr == 0 && pCollidedObject->GetTag() == "Player2")
+		{
+			GameObject* pPlayer = SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player");
+			pPlayer->GetComponent<ScoreComponent>()->AddPoints(100);
+			
+			pCollidedObject->GetComponent<LivesComponent>()->ReduceLives(1);
+
+			//Delete this gameobject
+			SceneManager::GetInstance().GetActiveScene()->Remove(m_pGameObject);
+		}
+		else if (m_PlayerNr == 1 && pCollidedObject->GetTag() == "Player")
+		{
+			GameObject* pPlayer = SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player2");
+			pPlayer->GetComponent<ScoreComponent>()->AddPoints(100);
+			
+			pCollidedObject->GetComponent<LivesComponent>()->ReduceLives(1);
+
+			//Delete this gameobject
+			SceneManager::GetInstance().GetActiveScene()->Remove(m_pGameObject);
+		}
+	}
+
 }

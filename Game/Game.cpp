@@ -289,7 +289,7 @@ void Game::InitializeLevel1VS()
 	scene.Add(player.GetGameObject());
 
 	//Initialize player 2
-	Player player2 = Player{ 100,50,1, "Player2", "Player2" };
+	Player player2 = Player{ 100,50,2, "Player2", "Player2" };
 	scene.Add(player2.GetGameObject());
 
 	GameObject* pLevelManager = new GameObject{ "LevelManager", "LevelManager" };
@@ -317,7 +317,7 @@ void Game::InitializeLevel2VS()
 	scene.Add(player.GetGameObject());
 
 	//Initialize player 2
-	Player player2 = Player{ 100,50,1, "Player2", "Player2" };
+	Player player2 = Player{ 100,50,2, "Player2", "Player2" };
 	scene.Add(player2.GetGameObject());
 
 	GameObject* pLevelManager = new GameObject{ "LevelManager", "LevelManager" };
@@ -345,7 +345,7 @@ void Game::InitializeLevel3VS()
 	scene.Add(player.GetGameObject());
 
 	//Initialize player 2
-	Player player2 = Player{ 100,50,1, "Player2", "Player2" };
+	Player player2 = Player{ 100,50,2, "Player2", "Player2" };
 	scene.Add(player2.GetGameObject());
 
 	GameObject* pLevelManager = new GameObject{ "LevelManager", "LevelManager" };

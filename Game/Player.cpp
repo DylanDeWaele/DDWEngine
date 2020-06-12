@@ -26,6 +26,9 @@ Player::Player(float x, float y, int playerCount, const std::string& name, const
 	case 1:
 		pTexture = new TextureComponent{ "Player2.png",width,height };
 		break;
+	case 2:
+		pTexture = new TextureComponent{ "Maita.png",width,height };
+		break;
 	}
 
 	BoxColliderComponent* pBoxCollider = new BoxColliderComponent{ width,height };

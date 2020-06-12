@@ -13,6 +13,8 @@
 #include "SceneManager.h"
 #include "Scene.h"
 #include "PlayerStates.h"
+#include "Builder.h"
+#include "GameMode.h"
 
 PlayerControllerComponent::PlayerControllerComponent()
 	:BaseComponent{},
@@ -134,9 +136,18 @@ void PlayerControllerComponent::Shoot()
 		if (m_LookingRight)
 			x += m_pGameObject->GetComponent<BoxColliderComponent>()->GetRect().width;
 
-		//Instantiate
-		Bullet bullet = Bullet{ x, position.y - offset, m_LookingRight };
-		SceneManager::GetInstance().GetActiveScene()->Add(bullet.GetGameObject());
+		if (GameMode::GetInstance().GetGameMode() == GameMode::Mode::Versus && m_pGameObject->GetTag() == "Player2")
+		{
+			//Instantiate builder
+			Bullet bullet = Bullet{ x, position.y - offset, m_LookingRight,1,true};
+			SceneManager::GetInstance().GetActiveScene()->Add(bullet.GetGameObject());
+		}
+		else
+		{
+			//Instantiate bullet
+			Bullet bullet = Bullet{ x, position.y - offset, m_LookingRight,0 };
+			SceneManager::GetInstance().GetActiveScene()->Add(bullet.GetGameObject());
+		}
 
 		m_AttackReady = false;
 	}

@@ -5,7 +5,7 @@ class Player : public Prefab
 {
 public:
 	//Ctor
-	Player(float x, float y, int playerCount = 0, const std::string& name = "Player",
+	Player(float x, float y, int playerType = 0, const std::string& name = "Player",
 												  const std::string& tag = "Player",
 												  const std::string& collisionLayer = "Default");
 	//Dtor

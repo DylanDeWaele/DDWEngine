@@ -41,5 +41,6 @@ private:
 	void HandleLevelEnd();
 	void HandleLevelSwap();
 	void HandleDeath();
+	void HandlePointsTransferMP(int& currentPoints1, int& currentPoints2);
 };
 

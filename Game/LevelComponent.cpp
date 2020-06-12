@@ -157,15 +157,7 @@ void LevelComponent::HandleLevelSwap()
 			break;
 		case GameMode::Mode::Versus:
 		case GameMode::Mode::Coop:
-			currentPoints1 = SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player")->GetComponent<ScoreComponent>()->GetPoints();
-			currentPoints2 = SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player2")->GetComponent<ScoreComponent>()->GetPoints();
-			//Load new level
-			SceneManager::GetInstance().SetActiveScene(m_NextLevel);
-			if (m_NextLevel != "GameOverScreenMP")
-			{
-				SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player")->GetComponent<ScoreComponent>()->AddPoints(currentPoints1);
-				SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player2")->GetComponent<ScoreComponent>()->AddPoints(currentPoints2);
-			}
+			HandlePointsTransferMP(currentPoints1, currentPoints2);
 			break;
 		}
 	}
@@ -173,6 +165,9 @@ void LevelComponent::HandleLevelSwap()
 
 void LevelComponent::HandleDeath()
 {
+	int currentPoints1 = 0;
+	int currentPoints2 = 0;
+
 	//Or if players are dead
 	switch (GameMode::GetInstance().GetGameMode())
 	{
@@ -191,8 +186,23 @@ void LevelComponent::HandleDeath()
 		//1 of the 2 is dead
 		if (SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player")->GetComponent<PlayerControllerComponent>()->GetState() == "Dead" ||
 			SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player2")->GetComponent<PlayerControllerComponent>()->GetState() == "Dead")
-			SceneManager::GetInstance().SetActiveScene("GameOverScreenMP");
+		{
+			HandlePointsTransferMP(currentPoints1, currentPoints2);
+		}
 		break;
 	}
 
+}
+
+void LevelComponent::HandlePointsTransferMP(int& currentPoints1, int& currentPoints2)
+{
+	currentPoints1 = SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player")->GetComponent<ScoreComponent>()->GetPoints();
+	currentPoints2 = SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player2")->GetComponent<ScoreComponent>()->GetPoints();
+	//Load new level
+	SceneManager::GetInstance().SetActiveScene(m_NextLevel);
+	if (m_NextLevel != "GameOverScreenMP")
+	{
+		SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player")->GetComponent<ScoreComponent>()->AddPoints(currentPoints1);
+		SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player2")->GetComponent<ScoreComponent>()->AddPoints(currentPoints2);
+	}
 }
