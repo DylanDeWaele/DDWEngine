@@ -65,6 +65,9 @@ void Game::Initialize()
 	//Initialize input commands
 	InitializeInput();
 
+	//Console controls
+	WriteControls();
+
 	//Write and export levels if necesarry
 	//m_LevelCreator.CreateLevels();
 
@@ -106,16 +109,24 @@ void Game::InitializeInput()
 	InputManager::GetInstance().AssignCommandToEnterKey(m_pAction1Command);
 
 }
+void Game::WriteControls()
+{
+	std::cout << "BUBBLE BOBBLE BY DYLAN DE WAELE\n";
+	std::cout << "===============================\n";
+	std::cout << "Keyboard: \n";
+	std::cout << "Movement: AD \n";
+	std::cout << "Shoot: F\n";
+	std::cout << "Jump: Spacebar\n";
+	std::cout << "===============================\n";
+	std::cout << "Controller: \n";
+	std::cout << "Movement: DPAD\n";
+	std::cout << "Shoot: West button\n";
+	std::cout << "Jump: South button\n";
+}
 void Game::InitializeMainMenu()
 {
 	Scene& scene = SceneManager::GetInstance().CreateScene("MainMenu");
 	SceneManager::GetInstance().SetActiveScene("MainMenu");
-
-	GameObject* pMusicGO = new GameObject{};
-	SoundComponent* pSound = new SoundComponent{ { reinterpret_cast<Sound*>(ResourceManager::GetInstance().LoadMusic("MainMenu.ogg",true)) } };
-	pSound->SetVolume(25);
-	pMusicGO->AddComponent(pSound);
-	scene.Add(pMusicGO);
 
 	MainMenu mainMenu = MainMenu{};
 	scene.Add(mainMenu.GetGameObject());

@@ -36,6 +36,7 @@ private:
 	//Private functions
 	void Initialize();
 	void InitializeInput();
+	void WriteControls();
 #pragma region Scene Initialization
 	void InitializeMainMenu();
 	void InitializeSP();
