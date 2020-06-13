@@ -9,7 +9,6 @@
 #include "TransformComponent.h"
 #include "TextureComponent.h"
 #include "MainMenuComponent.h"
-#include "SoundComponent.h"
 
 #include "ResourceManager.h"
 
@@ -63,9 +62,4 @@ MainMenu::MainMenu(const std::string& name, const std::string& tag, const std::s
 	m_pGameObject->AddChild(pSelectionScreen);
 	//Add main menu component
 	m_pGameObject->AddComponent(new MainMenuComponent{});
-
-	//Add music
-	SoundComponent* pSound = new SoundComponent{ { reinterpret_cast<Sound*>(ResourceManager::GetInstance().LoadMusic("MainMenu.mp3",true)) } };
-	pSound->SetVolume(25);
-	m_pGameObject->AddComponent(pSound);
 }
