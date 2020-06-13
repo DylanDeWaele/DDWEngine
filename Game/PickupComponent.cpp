@@ -5,6 +5,7 @@
 #include "WorthComponent.h"
 #include "SceneManager.h"
 #include "Scene.h"
+#include "SoundComponent.h"
 
 PickupComponent::PickupComponent()
 	: BaseComponent{}
@@ -19,6 +20,9 @@ void PickupComponent::Update()
 	{
 		if (pCollidedObject->GetTag() == "Player" || pCollidedObject->GetTag() == "Player2")
 		{
+			//Play sound
+			m_pGameObject->GetComponent<SoundComponent>()->Play(0);
+
 			//Add the score to his points
 			pCollidedObject->GetComponent<ScoreComponent>()->AddPoints(m_pGameObject->GetComponent<WorthComponent>()->GetWorth());
 			//Delete itself

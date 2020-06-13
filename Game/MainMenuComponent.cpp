@@ -9,6 +9,7 @@
 //Components
 #include "TransformComponent.h"
 #include "ScoreComponent.h"
+#include "SoundComponent.h"
 
 MainMenuComponent::MainMenuComponent()
 	:BaseComponent{},

@@ -7,6 +7,8 @@
 #include "Renderer.h"
 #include "Texture2D.h"
 #include "Font.h"
+#include "Music.h"
+#include "SoundEffect.h"
 
 void  ResourceManager::Init(const std::string& dataPath)
 {
@@ -44,4 +46,14 @@ Texture2D* ResourceManager::LoadTexture(const std::string& file) const
 Font* ResourceManager::LoadFont(const std::string& file, unsigned int size) const
 {
 	return new Font{ m_DataPath + file, size };
+}
+
+Music* ResourceManager::LoadMusic(const std::string& file, bool playOnStart) const
+{
+	return new Music{ m_DataPath + file,playOnStart };
+}
+
+SoundEffect* ResourceManager::LoadSoundEffect(const std::string& file, bool playOnStart) const
+{
+	return new SoundEffect{ m_DataPath + file,playOnStart };
 }

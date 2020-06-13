@@ -7,12 +7,12 @@
 #include "ResourceManager.h"
 #include "Renderer.h"
 #include <SDL.h>
+#include "SDL_Mixer.h"
 #include "GameTime.h"
 
 //UNIT TESTING
 #define CATCH_CONFIG_RUNNER
 #include "catch.hpp"
-
 
 using namespace std;
 using namespace std::chrono;
@@ -42,6 +42,12 @@ void  Minigin::Initialize()
 
 	Renderer::GetInstance().Init(m_Window);
 
+	//Initialize SDL_mixer
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+	{
+		printf("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
+	}
+
 	// tell the resource manager where he can find the game data
 	ResourceManager::GetInstance().Init("../Data/");
 
@@ -53,7 +59,9 @@ void  Minigin::Cleanup()
 {
 	Renderer::GetInstance().Destroy();
 	SDL_DestroyWindow(m_Window);
+
 	m_Window = nullptr;
+
 	SDL_Quit();
 }
 

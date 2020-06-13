@@ -9,6 +9,7 @@
 #include "SceneManager.h"
 #include "Scene.h"
 #include "Builder.h"
+#include "SoundComponent.h"
 
 EnemyControllerComponent::EnemyControllerComponent(Type enemyType)
 	: m_State{  },
@@ -118,6 +119,9 @@ void EnemyControllerComponent::Bubble()
 
 void EnemyControllerComponent::Kill(int playerNr)
 {
+	//Play sound
+	m_pGameObject->GetComponent<SoundComponent>()->Play(0);
+
 	//Change his sprite back
 	switch (m_Type)
 	{

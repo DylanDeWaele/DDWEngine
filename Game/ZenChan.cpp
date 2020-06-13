@@ -6,6 +6,8 @@
 #include "RigidBodyComponent.h"
 #include "WorthComponent.h"
 #include "EnemyControllerComponent.h"
+#include "SoundComponent.h"
+#include "ResourceManager.h"
 
 ZenChan::ZenChan(float x, float y, const std::string& name, const std::string& tag, const std::string& collisionLayer)
 	: Prefab{ name, tag, collisionLayer }
@@ -20,6 +22,7 @@ ZenChan::ZenChan(float x, float y, const std::string& name, const std::string& t
 	RigidBodyComponent* pRigidbody = new RigidBodyComponent{ };
 	EnemyControllerComponent* pEnemyController = new EnemyControllerComponent{ EnemyControllerComponent::Type::ZenChan };
 	WorthComponent* pWorth = new WorthComponent{ 1000 }; //1000 points when player kills enemy
+	SoundComponent* pSound = new SoundComponent{ {reinterpret_cast<Sound*>(ResourceManager::GetInstance().LoadSoundEffect("Bubble.wav"))} };
 
 	//Add components to gameobject
 	m_pGameObject->AddComponent(pTransform);
@@ -28,4 +31,5 @@ ZenChan::ZenChan(float x, float y, const std::string& name, const std::string& t
 	m_pGameObject->AddComponent(pRigidbody);
 	m_pGameObject->AddComponent(pEnemyController);
 	m_pGameObject->AddComponent(pWorth);
+	m_pGameObject->AddComponent(pSound);
 }

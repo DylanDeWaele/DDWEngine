@@ -14,6 +14,8 @@
 #include "TextureComponent.h"
 #include "TextComponent.h"
 #include "LevelComponent.h"
+#include "SoundComponent.h"
+#include "Sound.h"
 
 //Input
 #include "InputManager.h"
@@ -108,6 +110,12 @@ void Game::InitializeMainMenu()
 {
 	Scene& scene = SceneManager::GetInstance().CreateScene("MainMenu");
 	SceneManager::GetInstance().SetActiveScene("MainMenu");
+
+	GameObject* pMusicGO = new GameObject{};
+	SoundComponent* pSound = new SoundComponent{ { reinterpret_cast<Sound*>(ResourceManager::GetInstance().LoadMusic("MainMenu.ogg",true)) } };
+	pSound->SetVolume(25);
+	pMusicGO->AddComponent(pSound);
+	scene.Add(pMusicGO);
 
 	MainMenu mainMenu = MainMenu{};
 	scene.Add(mainMenu.GetGameObject());
@@ -217,7 +225,7 @@ void Game::InitializeLevel1MP()
 	scene.Add(hud.GetGameObject());
 
 	//Initialize HUD 2
-	HUD hud2 = HUD{1};
+	HUD hud2 = HUD{ 1 };
 	scene.Add(hud2.GetGameObject());
 }
 
@@ -365,7 +373,7 @@ void Game::InitializeGameOverSceneSP()
 {
 	Scene& scene = SceneManager::GetInstance().CreateScene("GameOverScreenSP");
 
-	GameOverScreen gameOverScreen{1};
+	GameOverScreen gameOverScreen{ 1 };
 
 	scene.Add(gameOverScreen.GetGameObject());
 }

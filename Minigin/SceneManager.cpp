@@ -67,7 +67,8 @@ Scene* SceneManager::GetPreviousScene() const
 }
 
 SceneManager::SceneManager()
-	: m_pActiveScene{ nullptr }
+	: m_pActiveScene{ nullptr },
+	m_pPreviousScene{nullptr}
 {
 }
 

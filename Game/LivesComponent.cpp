@@ -3,6 +3,7 @@
 #include "PlayerControllerComponent.h"
 #include "RigidBodyComponent.h"
 #include "GameTime.h"
+#include "SoundComponent.h"
 
 LivesComponent::LivesComponent(int amountOfLives)
 	: m_MaxLives{ amountOfLives },
@@ -30,6 +31,9 @@ void LivesComponent::ReduceLives(int amount)
 	PlayerControllerComponent* pPc = m_pGameObject->GetComponent<PlayerControllerComponent>();
 	if (pPc->GetState() != "Hit")
 	{
+		//Play hit sound
+		m_pGameObject->GetComponent<SoundComponent>()->Play(2);
+
 		if (m_CurrentLives > 0)
 			m_CurrentLives -= amount;
 

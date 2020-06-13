@@ -7,6 +7,8 @@
 #include "PlayerControllerComponent.h"
 #include "ScoreComponent.h"
 #include "LivesComponent.h"
+#include "SoundComponent.h"
+#include "ResourceManager.h"
 
 Player::Player(float x, float y, int playerCount, const std::string& name, const std::string& tag, const std::string& collisionLayer)
 	: Prefab{ name, tag, collisionLayer }
@@ -36,6 +38,14 @@ Player::Player(float x, float y, int playerCount, const std::string& name, const
 	PlayerControllerComponent* pPlayerController = new PlayerControllerComponent{};
 	ScoreComponent* pScore = new ScoreComponent{};
 	LivesComponent* pLives = new LivesComponent{ 4 };
+	SoundComponent* pSounds = new SoundComponent{
+		{
+			reinterpret_cast<Sound*>(ResourceManager::GetInstance().LoadSoundEffect("Jump.wav")),
+			reinterpret_cast<Sound*>(ResourceManager::GetInstance().LoadSoundEffect("Shoot.wav")),
+			reinterpret_cast<Sound*>(ResourceManager::GetInstance().LoadSoundEffect("Hit.wav")),
+		}
+	};
+	pSounds->SetVolume(60);
 
 	//Add components to gameobject
 	m_pGameObject->AddComponent(pTransform);
@@ -45,4 +55,5 @@ Player::Player(float x, float y, int playerCount, const std::string& name, const
 	m_pGameObject->AddComponent(pPlayerController);
 	m_pGameObject->AddComponent(pScore);
 	m_pGameObject->AddComponent(pLives);
+	m_pGameObject->AddComponent(pSounds);
 }

@@ -51,6 +51,9 @@
     <Filter Include="Prefabs\Box">
       <UniqueIdentifier>{4e8bc435-d0aa-45d5-bda1-269e86e864bd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sound">
+      <UniqueIdentifier>{fea3577e-2d91-493e-bde8-03740db5b260}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MiniginPCH.h">
@@ -141,6 +144,18 @@
     <ClInclude Include="Box.h">
       <Filter>Prefabs\Box</Filter>
     </ClInclude>
+    <ClInclude Include="SoundComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundEffect.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Music.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InputManager.cpp">
@@ -215,6 +230,18 @@
     </ClCompile>
     <ClCompile Include="Box.cpp">
       <Filter>Prefabs\Box</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Music.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundEffect.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound.cpp">
+      <Filter>Sound</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

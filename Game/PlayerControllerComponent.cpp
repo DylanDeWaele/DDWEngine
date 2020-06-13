@@ -15,6 +15,7 @@
 #include "PlayerStates.h"
 #include "Builder.h"
 #include "GameMode.h"
+#include "SoundComponent.h"
 
 PlayerControllerComponent::PlayerControllerComponent()
 	:BaseComponent{},
@@ -123,12 +124,18 @@ void PlayerControllerComponent::MoveRight()
 void PlayerControllerComponent::Jump()
 {
 	m_pRigidbody->SetVelocity(m_pRigidbody->GetVelocity().x, m_JumpForce);
+
+	//Play jump sound
+	m_pGameObject->GetComponent<SoundComponent>()->Play(0);
 }
 
 void PlayerControllerComponent::Shoot()
 {
 	if (m_AttackReady)
 	{
+		//Play shoot sound
+		m_pGameObject->GetComponent<SoundComponent>()->Play(1);
+
 		//Get necesarry variables
 		const glm::vec2& position{ m_pGameObject->GetComponent<TransformComponent>()->GetPosition() };
 		float x = position.x;
