@@ -130,10 +130,31 @@ void LevelComponent::HandleEnemySpawn()
 
 void LevelComponent::HandleLevelEnd()
 {
-	m_pEnemies = SceneManager::GetInstance().GetActiveScene()->GetGameObjecstWithTag("Enemy");
+	GameObject* pPlayer1 = nullptr;
+	GameObject* pPlayer2 = nullptr;
 
-	if (m_pEnemies.empty())
-		m_LevelEnded = true;
+	//Check kill count
+	switch (GameMode::GetInstance().GetGameMode())
+	{
+	case GameMode::Mode::Singleplayer:
+		pPlayer1 = SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player");
+		if (pPlayer1)
+		{
+			if (pPlayer1->GetComponent<ScoreComponent>()->GetKills() == m_AmountOfEnemies)
+				m_LevelEnded = true;
+		}
+		break;
+
+	case GameMode::Mode::Coop:
+		pPlayer1 = SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player");
+		pPlayer2 = SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player2");
+		if (pPlayer1 && pPlayer2)
+		{
+			if (pPlayer1->GetComponent<ScoreComponent>()->GetKills() + pPlayer2->GetComponent<ScoreComponent>()->GetKills() == m_AmountOfEnemies)
+				m_LevelEnded = true;
+		}
+		break;
+	}
 }
 
 void LevelComponent::HandleLevelSwap()

@@ -27,48 +27,83 @@ GameObject::~GameObject()
 
 void GameObject::Initialize()
 {
-	for (BaseComponent* component : m_Components)
+	try
 	{
-		component->Initialize();
+		for (BaseComponent* component : m_Components)
+		{
+			component->Initialize();
+		}
+	}
+	catch (const std::exception&)
+	{
+		std::cout << "An error occured while initializing components of a gameobject\n";
 	}
 }
 
 void GameObject::FixedUpdate()
 {
-	for (BaseComponent* component : m_Components)
+	try
 	{
-		component->FixedUpdate();
+		for (BaseComponent* component : m_Components)
+		{
+			component->FixedUpdate();
+		}
+	}
+	catch (const std::exception&)
+	{
+		std::cout << "An error occured in the fixed update of a gameobject\n";
 	}
 }
 
 void  GameObject::Update()
 {
-	for (BaseComponent* component : m_Components)
+	try
 	{
-		component->Update();
+		for (BaseComponent* component : m_Components)
+		{
+			component->Update();
+		}
+	}
+	catch (const std::exception&)
+	{
+		std::cout << "An error occured while updating components of a gameobject\n";
 	}
 }
 
 void  GameObject::Render() const
 {
-	for (BaseComponent* component : m_Components)
+	try
 	{
-		component->Render();
+		for (BaseComponent* component : m_Components)
+		{
+			component->Render();
+		}
+	}
+	catch (const std::exception&)
+	{
+		std::cout << "An error occured while rendering components of a gameobject\n";
 	}
 }
 
 void  GameObject::AddComponent(BaseComponent* pComponent)
 {
-	for (auto* component : m_Components)
+	try
 	{
-		if (component == pComponent)
+		for (auto* component : m_Components)
 		{
-			std::cout << "This object already contains this type of component.\n";
-			return;
+			if (component == pComponent)
+			{
+				std::cout << "This object already contains this type of component.\n";
+				return;
+			}
 		}
+		m_Components.push_back(pComponent);
+		pComponent->SetGameObject(this);
 	}
-	m_Components.push_back(pComponent);
-	pComponent->SetGameObject(this);
+	catch (const std::exception&)
+	{
+		std::cout << "An error occured while trying to add a component to a gameobject\n";
+	}
 }
 
 void GameObject::AddChild(GameObject* pGameObject)

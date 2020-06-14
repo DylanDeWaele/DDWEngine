@@ -5,69 +5,77 @@
 
 bool InputManager::ProcessInput()
 {
-	for (int i = 0; i < MAX_PLAYER_COUNT; i++)
+	try
 	{
-		//Controller
-		ZeroMemory(&m_ControllerStates[i], sizeof(XINPUT_STATE));
-		XInputGetState(i, &m_ControllerStates[i]);
-
-		m_CurrentControllerIndex = i;
-
-		if (IsPressed(ControllerButton::LeftDPad))
-			m_pLeftDPAD->Execute();
-		if (IsPressed(ControllerButton::RightDPad))
-			m_pRightDPAD->Execute();
-		if (IsPressed(ControllerButton::UpDPad))
-			m_pUpDPAD->Execute();
-		if (IsPressed(ControllerButton::DownDPad))
-			m_pDownDPAD->Execute();
-		if (IsPressed(ControllerButton::SouthButton))
-			m_pSouthButton->Execute();
-		if (IsPressed(ControllerButton::WestButton))
-			m_pWestButton->Execute();
-	}
-
-	//Keyboard - single hit events
-	SDL_Event e;
-	while (SDL_PollEvent(&e)) {
-		if (e.type == SDL_QUIT) {
-			return false;
-		}
-		if (e.type == SDL_KEYUP)
+		for (int i = 0; i < MAX_PLAYER_COUNT; i++)
 		{
-			switch (e.key.keysym.sym)
+			//Controller
+			ZeroMemory(&m_ControllerStates[i], sizeof(XINPUT_STATE));
+			XInputGetState(i, &m_ControllerStates[i]);
+
+			m_CurrentControllerIndex = i;
+
+			if (IsPressed(ControllerButton::LeftDPad))
+				m_pLeftDPAD->Execute();
+			if (IsPressed(ControllerButton::RightDPad))
+				m_pRightDPAD->Execute();
+			if (IsPressed(ControllerButton::UpDPad))
+				m_pUpDPAD->Execute();
+			if (IsPressed(ControllerButton::DownDPad))
+				m_pDownDPAD->Execute();
+			if (IsPressed(ControllerButton::SouthButton))
+				m_pSouthButton->Execute();
+			if (IsPressed(ControllerButton::WestButton))
+				m_pWestButton->Execute();
+		}
+
+		//Keyboard - single hit events
+		SDL_Event e;
+		while (SDL_PollEvent(&e)) {
+			if (e.type == SDL_QUIT) {
+				return false;
+			}
+			if (e.type == SDL_KEYUP)
 			{
-			case SDLK_SPACE:
-				m_pSpacebarKey->Execute();
-				break;
-			case SDLK_f:
-				m_pFKey->Execute();
-				break;
-			case SDLK_UP:
-				m_pUpArrowKey->Execute();
-				break;
-			case SDLK_DOWN:
-				m_pDownArrowKey->Execute();
-				break;
-			case SDLK_RETURN:
-				m_pEnterKey->Execute();
-				break;
+				switch (e.key.keysym.sym)
+				{
+				case SDLK_SPACE:
+					m_pSpacebarKey->Execute();
+					break;
+				case SDLK_f:
+					m_pFKey->Execute();
+					break;
+				case SDLK_UP:
+					m_pUpArrowKey->Execute();
+					break;
+				case SDLK_DOWN:
+					m_pDownArrowKey->Execute();
+					break;
+				case SDLK_RETURN:
+					m_pEnterKey->Execute();
+					break;
+				}
 			}
 		}
+
+		//Keyboard - continuous-response
+		//https://gamedev.stackexchange.com/questions/19571/how-can-i-process-continuously-held-keys-with-sdl
+		const Uint8* keystate = SDL_GetKeyboardState(NULL);
+		if (keystate[SDL_SCANCODE_A])
+			m_pAKey->Execute();
+		if (keystate[SDL_SCANCODE_D])
+			m_pDKey->Execute();
+
+		if (!Minigin::GetInstance().GetContinue())
+			return false;
+		else
+			return true;
 	}
-
-	//Keyboard - continuous-response
-	//https://gamedev.stackexchange.com/questions/19571/how-can-i-process-continuously-held-keys-with-sdl
-	const Uint8* keystate = SDL_GetKeyboardState(NULL);
-	if (keystate[SDL_SCANCODE_A])
-		m_pAKey->Execute();
-	if (keystate[SDL_SCANCODE_D])
-		m_pDKey->Execute();
-
-	if (!Minigin::GetInstance().GetContinue())
-		return false;
-	else
-		return true;
+	catch (const std::exception&)
+	{
+		std::cout << "An error occured while processing input\n";
+	}
+	return true;
 }
 
 void InputManager::AssignCommandToLeftDPad(Command* pCommand)

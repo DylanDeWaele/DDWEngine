@@ -32,17 +32,24 @@ void SceneManager::CleanUp()
 
 void SceneManager::SetActiveScene(const std::string& sceneName)
 {
-	for (Scene* pScene : m_Scenes)
+	try
 	{
-		if (pScene->GetName() == sceneName)
+		for (Scene* pScene : m_Scenes)
 		{
-			if (m_pActiveScene)
-				m_pActiveScene->CleanUp();
+			if (pScene->GetName() == sceneName)
+			{
+				if (m_pActiveScene)
+					m_pActiveScene->CleanUp();
 
-			m_pPreviousScene = m_pActiveScene;
-			m_pActiveScene = pScene;
-			m_pActiveScene->Initialize(); //Reinitialize the scene
+				m_pPreviousScene = m_pActiveScene;
+				m_pActiveScene = pScene;
+				m_pActiveScene->Initialize(); //Reinitialize the scene
+			}
 		}
+	}
+	catch (const std::exception&)
+	{
+		std::cout << "An error occured while setting a new scene\n";
 	}
 }
 
@@ -68,7 +75,7 @@ Scene* SceneManager::GetPreviousScene() const
 
 SceneManager::SceneManager()
 	: m_pActiveScene{ nullptr },
-	m_pPreviousScene{nullptr}
+	m_pPreviousScene{ nullptr }
 {
 }
 

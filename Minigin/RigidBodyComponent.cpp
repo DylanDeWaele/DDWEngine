@@ -19,7 +19,7 @@ RigidBodyComponent::RigidBodyComponent(bool useGravity)
 	m_CanMoveDown{ true },
 	m_CanMoveLeft{ true },
 	m_CanMoveRight{ true },
-	m_CanMoveUp{true}
+	m_CanMoveUp{ true }
 {
 }
 
@@ -34,18 +34,25 @@ void RigidBodyComponent::FixedUpdate() //Apply physics
 
 void RigidBodyComponent::Update() //Check collisions and do movement
 {
-	//Collisions
-	CheckCollisions();
+	try
+	{
+		//Collisions
+		CheckCollisions();
 
-	//Resetting y velocity if hitting bottom or hitting top
-	if (!m_CanMoveDown && m_Velocity.y < 0 || !m_CanMoveUp && m_Velocity.y > 0)
-		m_Velocity.y = 0;
-	//Same for x velocity
-	if (!m_CanMoveLeft && m_Velocity.x < 0 || !m_CanMoveRight && m_Velocity.x > 0)
-		m_Velocity.x = 0;
+		//Resetting y velocity if hitting bottom or hitting top
+		if (!m_CanMoveDown && m_Velocity.y < 0 || !m_CanMoveUp && m_Velocity.y > 0)
+			m_Velocity.y = 0;
+		//Same for x velocity
+		if (!m_CanMoveLeft && m_Velocity.x < 0 || !m_CanMoveRight && m_Velocity.x > 0)
+			m_Velocity.x = 0;
 
-	//Apply movement
-	m_pGameObject->GetComponent<TransformComponent>()->Translate(m_Velocity.x * GameTime::GetInstance().GetElapsedTime(), m_Velocity.y * GameTime::GetInstance().GetElapsedTime());
+		//Apply movement
+		m_pGameObject->GetComponent<TransformComponent>()->Translate(m_Velocity.x * GameTime::GetInstance().GetElapsedTime(), m_Velocity.y * GameTime::GetInstance().GetElapsedTime());
+	}
+	catch (const std::exception&)
+	{
+		std::cout << "An error occured in the update of the rigidbody\n";
+	}
 }
 
 

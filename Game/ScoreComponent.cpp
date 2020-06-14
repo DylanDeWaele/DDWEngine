@@ -2,7 +2,8 @@
 #include <iostream>
 
 ScoreComponent::ScoreComponent()
-	: m_CurrentPoints{}
+	: m_CurrentPoints{},
+	m_CurrentKillCount{}
 {
 }
 
@@ -15,9 +16,19 @@ int ScoreComponent::GetPoints() const
 	return m_CurrentPoints;
 }
 
+int ScoreComponent::GetKills() const
+{
+	return m_CurrentKillCount;
+}
+
 void ScoreComponent::AddPoints(int points)
 {
 	m_CurrentPoints += points;
+}
+
+void ScoreComponent::AddKill()
+{
+	m_CurrentKillCount++;
 }
 
 void ScoreComponent::Reset()

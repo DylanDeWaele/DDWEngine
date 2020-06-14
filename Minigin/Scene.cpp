@@ -48,71 +48,106 @@ bool Scene::Remove(GameObject* pObject)
 
 void Scene::Initialize()
 {
-	if (SceneManager::GetInstance().GetActiveScene() == this)
+	try
 	{
-		for (auto& object : m_Objects)
+		if (SceneManager::GetInstance().GetActiveScene() == this)
 		{
-			if (object)
-				object->Initialize();
+			for (auto& object : m_Objects)
+			{
+				if (object)
+					object->Initialize();
+			}
 		}
+	}
+	catch (const std::exception&)
+	{
+		std::cout << "An error occured while trying to initialize a scene\n";
 	}
 }
 
 void Scene::FixedUpdate()
 {
-	if (SceneManager::GetInstance().GetActiveScene() == this)
+	try
 	{
-		for (auto& object : m_Objects)
+		if (SceneManager::GetInstance().GetActiveScene() == this)
 		{
-			if (object->IsActive())
-				object->FixedUpdate();
+			for (auto& object : m_Objects)
+			{
+				if (object->IsActive())
+					object->FixedUpdate();
+			}
 		}
+	}
+	catch (const std::exception&)
+	{
+		std::cout << "An error occured during the fixed update of a scene\n";
 	}
 }
 
 void Scene::Update()
 {
-	//Changged this particular for loop to prevent a crash when adding new game objects inside the update
-	for (size_t i = 0; i < m_Objects.size(); i++)
+	try
 	{
-		//Only do when this scene is still the active scene
-		if (SceneManager::GetInstance().GetActiveScene() != this)
-			return;
+		//Changged this particular for loop to prevent a crash when adding new game objects inside the update
+		for (size_t i = 0; i < m_Objects.size(); i++)
+		{
+			//Only do when this scene is still the active scene
+			if (SceneManager::GetInstance().GetActiveScene() != this)
+				return;
 
-		if (m_Objects[i]->IsActive())
-			m_Objects[i]->Update();
+			if (m_Objects[i]->IsActive())
+				m_Objects[i]->Update();
+		}
+	}
+	catch (const std::exception&)
+	{
+		std::cout << "An error occured during the update of a scene\n";
 	}
 }
 
 void Scene::Render() const
 {
-	if (SceneManager::GetInstance().GetActiveScene() == this)
+	try
 	{
-		for (const auto& object : m_Objects)
+		if (SceneManager::GetInstance().GetActiveScene() == this)
 		{
-			//Only do when this scene is still the active scene
-			if (object->IsActive())
-				object->Render();
+			for (const auto& object : m_Objects)
+			{
+				//Only do when this scene is still the active scene
+				if (object->IsActive())
+					object->Render();
+			}
 		}
+	}
+	catch (const std::exception&)
+	{
+		std::cout << "An error occured while rendering a scene\n";
 	}
 }
 
 void Scene::CleanUp()
 {
-	if (SceneManager::GetInstance().GetActiveScene() == this)
+	try
 	{
-		for (size_t i = 0; i < m_Objects.size(); i++)
+		if (SceneManager::GetInstance().GetActiveScene() == this)
 		{
-			GameObject* pObject = m_Objects[i];
-			if (pObject)
+			for (size_t i = 0; i < m_Objects.size(); i++)
 			{
-				if (pObject->GetDelete())
+				GameObject* pObject = m_Objects[i];
+				if (pObject)
 				{
-					m_Objects.erase(std::find(m_Objects.begin(), m_Objects.end(), pObject));
-					SAFE_DELETE(pObject);
+					if (pObject->GetDelete())
+					{
+						m_Objects.erase(std::find(m_Objects.begin(), m_Objects.end(), pObject));
+						SAFE_DELETE(pObject);
+					}
 				}
 			}
 		}
+	}
+	catch (const std::exception&)
+	{
+		std::cout << "An error occured during the cleanup of a scene\n";
 	}
 }
 

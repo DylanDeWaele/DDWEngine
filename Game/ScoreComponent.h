@@ -14,11 +14,15 @@ public:
 
 	//Getters
 	int GetPoints() const;
+	int GetKills() const;
+
 	//Setters
 	void AddPoints(int points);
+	void AddKill();
 	void Reset();
 
 private:
 	//Private datamembers
 	int m_CurrentPoints;
+	int m_CurrentKillCount;
 };

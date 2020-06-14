@@ -29,10 +29,13 @@ void MainMenuComponent::Initialize()
 	m_pIntroScreen = SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("IntroScreen");
 	m_pSelectionScreen = SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("SelectionScreen");
 
-	m_pOptions.push_back(m_pSelectionScreen->GetChild(2)); //1P START
-	m_pOptions.push_back(m_pSelectionScreen->GetChild(3)); //2P START
-	m_pOptions.push_back(m_pSelectionScreen->GetChild(4)); //VS Start
-	m_pOptions.push_back(m_pSelectionScreen->GetChild(5)); //QUIT
+	if (m_pOptions.empty())
+	{
+		m_pOptions.push_back(m_pSelectionScreen->GetChild(2)); //1P START
+		m_pOptions.push_back(m_pSelectionScreen->GetChild(3)); //2P START
+		m_pOptions.push_back(m_pSelectionScreen->GetChild(4)); //VS Start
+		m_pOptions.push_back(m_pSelectionScreen->GetChild(5)); //QUIT
+	}
 
 	m_pIntroScreen->SetActive(true);
 	m_pSelectionScreen->SetActive(false);

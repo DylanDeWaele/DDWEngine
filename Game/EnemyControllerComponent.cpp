@@ -134,14 +134,19 @@ void EnemyControllerComponent::Kill(int playerNr)
 	}
 	//Apply gravity again
 	m_pGameObject->GetComponent<RigidBodyComponent>()->SetUseGravity(true);
+	GameObject* pPlayer = nullptr;
 	//Give the player his points
 	switch (playerNr)
 	{
 	case 0:
-		SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player")->GetComponent<ScoreComponent>()->AddPoints(m_pGameObject->GetComponent<WorthComponent>()->GetWorth());
+		pPlayer = SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player");
+		pPlayer->GetComponent<ScoreComponent>()->AddPoints(m_pGameObject->GetComponent<WorthComponent>()->GetWorth());
+		pPlayer->GetComponent<ScoreComponent>()->AddKill();
 		break;
 	case 1:
-		SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player2")->GetComponent<ScoreComponent>()->AddPoints(m_pGameObject->GetComponent<WorthComponent>()->GetWorth());
+		pPlayer = SceneManager::GetInstance().GetActiveScene()->GetGameObjectWithTag("Player2");
+		pPlayer->GetComponent<ScoreComponent>()->AddPoints(m_pGameObject->GetComponent<WorthComponent>()->GetWorth());
+		pPlayer->GetComponent<ScoreComponent>()->AddKill();
 		break;
 	}
 	//Change to the dead state

@@ -79,14 +79,17 @@ void BoxColliderComponent::FollowParent()
 {
 	//Could optimize this but dont want to include the whole vec3 hpp for it
 	//Only if the parent has a transformComponent
-	TransformComponent* pTransform = m_pGameObject->GetComponent<TransformComponent>();
-	if (pTransform)
+	try
 	{
-		m_Rect.x = pTransform->GetRenderPosition().x;
-		m_Rect.y = pTransform->GetRenderPosition().y;
+		TransformComponent* pTransform = m_pGameObject->GetComponent<TransformComponent>();
+		if (pTransform)
+		{
+			m_Rect.x = pTransform->GetRenderPosition().x;
+			m_Rect.y = pTransform->GetRenderPosition().y;
+		}
 	}
-	else
+	catch (const std::exception&)
 	{
-		std::cout << "ERROR: A BoxCollider is trying to follow an object that does not have a TransformComponent!\n";
+		std::cout << "ERROR: A BoxCollider is trying to follow an object that does not have a TransformComponent! \n";
 	}
 }
