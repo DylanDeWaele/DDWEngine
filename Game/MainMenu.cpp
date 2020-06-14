@@ -65,7 +65,7 @@ MainMenu::MainMenu(const std::string& name, const std::string& tag, const std::s
 	m_pGameObject->AddComponent(new MainMenuComponent{});
 
 	//Add music
-	SoundComponent* pSound = new SoundComponent{ { reinterpret_cast<Sound*>(ResourceManager::GetInstance().LoadMusic("MainMenu.mp3",true)) } };
+	SoundComponent* pSound = new SoundComponent{ { reinterpret_cast<Sound*>(ResourceManager::GetInstance().LoadMusic("MainMenu.wav",true)) } };
 	pSound->SetVolume(25);
 	m_pGameObject->AddComponent(pSound);
 }

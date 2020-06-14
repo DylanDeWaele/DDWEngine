@@ -26,12 +26,12 @@ void BoxColliderComponent::Update()
 
 void BoxColliderComponent::Render() const
 {
-	SDL_Rect sdlRect = m_Rect.GetSDLRect();
-	//DEBUG RENDERING
-	SDL_Renderer* pRenderer = Renderer::GetInstance().GetSDLRenderer();
-	SDL_SetRenderDrawColor(pRenderer, 255, 0, 0, 255);
-	SDL_RenderDrawRect(pRenderer, &sdlRect);
-	SDL_SetRenderDrawColor(pRenderer, 0, 0, 0, 255);
+	//SDL_Rect sdlRect = m_Rect.GetSDLRect();
+	////DEBUG RENDERING
+	//SDL_Renderer* pRenderer = Renderer::GetInstance().GetSDLRenderer();
+	//SDL_SetRenderDrawColor(pRenderer, 255, 0, 0, 255);
+	//SDL_RenderDrawRect(pRenderer, &sdlRect);
+	//SDL_SetRenderDrawColor(pRenderer, 0, 0, 0, 255);
 }
 
 const DDWRect& BoxColliderComponent::GetRect() const
