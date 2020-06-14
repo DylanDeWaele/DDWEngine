@@ -47,7 +47,7 @@ void LevelCreator::LoadLevel(int index, Scene* pScene)
 	//4. For all these boxes, read them in
 	for (size_t i = 0; i < size; i++)
 	{
-		std::string name, tag, collision;
+		std::string name{}, tag{}, collision{};
 		//Read 
 		m_BinReader.ReadData(x);
 		//Read y

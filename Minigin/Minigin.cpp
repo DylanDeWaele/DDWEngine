@@ -9,6 +9,7 @@
 #include <SDL.h>
 #include "SDL_Mixer.h"
 #include "GameTime.h"
+#include "Structs.h"
 
 //UNIT TESTING
 #define CATCH_CONFIG_RUNNER
@@ -119,3 +120,15 @@ bool Minigin::GetContinue() const
 {
 	return m_DoContinue;
 }
+
+
+#pragma region TESTS
+TEST_CASE("Testing DDWRect") 
+{
+	const float& height = Minigin::GetInstance().GetWindowHeight();
+	DDWRect rect{ 20,50,100,100 };
+
+	float y = height - rect.y;
+	CHECK(y == rect.GetModifiedY());
+}
+#pragma endregion

@@ -71,7 +71,7 @@ void MainMenuComponent::SelectDown()
 	if (!m_pIntroScreen->IsActive())
 	{
 		m_CurrentOption++;
-		if (m_CurrentOption > m_pOptions.size() - 1)
+		if (m_CurrentOption > int(m_pOptions.size()) - 1)
 			m_CurrentOption = 0;
 
 		SetSelectionPointerToOption(m_CurrentOption);

@@ -16,7 +16,7 @@ void BinaryWriter::WriteString(const std::string string)
 	if (m_OutputStream.is_open())
 	{
 		//When writing a string we first want to write its size
-		unsigned int stringSize{ static_cast<unsigned int>(string.size()) };
+		size_t stringSize{ static_cast<size_t>(string.size()) };
 		m_OutputStream.write((const char*)& stringSize, sizeof(stringSize));
 		m_OutputStream.write(string.c_str(), string.size());
 	}
